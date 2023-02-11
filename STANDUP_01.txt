@@ -31,12 +31,14 @@ For technologies, we propose:
 * OpenSeaDragon to view images in high resolution
 * Cornerstone medical imaging tools
 
+
 Questions / Problems / What We Need
 ===================================
 
 * We need to come to a final decision on a tech stack
 * We need to decide how we are going to store data
 * We need some image sets to work with
+
 
 List of Working Packages
 ========================
@@ -46,5 +48,4 @@ List of Working Packages
 * Decide on a tech stack to start with [everyone]
 * Get in contact with Allen Dai over email to establish contact and ask for
   resources, ideas, as well as getting an image set to work with [Nick]
-
 
