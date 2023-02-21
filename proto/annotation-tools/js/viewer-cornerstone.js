@@ -1,0 +1,3 @@
+
+
+const csTools = cornerstoneTools.init();
