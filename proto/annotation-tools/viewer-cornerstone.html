@@ -19,34 +19,37 @@
     <script src="https://unpkg.com/cornerstone-math@0.1.6/dist/cornerstoneMath.js"></script>
     <script src="https://unpkg.com/cornerstone-web-image-loader@2.1.0/dist/cornerstoneWebImageLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cornerstone-tools@3.0.0-b.717/dist/cornerstoneTools.js"></script>
-    
+
     <!-- my script -->
     <script src="js/viewer-cornerstone.js"></script>
 
     <style>
         html {
-            background-color: gray;
+            background-color: darkgray;
             overflow: hidden;
         }
 
-        #viewer {
-            margin-left: auto;
-            margin-right: auto;
-            display: block;
-            border: thick;
-            border-style: inset;
-            border-width: 10px;
-            border-color: black;
-            width: 500px;
-            height: 300px;
-            padding: 100px;
+        #toggle {
             text-align: center;
+            margin: 5%;
+        }
+
+        #cornerstone-element {
+            margin: 0 auto;
+            display: block;
+            width: 50%;
+            height: 50%;
         }
     </style>
 </head>
 
 <body>
-    <canvas id="viewer"></canvas>
+    <div id="cornerstone-element-wrapper">
+        <div id="cornerstone-element" data-index="0" oncontextmenu="return false"></div>
+    </div>
+    <div id="toggle">
+        <input type="button" id="toggle-button" value="Switch to Annotation" onclick="toggleTools()" />
+    </div>
 </body>
 
 </html>

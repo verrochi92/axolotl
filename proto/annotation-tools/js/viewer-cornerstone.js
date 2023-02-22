@@ -8,36 +8,50 @@
  * For CS410 - The Axolotl Project 
  */
 
+var annotationsEnabled = false; 
+const csTools = cornerstoneTools.init()
+const LengthTool = cornerstoneTools.LengthTool;
+const ArrowAnnotateTool = cornerstoneTools.ArrowAnnotateTool;
+
 // setting up cornerstone on page load
 window.onload = function () {
     // setup image loaders
     cornerstoneWebImageLoader.external.cornerstone = cornerstone;
-    cornerstone.registerImageLoader('http', cornerstoneWebImageLoader.loadImage)
-    cornerstone.registerImageLoader('https', cornerstoneWebImageLoader.loadImage)
-    cornerstone.registerImageLoader('data', cornerstoneWebImageLoader.loadImage)
+    cornerstone.registerImageLoader('http', cornerstoneWebImageLoader.loadImage);
+    cornerstone.registerImageLoader('https', cornerstoneWebImageLoader.loadImage);
+    cornerstone.registerImageLoader('data', cornerstoneWebImageLoader.loadImage);
 
     // initialize tools and enable cornerstone in the viewer
-    const csTools = cornerstoneTools.init()
-    const element = document.getElementById("viewer")
-    cornerstone.enable(element)
+    cornerstoneTools.toolStyle.setToolWidth(1);
+    cornerstoneTools.toolColors.setToolColor("rgb(255, 255, 0)");
+    cornerstoneTools.toolColors.setActiveColor("rgb(255, 255, 0)");
 
-    // length tool
-    const LengthTool = cornerstoneTools['LengthTool']
-    csTools.addTool(LengthTool)
+    const element = document.getElementById("cornerstone-element");
+    cornerstone.enable(element);
+
+    // add tools and activate length tool
+    csTools.addTool(LengthTool);
     csTools.setToolActive('Length', { mouseButtonMask: 1 });
+    csTools.addTool(ArrowAnnotateTool)
+    csTools.setToolPassive('ArrowAnnotate', { mouseButtonMask: 1 });
 
-    var canvas = document.getElementById("viewer");
-    var context = canvas.getContext("2d");
-    image = new Image();
-    image.src = "img/test.jpeg";
-    image.onload = function() {
-        context.drawImage(image, 0, 0);
-    }
-    const dataURL = canvas.toDataURL("image/jpeg");
-
-    cornerstone.loadImage(dataURL).then(function (image) {
+    cornerstone.loadImage('https://i.imgur.com/wpviULT.jpeg').then(function (image) {
         var img = image;
         img.rgba = true;
         cornerstone.displayImage(element, img)
-    })
+    });
+}
+
+function toggleTools() {
+    if (annotationsEnabled) {
+        csTools.setToolPassive('ArrowAnnotate', { mouseButtonMask: 1 });
+        csTools.setToolActive('Length', { mouseButtonMask: 1 });
+        document.getElementById("toggle-button").value = "Switch to Annotation";
+    }
+    else {
+        csTools.setToolPassive('Length', { mouseButtonMask: 1 });
+        csTools.setToolActive('ArrowAnnotate', { mouseButtonMask: 1 });
+        document.getElementById("toggle-button").value = "Switch to Measuring";
+    }
+    annotationsEnabled = !annotationsEnabled
 }
