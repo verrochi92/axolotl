@@ -21,3 +21,13 @@ body {
     width: 100%;
     margin: 0 auto;
 }
+
+#toolbox {
+    position: absolute;
+    z-index: 1000;
+    top: 5%;
+    left: 5%;
+    height: 10%;
+    width: 10%;
+    background-color: transparent;
+}
