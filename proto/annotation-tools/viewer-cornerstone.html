@@ -40,6 +40,11 @@
             width: 50%;
             height: 50%;
         }
+
+        input {
+            width: 33%;
+            margin: 1%;
+        }
     </style>
 </head>
 
@@ -48,7 +53,9 @@
         <div id="cornerstone-element" data-index="0" oncontextmenu="return false"></div>
     </div>
     <div id="toggle">
-        <input type="button" id="toggle-button" value="Switch to Annotation" onclick="toggleTools()" />
+        <input type="button" id="toggle-button" value="Switch to Annotation" onclick="toggleTools()" /><br />
+        <input type="button" id="save-button" value="Save Data" onclick="saveData()" /><br />
+        <input type="button" id="reset-button" value="Reset Stored Data" onclick="resetData()" />
     </div>
 </body>
 
