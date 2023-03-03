@@ -5,6 +5,8 @@
     For CS410 - The Axolotl Project
 */
 
+const PIXEL_SIZE = 4.54e-7;
+
 window.onload = function () {
     viewer = OpenSeadragon({
         id: "openseadragon-viewer",
@@ -13,7 +15,7 @@ window.onload = function () {
         tileSources: "../../data/W255B_0.dzi"
     });
 
-
+    // setting up a mouse tracker to get coordinates
     var tracker = new OpenSeadragon.MouseTracker({
         element: viewer.container,
         moveHandler: function (event) {
@@ -22,7 +24,36 @@ window.onload = function () {
             var imagePoint = viewer.viewport.viewportToImageCoordinates(viewportPoint);
 
             var display = document.getElementById("coordinates");
-            display.innerText = "Coordinates: " + imagePoint.toString();
+            display.innerHTML = "Coordinates: " + imagePoint.toString() + "<br />";
+        }
+    });
+
+    // turning off zoom on click...
+    viewer.zoomPerClick = 1;
+
+    // points for measuring
+    let p1 = null;
+    let p2 = null;
+    let n = 0; // number of measurements
+
+    // event handler on click
+    viewer.addHandler("canvas-click", function(event) {
+        let webPoint = event.position;
+        let viewportPoint = viewer.viewport.pointFromPixel(webPoint);
+        let imagePoint = viewer.viewport.viewportToImageCoordinates(viewportPoint);
+
+        // the null point is the one we need to add
+        if (p1 == null) { // no points selected
+            p1 = imagePoint;
+            p2 = null; // clears the previous p2 value
+        }
+        else if (p2 == null) { // we have one point, need the second
+            p2 = imagePoint;
+            let length = Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+            length *= PIXEL_SIZE * 1e6; // convert to real-life units (um)
+            n++;
+            document.getElementById("measurements").innerHTML += n + ": " + length + " um<br />";
+            p1 = null;
         }
     });
 
