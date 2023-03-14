@@ -13,7 +13,7 @@ var annotationEnabled = false;
 // initialize tools
 csTools = cornerstoneTools.init();
 
-window.onload = function() {
+window.onload = function () {
     // create the openseadragon viewer
     let viewer = OpenSeadragon({
         id: "openseadragon-viewer",
@@ -22,6 +22,23 @@ window.onload = function() {
         sequenceMode: false,
         useCanvas: true
     });
+
+    /** doesn't work when cornerstone tools active... */
+    /*
+    viewer.addHandler('canvas-click', (e) => {
+                let webPoint = e.position;
+                let viewportPoint = viewer.viewport.pointFromPixel(webPoint);
+                let imagePoint = viewer.viewport.viewportToImageCoordinates(viewportPoint);
+                alert("clicked at " + imagePoint.toString());
+    });
+    */
+
+    document.body.addEventListener('click', (e => {
+        let webPoint = e.position;
+        let viewportPoint = viewer.viewport.pointFromPixel(webPoint);
+        let imagePoint = viewer.viewport.viewportToImageCoordinates(viewportPoint);
+        alert("clicked at " + imagePoint.toString());
+    }));
 
     // setup cornerstone image loaders
     cornerstoneWebImageLoader.external.cornerstone = cornerstone;

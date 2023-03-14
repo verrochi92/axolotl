@@ -2,6 +2,7 @@
     viewer.js
     Logic for the OpenSeadragon viewer
     By Nicholas Verrochi
+    By Sairam Bandarupalli
     For CS410 - The Axolotl Project
 */
 
@@ -10,9 +11,21 @@ const PIXEL_SIZE = 4.54e-7;
 window.onload = function () {
     viewer = OpenSeadragon({
         id: "openseadragon-viewer",
-        visibilityRation: 1.0,
+        //visibilityRation: 1.0,
         prefixUrl: "https://openseadragon.github.io/openseadragon/images/",
-        tileSources: "../../data/W255B_0.dzi"
+        tileSources: [
+            "../../data/W255B_0.dzi",
+            "../../data/W255B_1.dzi",
+            "../../data/W255B_2.dzi"],
+        zoomInButton: "btn_zoomin",
+        zoomOutButton: "btn_zoomout",
+        nextButton: "btn_next",
+        previousButton: "btn_prev",
+        sequenceMode: true,
+    });
+
+    viewer.addHandler("page", function (data) {
+        document.getElementById("a_nav").innerHTML = ( data.page + 1 ) + " of " + viewer.tileSources.length;
     });
 
     // setting up a mouse tracker to get coordinates
@@ -28,8 +41,15 @@ window.onload = function () {
         }
     });
 
-    // turning off zoom on click...
-    viewer.zoomPerClick = 1;
+    // turning off zoom on click only when measure is set on...
+    let measure = document.getElementById("btn_measure");
+    measure.isdown = false;
+    measure.addEventListener("click", function()
+    {
+        measure.isdown =! measure.isdown;
+        viewer.zoomPerClick = measure.isdown == true ? 1 : 2;
+        measure.style.opacity = measure.isdown == true ? 0.2 : 1;
+    })
 
     // points for measuring
     let p1 = null;
@@ -52,7 +72,8 @@ window.onload = function () {
             let length = Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
             length *= PIXEL_SIZE * 1e6; // convert to real-life units (um)
             n++;
-            document.getElementById("measurements").innerHTML += n + ": " + length + " um<br />";
+            if(measure.isdown)
+                document.getElementById("measurements").innerHTML += n + ": " + length + " um<br />";
             p1 = null;
         }
     });
