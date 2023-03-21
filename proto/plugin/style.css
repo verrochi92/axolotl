@@ -9,3 +9,8 @@ body {
     overflow: hidden;
 }
 
+#viewer {
+    height: 75%;
+    width: 75%;
+}
+

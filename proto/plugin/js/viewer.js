@@ -12,7 +12,16 @@ window.onload = function () {
         constrainDuringPan: true,
         showNavigator: true,
         prefixUrl: "https://openseadragon.github.io/openseadragon/images/",
-        tileSources: "../../data/W255B_0.dzi",
-        sequenceMode: false
+        tileSources: [ 
+            "../../data/W255B_0.dzi",
+            "../../data/W255B_1.dzi",
+            "../../data/W255B_2.dzi"
+        ],
+        sequenceMode: true,
+
+        zoomInButton: "zoom-in-button",
+        zoomOutButton: "zoom-out-button",
+        nextButton: "next-button",
+        previousButton: "previous-button"
     });
 };
