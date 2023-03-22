@@ -5,11 +5,10 @@
  * For CS410 - The Axolotl Project
  */
 
-window.onload = function () {
+window.onload = function() {
     let viewer = OpenSeadragon({
         id: "viewer",
         visibilityRatio: 1.0,
-        constrainDuringPan: true,
         showNavigator: true,
         prefixUrl: "https://openseadragon.github.io/openseadragon/images/",
         tileSources: [ 
