@@ -43,7 +43,28 @@ window.onload = function () {
         previousButton: "previous-button"
     });
     overlay = viewer.fabricjsOverlay();
+
+    // register click handlers
+    viewer.addHandler('canvas-click', (event) => {
+        if (mode === Mode.MEASURE) {
+            handleClickMeasure(event);
+        }
+    });
 };
+
+function handleClickMeasure(event) {
+    let webPoint = event.position;
+    let viewportPoint = viewer.viewport.pointFromPixel(webPoint);
+    let imagePoint = viewer.viewport.viewportToImageCoordinates(viewportPoint);
+    // render square at imagePoint
+    overlay.fabricCanvas().add(new fabric.Rect({
+        left: imagePoint.x - 25,
+        top: imagePoint.y - 25,
+        fill: 'red',
+        width: 50,
+        height: 50
+    }));
+}
 
 function measureButton() {
     mode = Mode.MEASURE;
