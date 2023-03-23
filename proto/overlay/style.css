@@ -16,7 +16,7 @@ body {
     top: 0;
 }
 
-#cornerstone-container, #cornerstone-viewer, #openseadragon-viewer {
+#cornerstone-container, #cornerstone-viewer, #openseadragon-viewer, #canvas {
     height: 100%;
     width: 100%;
     margin: 0 auto;

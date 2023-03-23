@@ -13,7 +13,9 @@ var annotationEnabled = false;
 // initialize tools
 csTools = cornerstoneTools.init();
 
-window.onload = function() {
+var svgNode;
+
+window.onload = function () {
     // create the openseadragon viewer
     let viewer = OpenSeadragon({
         id: "openseadragon-viewer",
@@ -22,6 +24,8 @@ window.onload = function() {
         sequenceMode: false,
         useCanvas: true
     });
+    let overlay = viewer.svgOverlay()
+    svgNode = overlay.node();
 
     // setup cornerstone image loaders
     cornerstoneWebImageLoader.external.cornerstone = cornerstone;
@@ -46,18 +50,21 @@ window.onload = function() {
     csTools.setToolActive("Length", { mouseButtonMask: 1 });
     csTools.setToolPassive("ArrowAnnotate", { mouseButtonMask: 1 });
 
+    
     // capture the background while tool is active
     const canvas = document.getElementById("canvas");
     const dataURL = canvas.toDataURL("image/png");
     cornerstone.loadImage(dataURL).then(function (image) {
         cornerstone.displayImage(cornerstoneElement, image);
     });
+    
 }
 
 // button handlers
 
 function enableZoom() {
     if (measurementEnabled || annotationEnabled) {
+        //let cornerstoneContainer = svgNode;
         let cornerstoneContainer = document.getElementById("cornerstone-container");
         cornerstoneContainer.hidden = true;
         // deactive whichever tool is active
@@ -80,6 +87,7 @@ function enableMeasurement() {
         measurementEnabled = true;
     }
     else if (zoomEnabled) {
+        //let cornerstoneContainer = svgNode;
         let cornerstoneContainer = document.getElementById("cornerstone-container");
         cornerstoneContainer.hidden = false;
         csTools.setToolActive("Length", { mouseButtonMask: 1 });
@@ -96,6 +104,7 @@ function enableAnnotation() {
         annotationEnabled = true;
     }
     else if (zoomEnabled) {
+        //let cornerstoneContainer = svgNode;
         let cornerstoneContainer = document.getElementById("cornerstone-container");
         cornerstoneContainer.hidden = false;
         csTools.setToolActive("ArrowAnnotate", { mouseButtonMask: 1 });

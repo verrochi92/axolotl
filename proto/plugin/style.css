@@ -1,0 +1,15 @@
+/*
+ * style.css
+ * Stylesheet for the plugin prototype
+ * By Nicholas Verrochi
+ * For CS410 - The Axolotl Project
+ */
+
+body {
+    overflow: hidden;
+}
+
+#viewer {
+    height: 75%;
+    width: 75%;
+}

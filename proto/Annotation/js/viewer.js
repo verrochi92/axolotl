@@ -57,6 +57,7 @@ window.onload = function() {
       var imagePoint = viewer.viewport.viewportToImageCoordinates(viewportPoint);
       createAnnotation(viewportPoint.x, viewportPoint.y);
       isAnnotating = true;
+      event.preventDefault();
     });
 
     // Add click event listener to the annotate button
