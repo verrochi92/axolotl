@@ -10,7 +10,9 @@
 <head>
     <title>Viewer</title>
     <link rel="stylesheet" href="style.css">
+    <script src="../../lib/fabricjs.min.js"></script>
     <script src="../../lib/openseadragon.min.js"></script>
+    <script src="../../lib/openseadragon-fabricjs-overlay.js"></script>
     <script src="../../lib/openseadragon-scalebar.js"></script>
     <script src="js/viewer.js"></script>
 </head>
@@ -21,7 +23,8 @@
     <input type="button" id="zoom-out-button" value="Zoom Out">
     <input type="button" id="previous-button" value="Previous">
     <input type="button" id="next-button" value="Next">
-    <input type="button" id="measure-button" value="Measure">
+    <input type="button" id="measure-button" value="Measure" onclick="measureButton();">
+    <input type="button" id="annotate-button" value="Annotate" disabled> <!-- to be implemented later -->
     <div id="coordinates">Coordinates:</div>
     <div id="measurements"></div>
 </body>
