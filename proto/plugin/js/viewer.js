@@ -45,7 +45,7 @@ window.onload = function () {
     overlay = viewer.fabricjsOverlay();
 
     // register click handlers
-    viewer.addHandler('canvas-click', (event) => {
+    viewer.addHandler('canvas-double-click', (event) => {
         if (mode === Mode.MEASURE) {
             handleClickMeasure(event);
         }
@@ -64,6 +64,17 @@ function handleClickMeasure(event) {
         width: 50,
         height: 50
     }));
+    if (isMeasuring) {
+        p2 = imagePoint;
+        // draw line betweeen p1 and p2
+        overlay.fabricCanvas().add(new fabric.Line([p1.x, p1.y, p2.x, p2.y], {
+            stroke: 'red',
+            strokeWidth: 10
+        }));
+    } else {
+        p1 = imagePoint;
+    }
+    isMeasuring = !isMeasuring
 }
 
 function measureButton() {
@@ -74,6 +85,11 @@ function measureButton() {
     let measureButton = document.getElementById("measure-button");
     measureButton.value = "Stop Measuring";
     measureButton.setAttribute("onclick", "javascript: stopMeasuring();");
+    // disable the other buttons
+    document.getElementById("zoom-in-button").disabled = true;
+    document.getElementById("zoom-out-button").disabled = true;
+    document.getElementById("next-button").disabled = true;
+    document.getElementById("previous-button").disabled = true;
 }
 
 function stopMeasuring() {
@@ -83,4 +99,8 @@ function stopMeasuring() {
     let measureButton = document.getElementById("measure-button");
     measureButton.value = "Measure";
     measureButton.setAttribute("onclick", "javascript: measureButton();");
+    document.getElementById("zoom-in-button").disabled = false;
+    document.getElementById("zoom-out-button").disabled = false;
+    document.getElementById("next-button").disabled = false;
+    document.getElementById("previous-button").disabled = false;
 }
