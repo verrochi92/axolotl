@@ -1,7 +1,7 @@
 /**
  * viewer.js
  * Logic for the plugin prototype - adjusts measurements with zoom
- * By Nicholas Verrochi
+ * By Nicholas Verrochi and Vidhya Sree Narayanappa
  * For CS410 - The Axolotl Project
  */
 
@@ -66,16 +66,30 @@ function handleClickMeasure(event) {
     }));
     if (isMeasuring) {
         p2 = imagePoint;
-        // draw line betweeen p1 and p2
-        overlay.fabricCanvas().add(new fabric.Line([p1.x, p1.y, p2.x, p2.y], {
+        // draw line between p1 and p2
+        let line = new fabric.Line([p1.x, p1.y, p2.x, p2.y], {
             stroke: 'red',
             strokeWidth: 10
-        }));
+        });
+        // calculate distance between p1 and p2
+        let distance = Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+        // create text object to display measurement
+        let text = new fabric.Text(distance.toFixed(2) + ' px', {
+            left: (p1.x + p2.x) / 2,
+            top: (p1.y + p2.y) / 2,
+            fontSize: 100,
+            fill: 'red'
+        });
+        // rotate text object to align with line
+        let angle = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
+        text.setAngle(angle);
+        overlay.fabricCanvas().add(line, text);
     } else {
         p1 = imagePoint;
     }
     isMeasuring = !isMeasuring
 }
+
 
 function measureButton() {
     mode = Mode.MEASURE;
