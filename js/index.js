@@ -10,5 +10,5 @@
 function startButton() {
     imageSelect = document.getElementById("image-select");
     image = imageSelect.value;
-    window.open("./viewer.html?image=" + image);
+    window.open("./viewer.html?tileSource=" + image, "_self");
 }

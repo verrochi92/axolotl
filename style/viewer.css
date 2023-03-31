@@ -1,0 +1,26 @@
+/*
+ * viewer.css
+ * Styling for the viewer page
+ * By Nicholas Verrochi
+ * For CS410 - The Axolotl Project
+ */
+
+body {
+    overflow: hidden !important;
+    background-color: darkgray;
+    font-family: 'Courier New';
+}
+
+.centered {
+    margin: auto;
+    text-align: center;
+}
+
+#viewer {
+    height: 90%;
+    width: 100%;
+}
+
+#buttons {
+    margin-top: 1%;
+}
