@@ -12,15 +12,35 @@ window.onload = () => {
     const tileSource = "./data/" + urlParams.get('tileSource') + ".dzi"
 
     // setup the viewer
-    viewer = new OpenSeadragon({
+    let viewer = new OpenSeadragon({
         id: "viewer",
         prefixUrl: "https://openseadragon.github.io/openseadragon/images/",
         showNavigator: true,
         tileSources: tileSource,
         sequenceMode: false,
         zoomInButton: "zoom-in-button",
-        zoomOutButton: "zoom-out-button",
-        nextButton: "next-button",
-        previousButton: "previous-button"
+        zoomOutButton: "zoom-out-button"
     })
+
+    // initialize the plugin
+    let plugin = new OSDMeasureAndAnnotate(viewer);
+}
+
+function measureButton() {
+    // toggle measuring in the plugin
+    plugin.toggleMeasuring();
+    // get buttons
+    let zoomInButton = document.getElementById("zoom-in-button");
+    let zoomOutButton = document.getElementById("zoom-out-button");
+    let measureButton = document.getElementById("measure-button");
+    // based on plugin's mode, disable or re-enable other buttons
+    if (plugin.mode == plugin.Modes.ZOOM) {
+        zoomInButton.disabled = true;
+        zoomOutButton.disabled = true;
+        measureButton.value = "Stop Measuring";
+    } else {
+        zoomInButton.disabled = false;
+        zoomOutButton.disabled = false;
+        measureButton.value = "Measure";
+    }   
 }
