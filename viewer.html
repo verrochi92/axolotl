@@ -6,19 +6,30 @@
 -->
 
 <html>
-    <head>
-        <title>Viewer</title>
-        <link rel="stylesheet" href="style/viewer.css">
-        <script src="lib/openseadragon.min.js"></script>
-        <script src="js/viewer.js"></script>
-    </head>
-    <body>
-        <div class="centered" id="viewer"></div>
-        <div class="centered" id="buttons">
-            <input type="button" id="zoom-in-button" value="Zoom In">
-            <input type="button" id="zoom-out-button" value="Zoom Out">
-            <input type="button" id="measure-button" value="Measure">
-            <input type="button" id="annotate-button" value="Annotate">
-        </div>
-    </body>
+
+<head>
+    <title>Viewer</title>
+    <link rel="stylesheet" href="style/viewer.css">
+
+    <!-- library imports -->
+    <script src="lib/openseadragon.min.js"></script>
+    <script src="lib/openseadragon-annotorious.min.js"></script>
+    <script src="lib/annotorious-shape-labels.min.js"></script>
+    <script src="lib/fabricjs.min.js"></script>
+    <script src="lib/openseadragon-fabricjs-overlay.js"></script>
+    <link rel="stylesheet" href="lib/annotorious.min.css">
+
+    <script src="js/OSDMeasureAndAnnotate.js"></script>
+    <script src="js/viewer.js"></script>
+</head>
+
+<body>
+    <div class="centered" id="viewer"></div>
+    <div class="centered" id="buttons">
+        <input type="button" id="zoom-in-button" value="Zoom In">
+        <input type="button" id="zoom-out-button" value="Zoom Out">
+        <input type="button" id="measure-button" value="Measure" onclick="measureButton()">
+    </div>
+</body>
+
 </html>
