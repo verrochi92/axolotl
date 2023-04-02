@@ -1,0 +1,78 @@
+<!--
+    index.html
+    
+    Index page for the Axolotl project, allows user
+    to select one of the built-in images, or enter
+    a link to a valid image (must be hosted online)
+
+    By Nicholas Verrochi
+    For CS410 - The Axolotl Project
+-->
+
+<html>
+
+<head>
+    <title>The Axolotl Project</title>
+    <link rel="stylesheet" href="style/index.css">
+    <script src="js/index.js"></script>
+</head>
+
+<body>
+    <h1 class="centered">The Axolotl Project</h1>
+    <h3 class="centered">By Nicholas Verrochi, Vidhya Sree Narayanappa, Sairam Bandarupalli, and Andy Duverneau</h3>
+    <p class="centered" id="blurb">
+        Welcome to The Axolotl Project! This software is a special measuring tool that can take high-resolution scans
+        and
+        allow you to get real-world measurements just by double-clicking! You can also annotate the images as well by
+        holding shift and clicking. We've included several sample images to play with:
+    </p>
+
+    <div id="image-select-container" class="centered">
+        <label class="centered" for="image-select">Select an image:</label>
+        <select class="centered" id="image-select" name="image-select">
+            <optgroup label="W255B">
+                <option value="W255B_0">W255B_0</option>
+                <option value="W255B_1">W255B_1</option>
+                <option value="W255B_2">W255B_2</option>
+            </optgroup>
+            <optgroup label="W324B">
+                <option value="W324B_0">W324B_0</option>
+                <option value="W324B_1">W324B_1</option>
+                <option value="W324B_2">W324B_2</option>
+            </optgroup>
+            <optgroup label="W326B">
+                <option value="W326B_0">W326B_0</option>
+                <option value="W326B_1">W326B_1</option>
+                <option value="W326B_2">W326B_2</option>
+            </optgroup>
+            <optgroup label="W340B">
+                <option value="W340B_0">W340B_0</option>
+                <option value="W340B_1">W340B_1</option>
+                <option value="W340B_2">W340B_2</option>
+            </optgroup>
+            <optgroup label="W353B">
+                <option value="W353B_0">W353B_0</option>
+                <option value="W353B_1">W353B_1</option>
+                <option value="W353B_2">W353B_2</option>
+            </optgroup>
+            <optgroup label="W408B">
+                <option value="W408B_0">W408B_0</option>
+                <option value="W408B_1">W408B_1</option>
+                <option value="W408B_2">W408B_2</option>
+            </optgroup>
+            <optgroup label="W409B">
+                <option value="W409B_0">W409B_0</option>
+                <option value="W409B_1">W409B_1</option>
+                <option value="W409B_2">W409B_2</option>
+            </optgroup>
+            <optgroup label="W411B">
+                <option value="W411B_0">W411B_0</option>
+                <option value="W411B_1">W411B_1</option>
+                <option value="W411B_2">W411B_2</option>
+            </optgroup>
+        </select>
+        <input type="button" value="Start" id="start-button" onclick="startButton()">
+    </div>
+</body>
+
+</html>

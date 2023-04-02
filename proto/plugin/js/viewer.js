@@ -57,12 +57,13 @@ function handleClickMeasure(event) {
     let viewportPoint = viewer.viewport.pointFromPixel(webPoint);
     let imagePoint = viewer.viewport.viewportToImageCoordinates(viewportPoint);
     // render square at imagePoint
-    overlay.fabricCanvas().add(new fabric.Rect({
-        left: imagePoint.x - 25,
-        top: imagePoint.y - 25,
+    overlay.fabricCanvas().add(new fabric.Circle({
+        originX: 'center',
+        originY: 'center',
+        left: imagePoint.x,
+        top: imagePoint.y,
         fill: 'red',
-        width: 50,
-        height: 50
+        radius: 50
     }));
     if (isMeasuring) {
         p2 = imagePoint;

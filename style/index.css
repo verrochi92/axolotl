@@ -1,0 +1,25 @@
+/*
+    index.css
+
+    CSS styling for the index page.
+
+    By Nicholas Verrochi
+    For CS410 - The Axolotl Project
+*/
+
+body {
+    background-color: darkgrey;
+    font-family: 'Courier New';
+}
+
+.centered {
+    margin: auto;
+    margin-top: 1%;
+    text-align: center;
+}
+
+#blurb {
+    margin-top: 2%;
+    text-align: left;
+    width: 33%;
+}
