@@ -97,10 +97,14 @@ class OSDMeasureAndAnnotate {
             this.mode = this.Modes.MEASURE;
             // disable zoom on click
             this.viewer.zoomPerClick = 1;
+            // disable annotation selection so user can measure where there are annotations
+            this.annotations.disableSelect = true;
         } else {
-            this.mode == this.Modes.MEASURE;
+            this.mode = this.Modes.ZOOM;
             // re-enable zoom on click
             this.viewer.zoomPerClick = 2;
+            // re-enable annotation selection
+            this.annotations.disableSelect = false;
         }
     }
 }

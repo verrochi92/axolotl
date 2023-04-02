@@ -5,6 +5,8 @@
  * For CS410 - The Axolotl Project
  */
 
+var plugin; // stores the OSDMeasureAndAnnotate plugin
+
 window.onload = () => {
     // get the image url from the search parameters sent by index.html
     const urlParamsString = window.location.search;
@@ -23,7 +25,7 @@ window.onload = () => {
     })
 
     // initialize the plugin
-    let plugin = new OSDMeasureAndAnnotate(viewer);
+    plugin = new OSDMeasureAndAnnotate(viewer);
 }
 
 function measureButton() {
@@ -34,7 +36,7 @@ function measureButton() {
     let zoomOutButton = document.getElementById("zoom-out-button");
     let measureButton = document.getElementById("measure-button");
     // based on plugin's mode, disable or re-enable other buttons
-    if (plugin.mode == plugin.Modes.ZOOM) {
+    if (plugin.mode == plugin.Modes.MEASURE) {
         zoomInButton.disabled = true;
         zoomOutButton.disabled = true;
         measureButton.value = "Stop Measuring";
