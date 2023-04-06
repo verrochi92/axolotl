@@ -12,7 +12,15 @@ class Point {
     }
 
     /* renders the object onto the fabricCanvas based on zoom */
-    render(viewer) {
-        
+    render(fabricCanvas, zoom) {
+        this.fabricObject = new fabric.Circle({
+            originX: 'center',
+            originY: 'center',
+            left: this.x,
+            top: this.y,
+            fill: 'red',
+            radius: 100 / zoom
+        });
+        fabricCanvas.add(this.fabricObject);
     }
 }
