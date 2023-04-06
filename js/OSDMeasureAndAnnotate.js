@@ -17,6 +17,7 @@ class OSDMeasureAndAnnotate {
 
         // pull in the two libraries
         this.overlay = viewer.fabricjsOverlay();
+        this.fabricCanvas = this.overlay.fabricCanvas();
         this.annotations = OpenSeadragon.Annotorious(viewer);
         this.annotations.loadAnnotations('annotations.w3c.json');
 
@@ -32,7 +33,6 @@ class OSDMeasureAndAnnotate {
         // the two points used to measure - these are image coordinates
         this.p1 = null;
         this.p2 = null;
-        this.fabricObjects = []; // stores all of our fabric.js objects
 
         // add our custom handler for measurements
         viewer.addHandler('canvas-double-click', (event) => {
@@ -52,7 +52,7 @@ class OSDMeasureAndAnnotate {
         let viewportPoint = this.viewer.viewport.pointFromPixel(webPoint);
         let imagePoint = this.viewer.viewport.viewportToImageCoordinates(viewportPoint);
         // render square at imagePoint
-        this.overlay.fabricCanvas().add(new fabric.Circle({
+        this.fabricCanvas.add(new fabric.Circle({
             originX: 'center',
             originY: 'center',
             left: imagePoint.x,
