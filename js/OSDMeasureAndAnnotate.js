@@ -17,8 +17,9 @@ class OSDMeasureAndAnnotate {
 
         // pull in the two libraries
         this.overlay = viewer.fabricjsOverlay();
+        this.fabricCanvas = this.overlay.fabricCanvas();
         this.annotations = OpenSeadragon.Annotorious(viewer);
-        this.annotations.loadAnnotations('annotations.w3c.json');
+        //this.annotations.loadAnnotations('annotations.w3c.json');
 
         // enum to represent modes of operation - symbol enforces use of the enum
         this.Modes = {
@@ -32,14 +33,26 @@ class OSDMeasureAndAnnotate {
         // the two points used to measure - these are image coordinates
         this.p1 = null;
         this.p2 = null;
-        this.fabricObjects = []; // stores all of our fabric.js objects
+        // store all the measurements (and extraneous points)
+        this.measurements = [];
 
         // add our custom handler for measurements
-        viewer.addHandler('canvas-double-click', (event) => {
+        this.viewer.addHandler('canvas-double-click', (event) => {
             if (this.mode == this.Modes.MEASURE) {
                 this.handleClickMeasure(event);
             }
         });
+
+        /*
+        // re-render on page event (change in zoom)
+        this.viewer.addHandler('zoom', (event) => {
+            let objects = this.fabricCanvas.getObjects();
+            this.fabricCanvas.clear();
+            for (let i = 0; i < objects.length; i++) {
+                objects[i].render(this.fabricCanvas, this.viewer.viewport.getZoom(true));
+            }
+        });
+        */
     }
 
     /*
@@ -51,37 +64,17 @@ class OSDMeasureAndAnnotate {
         let webPoint = event.position;
         let viewportPoint = this.viewer.viewport.pointFromPixel(webPoint);
         let imagePoint = this.viewer.viewport.viewportToImageCoordinates(viewportPoint);
-        // render square at imagePoint
-        this.overlay.fabricCanvas().add(new fabric.Circle({
-            originX: 'center',
-            originY: 'center',
-            left: imagePoint.x,
-            top: imagePoint.y,
-            fill: 'red',
-            radius: 50
-        }));
-        if (this.isMeasuring) {
-            this.p2 = imagePoint;
-            // draw line between p1 and p2
-            let line = new fabric.Line([this.p1.x, this.p1.y, this.p2.x, this.p2.y], {
-                stroke: 'red',
-                strokeWidth: 10
-            });
-            // calculate distance between p1 and p2
-            let distance = Math.sqrt(Math.pow(this.p2.x - this.p1.x, 2) + Math.pow(this.p2.y - this.p1.y, 2));
-            // create text object to display measurement
-            let text = new fabric.Text(distance.toFixed(2) + ' px', {
-                left: (this.p1.x + this.p2.x) / 2,
-                top: (this.p1.y + this.p2.y) / 2,
-                fontSize: 100,
-                fill: 'red'
-            });
-            // rotate text object to align with line
-            let angle = Math.atan2(this.p2.y - this.p1.y, this.p2.x - this.p1.x) * 180 / Math.PI;
-            text.setAngle(angle);
-            this.overlay.fabricCanvas().add(line, text);
+        let zoom = this.viewer.viewport.getZoom(true);
+        if (this.isMeasuring) { // already have a point, so complete the measurement
+            this.p2 = new Point(imagePoint.x, imagePoint.y);
+            let measurement = new Measurement(this.p1, this.p2);
+            // have to remove the original first dot - looking for a workaround
+            this.fabricCanvas.remove(this.p1.fabricObject);
+            measurement.render(this.fabricCanvas, zoom);
+            this.measurements.push(measurement);
         } else {
-            this.p1 = imagePoint;
+            this.p1 = new Point(imagePoint.x, imagePoint.y);
+            this.p1.render(this.fabricCanvas, zoom);
         }
         this.isMeasuring = !this.isMeasuring;
     }
