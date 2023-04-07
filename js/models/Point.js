@@ -19,7 +19,8 @@ class Point {
             left: this.x,
             top: this.y,
             fill: 'red',
-            radius: 100 / zoom
+            radius: 50
+            //radius: 100 / zoom
         });
         fabricCanvas.add(this.fabricObject);
     }

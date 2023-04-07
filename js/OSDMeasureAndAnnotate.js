@@ -19,7 +19,7 @@ class OSDMeasureAndAnnotate {
         this.overlay = viewer.fabricjsOverlay();
         this.fabricCanvas = this.overlay.fabricCanvas();
         this.annotations = OpenSeadragon.Annotorious(viewer);
-        this.annotations.loadAnnotations('annotations.w3c.json');
+        //this.annotations.loadAnnotations('annotations.w3c.json');
 
         // enum to represent modes of operation - symbol enforces use of the enum
         this.Modes = {
