@@ -1,3 +1,7 @@
+Try it out!
+
+https://verrochi92.github.io/axolotl/
+
 This project is an extension of work done by Allen Dai in 2022:
 
 https://github.com/allendai1/cs460student/tree/main/axo
