@@ -43,16 +43,17 @@ class OSDMeasureAndAnnotate {
             }
         });
 
-        /*
         // re-render on page event (change in zoom)
         this.viewer.addHandler('zoom', (event) => {
-            let objects = this.fabricCanvas.getObjects();
             this.fabricCanvas.clear();
-            for (let i = 0; i < objects.length; i++) {
-                objects[i].render(this.fabricCanvas, this.viewer.viewport.getZoom(true));
+            let zoom = this.viewer.viewport.getZoom();
+            for (let i = 0; i < this.measurements.length; i++) {
+                this.measurements[i].render(this.fabricCanvas, zoom);
+            }
+            if (this.isMeasuring) {
+                this.p1.render(this.fabricCanvas, zoom);
             }
         });
-        */
     }
 
     /*
@@ -64,7 +65,7 @@ class OSDMeasureAndAnnotate {
         let webPoint = event.position;
         let viewportPoint = this.viewer.viewport.pointFromPixel(webPoint);
         let imagePoint = this.viewer.viewport.viewportToImageCoordinates(viewportPoint);
-        let zoom = this.viewer.viewport.getZoom(true);
+        let zoom = this.viewer.viewport.getZoom();
         if (this.isMeasuring) { // already have a point, so complete the measurement
             this.p2 = new Point(imagePoint.x, imagePoint.y);
             let measurement = new Measurement(this.p1, this.p2);
