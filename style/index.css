@@ -10,11 +10,29 @@
 body {
     background-color: darkgrey;
     font-family: 'Courier New';
+    overflow-x: hidden !important;
+}
+
+iframe {
+    width: 100%;
 }
 
 .centered {
     margin: auto;
     margin-top: 1%;
+    text-align: center;
+}
+
+.image-block {
+    width: 20%;
+    padding: 3%;
+    float: left;
+}
+
+.selector-row {
+    width: 100%;
+    margin-left: 10%;
+    margin-right: 5%;
     text-align: center;
 }
 

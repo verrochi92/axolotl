@@ -12,67 +12,134 @@
 <html>
 
 <head>
+
     <title>The Axolotl Project</title>
-    <link rel="stylesheet" href="style/index.css">
+
+    <script src="lib/openseadragon.min.js"></script>
+
     <script src="js/controllers/index.js"></script>
+    <link rel="stylesheet" href="style/index.css">
 </head>
 
 <body>
+
     <h1 class="centered">The Axolotl Project</h1>
     <h3 class="centered">By Nicholas Verrochi, Vidhya Sree Narayanappa, Sairam Bandarupalli, and Andy Duverneau</h3>
     <p class="centered" id="blurb">
         Welcome to The Axolotl Project! This software is a special measuring tool that can take high-resolution scans
-        and
-        allow you to get real-world measurements just by double-clicking! You can also annotate the images as well by
+        and allow you to get real-world measurements just by double-clicking! You can also annotate the images as well by
         holding shift and clicking. We've included several sample images to play with:
     </p>
 
-    <div id="image-select-container" class="centered">
-        <label class="centered" for="image-select">Select an image:</label>
-        <select class="centered" id="image-select" name="image-select">
-            <optgroup label="W255B">
-                <option value="W255B_0">W255B_0</option>
-                <option value="W255B_1">W255B_1</option>
-                <option value="W255B_2">W255B_2</option>
-            </optgroup>
-            <optgroup label="W324B">
-                <option value="W324B_0">W324B_0</option>
-                <option value="W324B_1">W324B_1</option>
-                <option value="W324B_2">W324B_2</option>
-            </optgroup>
-            <optgroup label="W326B">
-                <option value="W326B_0">W326B_0</option>
-                <option value="W326B_1">W326B_1</option>
-                <option value="W326B_2">W326B_2</option>
-            </optgroup>
-            <optgroup label="W340B">
-                <option value="W340B_0">W340B_0</option>
-                <option value="W340B_1">W340B_1</option>
-                <option value="W340B_2">W340B_2</option>
-            </optgroup>
-            <optgroup label="W353B">
-                <option value="W353B_0">W353B_0</option>
-                <option value="W353B_1">W353B_1</option>
-                <option value="W353B_2">W353B_2</option>
-            </optgroup>
-            <optgroup label="W408B">
-                <option value="W408B_0">W408B_0</option>
-                <option value="W408B_1">W408B_1</option>
-                <option value="W408B_2">W408B_2</option>
-            </optgroup>
-            <optgroup label="W409B">
-                <option value="W409B_0">W409B_0</option>
-                <option value="W409B_1">W409B_1</option>
-                <option value="W409B_2">W409B_2</option>
-            </optgroup>
-            <optgroup label="W411B">
-                <option value="W411B_0">W411B_0</option>
-                <option value="W411B_1">W411B_1</option>
-                <option value="W411B_2">W411B_2</option>
-            </optgroup>
-        </select>
-        <input type="button" value="Start" id="start-button" onclick="startButton()">
+    <div id="image-selection" class="centered">
+
+        <div id="W255B" class="selector-row">
+            <div id="W255B_0" class="image-block">
+                <a href="viewer.html?tileSource=W255B_0" target="_blank">W255B_0</a><br />
+                <iframe src="preview-viewer.html?tileSource=W255B_0"></iframe>
+            </div>
+            <div id="W255B_1" class="image-block">
+                <a href="viewer.html?tileSource=W255B_1" target="_blank">W255B_1</a><br />
+                <iframe src="preview-viewer.html?tileSource=W255B_1"></iframe>
+            </div>
+            <div id="W255B_2" class="image-block">
+                <a href="viewer.html?tileSource=W255B_2" target="_blank">W255B_2</a><br />
+                <iframe src="preview-viewer.html?tileSource=W255B_2"></iframe>
+            </div>
+        </div>
+
+        <div id="W324B" class="selector-row">
+            <div id="W324B_0" class="image-block">
+                <a href="viewer.html?tileSource=W324B_0" target="_blank">W324B_0</a><br />
+                <iframe src="preview-viewer.html?tileSource=W324B_0"></iframe>
+            </div>
+            <div id="W324B_1" class="image-block">
+                <a href="viewer.html?tileSource=W324B_1" target="_blank">W324B_1</a><br />
+                <iframe src="preview-viewer.html?tileSource=W324B_1"></iframe>
+            </div>
+            <div id="W324B_2" class="image-block">
+                <a href="viewer.html?tileSource=W324B_2" target="_blank">W324B_2</a><br />
+                <iframe src="preview-viewer.html?tileSource=W324B_2"></iframe>
+            </div>
+        </div>
+
+        <div id="W326B" class="selector-row">
+            <div id="W326B_0" class="image-block">
+                <a href="viewer.html?tileSource=W326B_0" target="_blank">W326B_0</a><br />
+                <iframe src="preview-viewer.html?tileSource=W326B_0"></iframe>
+            </div>
+            <div id="W326B_1" class="image-block">
+                <a href="viewer.html?tileSource=W326B_1" target="_blank">W326B_1</a><br />
+                <iframe src="preview-viewer.html?tileSource=W326B_1"></iframe>
+            </div>
+            <div id="W326B_2" class="image-block">
+                <a href="viewer.html?tileSource=W326B_2" target="_blank">W326B_2</a><br />
+                <iframe src="preview-viewer.html?tileSource=W326B_2"></iframe>
+            </div>
+        </div>
+
+        <div id="W340B" class="selector-row">
+            <div id="W340B_0" class="image-block">
+                <a href="viewer.html?tileSource=W340B_0" target="_blank">W340B_0</a><br />
+                <iframe src="preview-viewer.html?tileSource=W340B_0"></iframe>
+            </div>
+            <div id="W340B_1" class="image-block">
+                <a href="viewer.html?tileSource=W340B_1" target="_blank">W340B_1</a><br />
+                <iframe src="preview-viewer.html?tileSource=W340B_1"></iframe>
+            </div>
+            <div id="W340B_2" class="image-block">
+                <a href="viewer.html?tileSource=W340B_2" target="_blank">W340B_2</a><br />
+                <iframe src="preview-viewer.html?tileSource=W340B_2"></iframe>
+            </div>
+        </div>
+
+        <div id="W353B" class="selector-row">
+            <div id="W353B_0" class="image-block">
+                <a href="viewer.html?tileSource=W353B_0" target="_blank">W353B_0</a><br />
+                <iframe src="preview-viewer.html?tileSource=W353B_0"></iframe>
+            </div>
+            <div id="W353B_1" class="image-block">
+                <a href="viewer.html?tileSource=W353B_1" target="_blank">W353B_1</a><br />
+                <iframe src="preview-viewer.html?tileSource=W353B_1"></iframe>
+            </div>
+            <div id="W353B_2" class="image-block">
+                <a href="viewer.html?tileSource=W353B_2" target="_blank">W353B_2</a><br />
+                <iframe src="preview-viewer.html?tileSource=W353B_2"></iframe>
+            </div>
+        </div>
+
+        <div id="W409B" class="selector-row">
+            <div id="W409B_0" class="image-block">
+                <a href="viewer.html?tileSource=W409B_0" target="_blank">W409B_0</a><br />
+                <iframe src="preview-viewer.html?tileSource=W409B_0"></iframe>
+            </div>
+            <div id="W409B_1" class="image-block">
+                <a href="viewer.html?tileSource=W409B_1" target="_blank">W409B_1</a><br />
+                <iframe src="preview-viewer.html?tileSource=W409B_1"></iframe>
+            </div>
+            <div id="W409B_2" class="image-block">
+                <a href="viewer.html?tileSource=W409B_2" target="_blank">W409B_2</a><br />
+                <iframe src="preview-viewer.html?tileSource=W409B_2"></iframe>
+            </div>
+        </div>
+
+        <div id="W411B" class="selector-row">
+            <div id="W411B_0" class="image-block">
+                <a href="viewer.html?tileSource=W411B_0" target="_blank">W411B_0</a><br />
+                <iframe src="preview-viewer.html?tileSource=W411B_0"></iframe>
+            </div>
+            <div id="W411B_1" class="image-block">
+                <a href="viewer.html?tileSource=W411B_1" target="_blank">W411B_1</a><br />
+                <iframe src="preview-viewer.html?tileSource=W411B_1"></iframe>
+            </div>
+            <div id="W411B_2" class="image-block">
+                <a href="viewer.html?tileSource=W411B_2" target="_blank">W411B_2</a><br />
+                <iframe src="preview-viewer.html?tileSource=W411B_2"></iframe>
+            </div>
+        </div>
+
     </div>
+
 </body>
 
 </html>
