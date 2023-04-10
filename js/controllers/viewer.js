@@ -11,7 +11,7 @@ window.onload = () => {
     // get the image url from the search parameters sent by index.html
     const urlParamsString = window.location.search;
     const urlParams = new URLSearchParams(urlParamsString);
-    const tileSource = "./data/" + urlParams.get('tileSource') + ".dzi"
+    const tileSource = "./data/" + urlParams.get('tileSource') + ".dzi";
 
     // setup the viewer
     let viewer = new OpenSeadragon({
@@ -22,7 +22,7 @@ window.onload = () => {
         sequenceMode: false,
         zoomInButton: "zoom-in-button",
         zoomOutButton: "zoom-out-button"
-    })
+    });
 
     // initialize the plugin
     plugin = new OSDMeasureAndAnnotate(viewer);

@@ -13,6 +13,7 @@
 
 <head>
     <title>The Axolotl Project</title>
+    <script src="lib/openseadragon.min.js"></script>
     <link rel="stylesheet" href="style/index.css">
     <script src="js/controllers/index.js"></script>
 </head>
@@ -22,11 +23,45 @@
     <h3 class="centered">By Nicholas Verrochi, Vidhya Sree Narayanappa, Sairam Bandarupalli, and Andy Duverneau</h3>
     <p class="centered" id="blurb">
         Welcome to The Axolotl Project! This software is a special measuring tool that can take high-resolution scans
-        and
-        allow you to get real-world measurements just by double-clicking! You can also annotate the images as well by
+        and allow you to get real-world measurements just by double-clicking! You can also annotate the images as well by
         holding shift and clicking. We've included several sample images to play with:
     </p>
 
+    <div id="image-selection" class="centered">
+
+        <div id="W255B" class="selector-row">
+            <div id="W255B_0" class="image-block">
+                <a href="viewer.html?tileSource=W255B_0" target="_blank">W255B_0</a><br />
+                <iframe src="preview-viewer.html?tileSource=W255B_0"></iframe>
+            </div>
+            <div id="W255B_1" class="image-block">
+                <a href="viewer.html?tileSource=W255B_1" target="_blank">W255B_1</a><br />
+                <iframe src="preview-viewer.html?tileSource=W255B_1"></iframe>
+            </div>
+            <div id="W255B_2" class="image-block">
+                <a href="viewer.html?tileSource=W255B_2" target="_blank">W255B_2</a><br />
+                <iframe src="preview-viewer.html?tileSource=W255B_2"></iframe>
+            </div>
+        </div>
+
+        <div id="W324B" class="selector-row">
+            <div id="W324B_0" class="image-block">
+                <a href="viewer.html?tileSource=W324B_0" target="_blank">W324B_0</a><br />
+                <iframe src="preview-viewer.html?tileSource=W324B_0"></iframe>
+            </div>
+            <div id="W324B_1" class="image-block">
+                <a href="viewer.html?tileSource=W324B_1" target="_blank">W324B_1</a><br />
+                <iframe src="preview-viewer.html?tileSource=W324B_1"></iframe>
+            </div>
+            <div id="W324B_2" class="image-block">
+                <a href="viewer.html?tileSource=W324B_2" target="_blank">W324B_2</a><br />
+                <iframe src="preview-viewer.html?tileSource=W324B_2"></iframe>
+            </div>
+        </div>
+
+    </div>
+
+    <!--
     <div id="image-select-container" class="centered">
         <label class="centered" for="image-select">Select an image:</label>
         <select class="centered" id="image-select" name="image-select">
@@ -73,6 +108,7 @@
         </select>
         <input type="button" value="Start" id="start-button" onclick="startButton()">
     </div>
+    -->
 </body>
 
 </html>

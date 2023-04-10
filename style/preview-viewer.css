@@ -1,0 +1,19 @@
+/*
+    preview-viewer.css
+
+    Stylesheet for the smaller OpenSeadragon viewer
+    used on the index page for previewing images
+
+    By Nicholas Verrochi
+
+    For CS410 - The Axolotl Project
+*/
+
+body {
+    overflow: hidden !important;
+}
+
+#viewer {
+    width: 100%;
+    height: 100%;
+}
