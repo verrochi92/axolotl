@@ -19,7 +19,6 @@ class OSDMeasureAndAnnotate {
         this.overlay = viewer.fabricjsOverlay();
         this.fabricCanvas = this.overlay.fabricCanvas();
         this.annotations = OpenSeadragon.Annotorious(viewer);
-        //this.annotations.loadAnnotations('annotations.w3c.json');
 
         // enum to represent modes of operation - symbol enforces use of the enum
         this.Modes = {
@@ -39,21 +38,16 @@ class OSDMeasureAndAnnotate {
         // add our custom handler for measurements
         this.viewer.addHandler('canvas-double-click', (event) => {
             if (this.mode == this.Modes.MEASURE) {
-                this.handleClickMeasure(event);
+                this.addMeasurement(event);
             }
         });
 
         // re-render on page event (change in zoom)
         this.viewer.addHandler('zoom', (event) => {
-            this.fabricCanvas.clear();
-            let zoom = this.viewer.viewport.getZoom();
-            for (let i = 0; i < this.measurements.length; i++) {
-                this.measurements[i].render(this.fabricCanvas, zoom);
-            }
-            if (this.isMeasuring) {
-                this.p1.render(this.fabricCanvas, zoom);
-            }
+            this.renderAllMeasurements();
         });
+
+        this.loadFromLocalStorage();
     }
 
     /*
@@ -61,7 +55,7 @@ class OSDMeasureAndAnnotate {
      *     Only called in measuring mode - places a new point onto the canvas,
      *     and performs measuring once two points have been placed.
      */
-    handleClickMeasure(event) {
+    addMeasurement(event) {
         let webPoint = event.position;
         let viewportPoint = this.viewer.viewport.pointFromPixel(webPoint);
         let imagePoint = this.viewer.viewport.viewportToImageCoordinates(viewportPoint);
@@ -99,6 +93,56 @@ class OSDMeasureAndAnnotate {
             this.viewer.zoomPerClick = 2;
             // re-enable annotation selection
             this.annotations.disableSelect = false;
+        }
+    }
+
+    /**
+     * saveInLocalStorage:
+     *     Saves the measurements and annotations in localStorage in JSON format
+     */
+    saveInLocalStorage() {
+        // we can use the tileSource as a key to identify which image we are working with
+        let currentTileSource = this.viewer.tileSources; // for now only works with one source
+        let json = JSON.stringify({
+            measurements: this.measurements,
+            annotations: this.annotations.getAnnotations()
+        });
+        localStorage.setItem(currentTileSource, json);
+    }
+
+    /**
+     * loadFromLocalStorage:
+     *     Loads any existing measurements from localStorage
+     */
+    loadFromLocalStorage() {
+        // we will use the image name as a key
+        let currentTileSource = this.viewer.tileSources;
+        let json = localStorage.getItem(currentTileSource);
+        // make sure we have data
+        if (json != null) {
+            let data = JSON.parse(json).data;
+            this.measurements = data.measurements;
+            // we have to add the annotations one-by-one
+            for (let i = 0; i < data.annotations.length; i++) {
+                this.annotations.addAnnotation(data.annotations[i]);
+            }
+            // render the measurements
+            this.renderAllMeasurements();
+        }
+    }
+
+    /**
+     * renderAllMeasurements:
+     *     Renders all measurements
+     */
+    renderAllMeasurements() {
+        this.fabricCanvas.clear();
+        let zoom = this.viewer.viewport.getZoom();
+        for (let i = 0; i < this.measurements.length; i++) {
+            this.measurements[i].render(this.fabricCanvas, zoom);
+        }
+        if (this.isMeasuring) {
+            this.p1.render(this.fabricCanvas, zoom);
         }
     }
 }
