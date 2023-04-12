@@ -35,6 +35,11 @@ class OSDMeasureAndAnnotate {
         // store all the measurements (and extraneous points)
         this.measurements = [];
 
+        // save annotations after creations
+        this.annotations.on('createAnnotation', () => {
+            this.saveInLocalStorage();
+        })
+
         // add our custom handler for measurements
         this.viewer.addHandler('canvas-double-click', (event) => {
             if (this.mode == this.Modes.MEASURE) {
@@ -67,6 +72,7 @@ class OSDMeasureAndAnnotate {
             this.fabricCanvas.remove(this.p1.fabricObject);
             measurement.render(this.fabricCanvas, zoom);
             this.measurements.push(measurement);
+            this.saveInLocalStorage();
         } else {
             this.p1 = new Point(imagePoint.x, imagePoint.y);
             this.p1.render(this.fabricCanvas, zoom);
@@ -121,6 +127,7 @@ class OSDMeasureAndAnnotate {
         // make sure we have data
         if (json != null) {
             let data = JSON.parse(json).data;
+            console.log(data);
             this.measurements = data.measurements;
             // we have to add the annotations one-by-one
             for (let i = 0; i < data.annotations.length; i++) {
@@ -144,5 +151,20 @@ class OSDMeasureAndAnnotate {
         if (this.isMeasuring) {
             this.p1.render(this.fabricCanvas, zoom);
         }
+    }
+
+    /**
+     * clear:
+     *     Erases all saved data (measurements and annotations) for
+     *     this specific image from localStorage and clears fabric
+     *     objects, measurement data, and annotations.
+     */
+    clear() {
+        localStorage.removeItem(this.viewer.tileSources);
+        this.fabricCanvas.clear();
+        this.measurements = [];
+        this.annotations.clearAnnotations();
+        this.p1 = null;
+        this.p2 = null;
     }
 }

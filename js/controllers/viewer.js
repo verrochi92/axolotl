@@ -46,3 +46,7 @@ function measureButton() {
         measureButton.value = "Measure";
     }   
 }
+
+function resetButton() {
+    plugin.clear();
+}
