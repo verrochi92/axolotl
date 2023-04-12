@@ -123,14 +123,20 @@ class OSDMeasureAndAnnotate {
     loadFromLocalStorage() {
         // we will use the image name as a key
         let currentTileSource = this.viewer.tileSources;
-        let json = localStorage.getItem(currentTileSource);
+        let data = JSON.parse(localStorage.getItem(currentTileSource));
         // make sure we have data
-        if (json != null) {
-            let data = JSON.parse(json).data;
-            console.log(data);
-            this.measurements = data.measurements;
-            // we have to add the annotations one-by-one
+        if (data != null) {
+            // we have to add the measurements and annotations one-by-one 
+            for (let i = 0; i < data.measurements.length; i++) {
+                // JSON.stringify() strips our methods from Measurement objects,
+                // so we have to re-construct all of them one-by-one
+                this.measurements.push(new Measurement(
+                    new Point(parseInt(data.measurements[i].p1.x), parseInt(data.measurements[i].p1.y)),
+                    new Point(parseInt(data.measurements[i].p2.x), parseInt(data.measurements[i].p2.y))
+                ));
+            }
             for (let i = 0; i < data.annotations.length; i++) {
+                // Annotorious is set up to take the stripped objects from the JSON
                 this.annotations.addAnnotation(data.annotations[i]);
             }
             // render the measurements
