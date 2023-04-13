@@ -19,8 +19,7 @@ body {
 #viewer {
     height: 90%;
     width: 100%;
-    border: black;
-    border-width: 5px;
+    border: 1px solid black;
 }
 
 #buttons {
