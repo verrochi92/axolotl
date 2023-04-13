@@ -10,6 +10,7 @@ class Measurement {
     constructor(p1, p2) {
         this.p1 = p1;
         this.p2 = p2;
+        this.distance = Math.sqrt(Math.pow(this.p2.x - this.p1.x, 2) + Math.pow(this.p2.y - this.p1.y, 2));
     }
 
     /* render the measurement as 3 fabricjs objects on the viewer passed in */
@@ -22,18 +23,14 @@ class Measurement {
             stroke: 'red',
             strokeWidth: 50 / zoom
         });
-        // calculate distance between p1 and p2
-        let distance = Math.sqrt(Math.pow(this.p2.x - this.p1.x, 2) + Math.pow(this.p2.y - this.p1.y, 2));
+        fabricCanvas.add(line);
         // create text object to display measurement
-        let text = new fabric.Text(distance.toFixed(2) + ' px', {
-            left: (this.p1.x + this.p2.x) / 2,
-            top: (this.p1.y + this.p2.y) / 2,
+        let text = new fabric.Text(this.distance.toFixed(2) + ' px', {
+            left: Math.max(this.p1.x, this.p2.x) + 100 / zoom,
+            top: this.p1.x > this.p2.x ? this.p1.y : this.p2.y,
             fontSize: 300 / zoom,
             fill: 'red'
         });
-        // rotate text object to align with line
-        let angle = Math.atan2(this.p2.y - this.p1.y, this.p2.x - this.p1.x) * 180 / Math.PI;
-        text.setAngle(angle);
-        fabricCanvas.add(line, text);
+        fabricCanvas.add(text);
     }
 }

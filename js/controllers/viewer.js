@@ -44,7 +44,7 @@ function measureButton() {
         zoomInButton.disabled = false;
         zoomOutButton.disabled = false;
         measureButton.value = "Measure";
-    }   
+    }
 }
 
 function resetButton() {
