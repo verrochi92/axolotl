@@ -27,15 +27,15 @@ window.onload = () => {
     // initialize the plugin
     plugin = new OSDMeasureAndAnnotate(viewer);
 
+    let undoButton = document.getElementById("undo-button");
     // if no measurements stored, disable the undo button
     if (plugin.measurements.length == 0) {
-        document.getElementById("undo-button").disabled = true;
+        undoButton.disabled = true;
     }
-
     // re-enable undo button after a measurement
     viewer.addHandler('canvas-double-click', () => {
         if (plugin.measurements.length > 0 || plugin.isMeasuring) {
-            document.getElementById("undo-button").disabled = false;
+            undoButton.disabled = false;
         }
     })
 }
@@ -47,6 +47,7 @@ function measureButton() {
     let zoomInButton = document.getElementById("zoom-in-button");
     let zoomOutButton = document.getElementById("zoom-out-button");
     let measureButton = document.getElementById("measure-button");
+    let undoButton = document.getElementById("undo-button");
     // based on plugin's mode, disable or re-enable other buttons
     if (plugin.mode == plugin.Modes.MEASURE) {
         zoomInButton.disabled = true;
@@ -56,6 +57,10 @@ function measureButton() {
         zoomInButton.disabled = false;
         zoomOutButton.disabled = false;
         measureButton.value = "Measure";
+        // disable undo if needed
+        if (plugin.measurements.length == 0) {
+            undoButton.disabled = true;
+        }
     }
 }
 
