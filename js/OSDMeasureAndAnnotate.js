@@ -106,6 +106,7 @@ class OSDMeasureAndAnnotate {
             this.annotations.disableSelect = false;
             if (this.isMeasuring) {
                 this.p1 = null;
+                this.isMeasuring = !this.isMeasuring;
                 this.renderAllMeasurements();
             }
         }
@@ -163,7 +164,7 @@ class OSDMeasureAndAnnotate {
         for (let i = 0; i < this.measurements.length; i++) {
             this.measurements[i].render(this.fabricCanvas, zoom);
         }
-        if (this.isMeasuring) {
+        if (this.isMeasuring && this.p1 != null) {
             this.p1.render(this.fabricCanvas, zoom);
         }
     }
@@ -181,5 +182,23 @@ class OSDMeasureAndAnnotate {
         this.annotations.clearAnnotations();
         this.p1 = null;
         this.p2 = null;
+    }
+
+    /**
+     * undo:
+     *     Undose the last action - if mid-measurement, the first
+     *     point is erased and the user will have to start over.
+     *     Otherwise, the last created measurement is erased.
+     */
+    undo() {
+        if (this.isMeasuring) {
+            this.p1 = null;
+            this.isMeasuring = !this.isMeasuring;
+        }
+        else {
+            this.measurements.pop();
+        }
+        this.saveInLocalStorage();
+        this.renderAllMeasurements();
     }
 }

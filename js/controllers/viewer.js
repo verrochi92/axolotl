@@ -1,4 +1,4 @@
-/*
+/**
  * viewer.js
  * Viewer page logic
  * By Nicholas Verrochi
@@ -26,6 +26,18 @@ window.onload = () => {
 
     // initialize the plugin
     plugin = new OSDMeasureAndAnnotate(viewer);
+
+    // if no measurements stored, disable the undo button
+    if (plugin.measurements.length == 0) {
+        document.getElementById("undo-button").disabled = true;
+    }
+
+    // re-enable undo button after a measurement
+    viewer.addHandler('canvas-double-click', () => {
+        if (plugin.measurements.length > 0 || plugin.isMeasuring) {
+            document.getElementById("undo-button").disabled = false;
+        }
+    })
 }
 
 function measureButton() {
@@ -50,5 +62,12 @@ function measureButton() {
 function resetButton() {
     if (window.confirm("Are you sure you want to reset all measurements and annotations?")) {
         plugin.clear();
+    }
+}
+
+function undoButton() {
+    plugin.undo();
+    if (plugin.measurements.length == 0 && !plugin.isMeasuring) {
+        document.getElementById("undo-button").disabled = true;
     }
 }
