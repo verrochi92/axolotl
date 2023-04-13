@@ -48,5 +48,7 @@ function measureButton() {
 }
 
 function resetButton() {
-    plugin.clear();
+    if (window.confirm("Are you sure you want to reset all measurements and annotations?")) {
+        plugin.clear();
+    }
 }
