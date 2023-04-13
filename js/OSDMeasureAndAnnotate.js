@@ -48,9 +48,14 @@ class OSDMeasureAndAnnotate {
         });
 
         // re-render on page event (change in zoom)
-        this.viewer.addHandler('zoom', (event) => {
+        this.viewer.addHandler('zoom', () => {
             this.renderAllMeasurements();
         });
+
+        // re-render on rotation
+        this.viewer.addHandler('rotate', () => {
+            this.viewer.viewport.rotateTo(0);
+        })
 
         this.loadFromLocalStorage();
     }
