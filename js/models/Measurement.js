@@ -14,13 +14,13 @@ class Measurement {
     }
 
     /* render the measurement as 3 fabricjs objects on the viewer passed in */
-    render(fabricCanvas, zoom) {
+    render(fabricCanvas, zoom, color) {
         this.p1.render(fabricCanvas, zoom);
         this.p2.render(fabricCanvas, zoom);
 
         // draw line between p1 and p2
         let line = new fabric.Line([this.p1.x, this.p1.y, this.p2.x, this.p2.y], {
-            stroke: 'red',
+            stroke: color,
             strokeWidth: 50 / zoom
         });
         fabricCanvas.add(line);
@@ -29,7 +29,7 @@ class Measurement {
             left: Math.max(this.p1.x, this.p2.x) + 100 / zoom,
             top: this.p1.x > this.p2.x ? this.p1.y : this.p2.y,
             fontSize: 300 / zoom,
-            fill: 'red'
+            fill: color
         });
         fabricCanvas.add(text);
     }

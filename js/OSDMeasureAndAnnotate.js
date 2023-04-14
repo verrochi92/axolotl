@@ -35,6 +35,9 @@ class OSDMeasureAndAnnotate {
         // store all the measurements (and extraneous points)
         this.measurements = [];
 
+        // measurement marking color
+        this.measurementColor = "#000000"
+
         // save annotations after creations
         this.annotations.on('createAnnotation', () => {
             this.saveInLocalStorage();
@@ -75,12 +78,12 @@ class OSDMeasureAndAnnotate {
             let measurement = new Measurement(this.p1, this.p2);
             // have to remove the original first dot - looking for a workaround
             this.fabricCanvas.remove(this.p1.fabricObject);
-            measurement.render(this.fabricCanvas, zoom);
+            measurement.render(this.fabricCanvas, zoom, this.measurementColor);
             this.measurements.push(measurement);
             this.saveInLocalStorage();
         } else {
             this.p1 = new Point(imagePoint.x, imagePoint.y);
-            this.p1.render(this.fabricCanvas, zoom);
+            this.p1.render(this.fabricCanvas, zoom, this.measurementColor);
         }
         this.isMeasuring = !this.isMeasuring;
     }
@@ -162,10 +165,10 @@ class OSDMeasureAndAnnotate {
         this.fabricCanvas.clear();
         let zoom = this.viewer.viewport.getZoom();
         for (let i = 0; i < this.measurements.length; i++) {
-            this.measurements[i].render(this.fabricCanvas, zoom);
+            this.measurements[i].render(this.fabricCanvas, zoom, this.measurementColor);
         }
         if (this.isMeasuring && this.p1 != null) {
-            this.p1.render(this.fabricCanvas, zoom);
+            this.p1.render(this.fabricCanvas, zoom, this.measurementColor);
         }
     }
 
@@ -200,5 +203,19 @@ class OSDMeasureAndAnnotate {
         }
         this.saveInLocalStorage();
         this.renderAllMeasurements();
+    }
+
+    /**
+     * setMeasurementColor:
+     *     changes color of measurement markings, also when
+     *     mid-measurement, changes the color of the first marking
+     */
+    setMeasurementColor(color) {
+        this.measurementColor = color;
+        if (this.isMeasuring) {
+            // have to re-color the marking already placed
+            this.p1.fabricObject.remove();
+            this.p1.render(this.fabricCanvas, this.viewer.viewport.getZoom(), this.measurementColor);
+        }
     }
 }
