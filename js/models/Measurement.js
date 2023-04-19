@@ -7,9 +7,10 @@
 
 class Measurement {
     /* p1 and p2 are the **image** coordinates */
-    constructor(p1, p2) {
+    constructor(p1, p2, color) {
         this.p1 = p1;
         this.p2 = p2;
+        this.color = color;
         this.distance = Math.sqrt(Math.pow(this.p2.x - this.p1.x, 2) + Math.pow(this.p2.y - this.p1.y, 2));
     }
 
@@ -20,7 +21,7 @@ class Measurement {
 
         // draw line between p1 and p2
         let line = new fabric.Line([this.p1.x, this.p1.y, this.p2.x, this.p2.y], {
-            stroke: 'red',
+            stroke: this.color,
             strokeWidth: 50 / zoom
         });
         fabricCanvas.add(line);
@@ -29,7 +30,7 @@ class Measurement {
             left: Math.max(this.p1.x, this.p2.x) + 100 / zoom,
             top: this.p1.x > this.p2.x ? this.p1.y : this.p2.y,
             fontSize: 300 / zoom,
-            fill: 'red'
+            fill: this.color
         });
         fabricCanvas.add(text);
     }

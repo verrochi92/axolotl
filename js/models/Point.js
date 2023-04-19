@@ -6,9 +6,10 @@
  */
 
 class Point {
-    constructor(x, y) {
+    constructor(x, y, color) {
         this.x = x;
         this.y = y;
+        this.color = color;
     }
 
     /* renders the object onto the fabricCanvas based on zoom */
@@ -18,7 +19,7 @@ class Point {
             originY: 'center',
             left: this.x,
             top: this.y,
-            fill: 'red',
+            fill: this.color,
             radius: 150 / (zoom * 1.5)
         });
         fabricCanvas.add(this.fabricObject);

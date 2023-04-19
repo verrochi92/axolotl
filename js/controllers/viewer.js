@@ -48,11 +48,14 @@ function measureButton() {
     let zoomOutButton = document.getElementById("zoom-out-button");
     let measureButton = document.getElementById("measure-button");
     let undoButton = document.getElementById("undo-button");
+    let optionsSpan = document.getElementById("options");
     // based on plugin's mode, disable or re-enable other buttons
     if (plugin.mode == plugin.Modes.MEASURE) {
         zoomInButton.disabled = true;
         zoomOutButton.disabled = true;
         measureButton.value = "Stop Measuring";
+        // display measurement options
+        optionsSpan.removeAttribute("hidden");
     } else {
         zoomInButton.disabled = false;
         zoomOutButton.disabled = false;
@@ -61,6 +64,7 @@ function measureButton() {
         if (plugin.measurements.length == 0) {
             undoButton.disabled = true;
         }
+        optionsSpan.hidden = "hidden";
     }
 }
 
@@ -75,4 +79,9 @@ function undoButton() {
     if (plugin.measurements.length == 0 && !plugin.isMeasuring) {
         document.getElementById("undo-button").disabled = true;
     }
+}
+
+function setColor() {
+    colorSelector = document.getElementById("measurement-color");
+    plugin.measurementColor = colorSelector.value;
 }

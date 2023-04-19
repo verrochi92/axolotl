@@ -35,6 +35,9 @@ class OSDMeasureAndAnnotate {
         // store all the measurements (and extraneous points)
         this.measurements = [];
 
+        // measurement marking color
+        this.measurementColor = "#000000"
+
         // save annotations after creations
         this.annotations.on('createAnnotation', () => {
             this.saveInLocalStorage();
@@ -71,15 +74,15 @@ class OSDMeasureAndAnnotate {
         let imagePoint = this.viewer.viewport.viewportToImageCoordinates(viewportPoint);
         let zoom = this.viewer.viewport.getZoom();
         if (this.isMeasuring) { // already have a point, so complete the measurement
-            this.p2 = new Point(imagePoint.x, imagePoint.y);
-            let measurement = new Measurement(this.p1, this.p2);
+            this.p2 = new Point(imagePoint.x, imagePoint.y, this.measurementColor);
+            let measurement = new Measurement(this.p1, this.p2, this.measurementColor);
             // have to remove the original first dot - looking for a workaround
             this.fabricCanvas.remove(this.p1.fabricObject);
             measurement.render(this.fabricCanvas, zoom);
             this.measurements.push(measurement);
             this.saveInLocalStorage();
         } else {
-            this.p1 = new Point(imagePoint.x, imagePoint.y);
+            this.p1 = new Point(imagePoint.x, imagePoint.y, this.measurementColor);
             this.p1.render(this.fabricCanvas, zoom);
         }
         this.isMeasuring = !this.isMeasuring;
@@ -141,8 +144,9 @@ class OSDMeasureAndAnnotate {
                 // JSON.stringify() strips our methods from Measurement objects,
                 // so we have to re-construct all of them one-by-one
                 this.measurements.push(new Measurement(
-                    new Point(parseInt(data.measurements[i].p1.x), parseInt(data.measurements[i].p1.y)),
-                    new Point(parseInt(data.measurements[i].p2.x), parseInt(data.measurements[i].p2.y))
+                    new Point(parseInt(data.measurements[i].p1.x), parseInt(data.measurements[i].p1.y), this.measurementColor),
+                    new Point(parseInt(data.measurements[i].p2.x), parseInt(data.measurements[i].p2.y), this.measurementColor),
+                    this.measurementColor
                 ));
             }
             for (let i = 0; i < data.annotations.length; i++) {
@@ -200,5 +204,19 @@ class OSDMeasureAndAnnotate {
         }
         this.saveInLocalStorage();
         this.renderAllMeasurements();
+    }
+
+    /**
+     * setMeasurementColor:
+     *     changes color of measurement markings, also when
+     *     mid-measurement, changes the color of the first marking
+     */
+    setMeasurementColor(color) {
+        this.measurementColor = color;
+        if (this.isMeasuring) {
+            // have to re-color the marking already placed
+            this.p1.color = this.measurementColor;
+            this.renderAllMeasurements();
+        }
     }
 }

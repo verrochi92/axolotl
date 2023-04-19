@@ -16,6 +16,10 @@ body {
     text-align: center;
 }
 
+#options {
+    margin-left: 1%;
+}
+
 #viewer {
     height: 90%;
     width: 100%;
