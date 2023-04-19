@@ -6,19 +6,20 @@
  */
 
 class Point {
-    constructor(x, y) {
+    constructor(x, y, color) {
         this.x = x;
         this.y = y;
+        this.color = color;
     }
 
     /* renders the object onto the fabricCanvas based on zoom */
-    render(fabricCanvas, zoom, color) {
+    render(fabricCanvas, zoom) {
         this.fabricObject = new fabric.Circle({
             originX: 'center',
             originY: 'center',
             left: this.x,
             top: this.y,
-            fill: color,
+            fill: this.color,
             radius: 150 / (zoom * 1.5)
         });
         fabricCanvas.add(this.fabricObject);
