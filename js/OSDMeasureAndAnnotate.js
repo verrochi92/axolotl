@@ -144,9 +144,9 @@ class OSDMeasureAndAnnotate {
                 // JSON.stringify() strips our methods from Measurement objects,
                 // so we have to re-construct all of them one-by-one
                 this.measurements.push(new Measurement(
-                    new Point(parseInt(data.measurements[i].p1.x), parseInt(data.measurements[i].p1.y), this.measurementColor),
-                    new Point(parseInt(data.measurements[i].p2.x), parseInt(data.measurements[i].p2.y), this.measurementColor),
-                    this.measurementColor
+                    new Point(parseInt(data.measurements[i].p1.x), parseInt(data.measurements[i].p1.y), data.measurements[i].color),
+                    new Point(parseInt(data.measurements[i].p2.x), parseInt(data.measurements[i].p2.y), data.measurements[i].color),
+                    data.measurements[i].color
                 ));
             }
             for (let i = 0; i < data.annotations.length; i++) {
@@ -216,7 +216,8 @@ class OSDMeasureAndAnnotate {
         if (this.isMeasuring) {
             // have to re-color the marking already placed
             this.p1.color = this.measurementColor;
-            this.renderAllMeasurements();
+            this.p1.fabricObject.remove();
+            this.p1.render(this.fabricCanvas, this.viewer.viewport.getZoom());
         }
     }
 }
