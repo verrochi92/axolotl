@@ -55,8 +55,8 @@ window.onload = function () {
     overlay = viewer.fabricjsOverlay();
 
 // create the grid buttons
-for (let i = 0; i < 100; i++) {
-    for (let j = 0; j < 100; j++) {
+for (let i = 0; i < 23; i++) {
+    for (let j = 0; j < 13; j++) {
         let button = new fabric.Rect({
             left: i * 800,
             top: j * 800,
