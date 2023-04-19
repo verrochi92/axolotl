@@ -213,7 +213,9 @@ class OSDMeasureAndAnnotate {
      */
     setMeasurementColor(color) {
         this.measurementColor = color;
+        console.log("color set...");
         if (this.isMeasuring) {
+            console.log("re-rendering p1");
             // have to re-color the marking already placed
             this.p1.color = this.measurementColor;
             this.p1.fabricObject.remove();

@@ -83,5 +83,5 @@ function undoButton() {
 
 function setColor() {
     colorSelector = document.getElementById("measurement-color");
-    plugin.measurementColor = colorSelector.value;
+    plugin.setMeasurementColor(colorSelector.value);
 }
