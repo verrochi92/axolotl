@@ -30,6 +30,12 @@ var viewer;
 // the fabric.js overlay
 var overlay;
 
+// initialize the grid group
+var gridGroup = new fabric.Group([], {
+    selectable: false,
+    evented: false
+});
+
 window.onload = function () {
     viewer = OpenSeadragon({
         id: "viewer",
@@ -47,15 +53,10 @@ window.onload = function () {
         zoomOutButton: "zoom-out-button"
     });
     overlay = viewer.fabricjsOverlay();
-// initialize the grid group
-var gridGroup = new fabric.Group([], {
-    selectable: false,
-    evented: false
-});
 
 // create the grid buttons
-for (let i = 0; i < 23; i++) {
-    for (let j = 0; j < 13; j++) {
+for (let i = 0; i < 100; i++) {
+    for (let j = 0; j < 100; j++) {
         let button = new fabric.Rect({
             left: i * 800,
             top: j * 800,
@@ -72,14 +73,7 @@ for (let i = 0; i < 23; i++) {
 // add the grid group to the overlay canvas
 overlay.fabricCanvas().add(gridGroup);
 
-    // register click handlers
-    viewer.addHandler("canvas-double-click", (event) => {
-    if (mode === Mode.MEASURE) {
-    handleClickMeasure(event);
-    }
-    });
- };
-
+}
 function handleClickMeasure(event) {
     let webPoint = event.position;
     let viewportPoint = viewer.viewport.pointFromPixel(webPoint);
@@ -150,4 +144,9 @@ function stopMeasuring() {
     measureButton.setAttribute("onclick", "javascript: measureButton();");
     document.getElementById("zoom-in-button").disabled = false;
     document.getElementById("zoom-out-button").disabled = false;
+}
+
+function rotateGrid() {
+    gridGroup.setAngle(5);
+    overlay.fabricCanvas().renderAll();
 }
