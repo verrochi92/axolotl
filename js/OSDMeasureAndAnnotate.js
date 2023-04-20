@@ -85,7 +85,9 @@ class OSDMeasureAndAnnotate {
             measurement.render(this.fabricCanvas, zoom);
             this.measurements.push(measurement);
             this.saveInLocalStorage();
-        } else {
+            // have to blow out the redo stack since we made a new measurement
+            this.redoStack = [];
+        } else { // place the first point
             this.p1 = new Point(imagePoint.x, imagePoint.y, this.measurementColor);
             this.p1.render(this.fabricCanvas, zoom);
         }
@@ -111,7 +113,8 @@ class OSDMeasureAndAnnotate {
             this.viewer.zoomPerClick = 2;
             // re-enable annotation selection
             this.annotations.disableSelect = false;
-            if (this.isMeasuring) {
+            if (this.isMeasuring) { 
+                // cancel current measurement
                 this.p1 = null;
                 this.isMeasuring = !this.isMeasuring;
                 this.renderAllMeasurements();
@@ -187,6 +190,7 @@ class OSDMeasureAndAnnotate {
         localStorage.removeItem(this.viewer.tileSources);
         this.fabricCanvas.clear();
         this.measurements = [];
+        this.redoStack = [];
         this.annotations.clearAnnotations();
         this.p1 = null;
         this.p2 = null;
@@ -234,6 +238,8 @@ class OSDMeasureAndAnnotate {
             else { // it's a measurement
                 this.measurements.push(lastObject);
                 lastObject.render(this.fabricCanvas, zoom);
+                // can't forget to save!
+                this.saveInLocalStorage();
             }
         }
     }

@@ -81,6 +81,8 @@ function measureButton() {
 function resetButton() {
     if (window.confirm("Are you sure you want to reset all measurements and annotations?")) {
         plugin.clear();
+        document.getElementById("undo-button").disabled = true;
+        document.getElementById("redo-button").disabled = true;
     }
 }
 
@@ -90,7 +92,6 @@ function undoButton() {
         document.getElementById("undo-button").disabled = true;
     }
     // re-enable the redo button if there has been a successful undo
-    console.log("redoStack.length = " + plugin.redoStack.length);
     if (plugin.redoStack.length > 0) {
         document.getElementById("redo-button").disabled = false;
     }
