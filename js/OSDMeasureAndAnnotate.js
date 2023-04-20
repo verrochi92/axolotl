@@ -1,5 +1,5 @@
 /*
- * osd-measure-and-annotate.js
+ * OSDMeasureAndAnnotate.js
  * 
  * Plugin for OpenSeadragon that allows for measuring
  * as well as annotation on the same image.
@@ -29,11 +29,15 @@ class OSDMeasureAndAnnotate {
         // setting up variables used in tracking what user is doing
         this.mode = this.Modes.ZOOM; // start in ZOOM mode (no measurements taken on click)
         this.isMeasuring = false; // toggles when user places first point of a measurement
+
         // the two points used to measure - these are image coordinates
         this.p1 = null;
         this.p2 = null;
+
         // store all the measurements (and extraneous points)
         this.measurements = [];
+        // temporarily stores undone measurements
+        this.redoStack = [];
 
         // measurement marking color
         this.measurementColor = "#000000"
@@ -195,15 +199,43 @@ class OSDMeasureAndAnnotate {
      *     Otherwise, the last created measurement is erased.
      */
     undo() {
-        if (this.isMeasuring) {
+        if (this.isMeasuring) { // we have a point
+            // store the point for redo
+            this.redoStack.push(this.p1);
             this.p1 = null;
             this.isMeasuring = !this.isMeasuring;
+            this.renderAllMeasurements();
         }
-        else {
-            this.measurements.pop();
+        else if (this.measurements.length > 0) { // we have a whole measurement
+            // pop out of measurements and into redoStack
+            this.redoStack.push(this.measurements.pop());
+            this.saveInLocalStorage();
+            this.renderAllMeasurements();
         }
-        this.saveInLocalStorage();
-        this.renderAllMeasurements();
+        
+    }
+
+    /**
+     * redo:
+     *     replaces the last undone measurement or point if there are any in the stack
+     */
+    redo() {
+        if (this.redoStack.length > 0) {
+            let lastObject = this.redoStack.pop();
+            // get zoom level for rendering
+            let zoom = this.viewer.viewport.getZoom();
+            // if it's a point, handle it as such
+            if (lastObject instanceof Point) {
+                this.p1 = lastObject;
+                this.p1.render(this.fabricCanvas, zoom);
+                // set isMeasuring so the next double-click finishes the measurement
+                this.isMeasuring = true;
+            }
+            else { // it's a measurement
+                this.measurements.push(lastObject);
+                lastObject.render(this.fabricCanvas, zoom);
+            }
+        }
     }
 
     /**

@@ -27,15 +27,23 @@ window.onload = () => {
     // initialize the plugin
     plugin = new OSDMeasureAndAnnotate(viewer);
 
+    // set up undo and redo features
     let undoButton = document.getElementById("undo-button");
+    let redoButton = document.getElementById("redo-button");
     // if no measurements stored, disable the undo button
     if (plugin.measurements.length == 0) {
         undoButton.disabled = true;
+    }
+    // if no undone items stored, disable the redo button
+    if (plugin.redoStack.length == 0) {
+        redoButton.disabled = true;
     }
     // re-enable undo button after a measurement
     viewer.addHandler('canvas-double-click', () => {
         if (plugin.measurements.length > 0 || plugin.isMeasuring) {
             undoButton.disabled = false;
+            // since we made a new measurement, we need to disable the redo button
+            redoButton.disabled = true; 
         }
     })
 }
@@ -43,7 +51,7 @@ window.onload = () => {
 function measureButton() {
     // toggle measuring in the plugin
     plugin.toggleMeasuring();
-    // get buttons
+    // get buttons 
     let zoomInButton = document.getElementById("zoom-in-button");
     let zoomOutButton = document.getElementById("zoom-out-button");
     let measureButton = document.getElementById("measure-button");
@@ -51,12 +59,14 @@ function measureButton() {
     let optionsSpan = document.getElementById("options");
     // based on plugin's mode, disable or re-enable other buttons
     if (plugin.mode == plugin.Modes.MEASURE) {
+        // disable zoom and set text in measure button
         zoomInButton.disabled = true;
         zoomOutButton.disabled = true;
         measureButton.value = "Stop Measuring";
-        // display measurement options
+        // display measurement options while measuring
         optionsSpan.removeAttribute("hidden");
     } else {
+        // restore buttons as measuring stopped
         zoomInButton.disabled = false;
         zoomOutButton.disabled = false;
         measureButton.value = "Measure";
@@ -79,9 +89,25 @@ function undoButton() {
     if (plugin.measurements.length == 0 && !plugin.isMeasuring) {
         document.getElementById("undo-button").disabled = true;
     }
+    // re-enable the redo button if there has been a successful undo
+    console.log("redoStack.length = " + plugin.redoStack.length);
+    if (plugin.redoStack.length > 0) {
+        document.getElementById("redo-button").disabled = false;
+    }
+}
+
+function redoButton() {
+    plugin.redo();
+    if (plugin.redoStack.length == 0) {
+        document.getElementById("redo-button").disabled = true;
+    }
+    if (plugin.measurements.length > 0) {
+        document.getElementById("undo-button").disabled = false;
+    }
 }
 
 function setColor() {
     colorSelector = document.getElementById("measurement-color");
     plugin.setMeasurementColor(colorSelector.value);
 }
+
