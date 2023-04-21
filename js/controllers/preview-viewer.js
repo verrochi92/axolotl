@@ -14,7 +14,8 @@ window.onload = () => {
     // get the image url from the search parameters sent by index.html
     const urlParamsString = window.location.search;
     const urlParams = new URLSearchParams(urlParamsString);
-    const tileSource = "./data/" + urlParams.get('tileSource') + ".dzi";
+    const imageName = urlParams.get("tileSource");
+    const tileSource = "./data/" + imageName + ".dzi";
 
     let viewer = new OpenSeadragon({
         id: "viewer",
@@ -22,5 +23,14 @@ window.onload = () => {
         showNavigator: false,
         tileSources: tileSource,
         sequenceMode: false,
+        showFullPageControl: false,
+        showHomeControl: false,
+        showZoomControl: false,
+        zoomPerClick: 1
+    });
+
+    // open full-size viewer on click
+    viewer.addHandler('canvas-click', () => {
+        window.open("./viewer.html?tileSource=" + imageName, "_blank");
     });
 }
