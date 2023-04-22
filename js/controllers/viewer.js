@@ -25,7 +25,7 @@ window.onload = () => {
     });
 
     // initialize the plugin
-    plugin = new OSDMeasureAndAnnotate(viewer);
+    plugin = new OSDMeasureAndAnnotate(viewer, 4.54e-1, "um");
 
     // set up undo and redo features
     let undoButton = document.getElementById("undo-button");
