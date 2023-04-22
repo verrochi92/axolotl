@@ -7,17 +7,13 @@
 
 class Measurement {
     /* p1 and p2 are the **image** coordinates */
-    constructor(p1, p2, color) {
+    constructor(p1, p2, color, conversionFactor, units) {
         this.p1 = p1;
         this.p2 = p2;
         this.color = color;
         this.distance = Math.sqrt(Math.pow(this.p2.x - this.p1.x, 2) + Math.pow(this.p2.y - this.p1.y, 2));
-    }
-
-    /* convert pixels to nanometers                         *
-     * NOTE: not reusable - this is specific to the project */
-    toUM() {
-        return this.distance * 4.54e-7 * 10e6;
+        this.conversionFactor = conversionFactor; // pixels * conversionFactor = actual measurement
+        this.units = units;
     }
 
     /* render the measurement as 3 fabricjs objects on the viewer passed in */
@@ -32,12 +28,13 @@ class Measurement {
         });
         fabricCanvas.add(line);
         // create text object to display measurement
-        let text = new fabric.Text(this.distance.toFixed(2) + ' px', {
+        let text = (this.distance * this.conversionFactor).toFixed(3) + " " + this.units;
+        let textObject = new fabric.Text(text, {
             left: Math.max(this.p1.x, this.p2.x) + 100 / zoom,
             top: this.p1.x > this.p2.x ? this.p1.y : this.p2.y,
             fontSize: 300 / zoom,
             fill: this.color
         });
-        fabricCanvas.add(text);
+        fabricCanvas.add(textObject);
     }
 }

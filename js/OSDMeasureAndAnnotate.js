@@ -42,6 +42,10 @@ class OSDMeasureAndAnnotate {
         // measurement marking color
         this.measurementColor = "#000000"
 
+        // these are used to convert from pixels to real-world units
+        this.conversionFactor = 1;
+        this.units = "px";
+
         // save annotations after creations
         this.annotations.on('createAnnotation', () => {
             this.saveInLocalStorage();
@@ -79,7 +83,12 @@ class OSDMeasureAndAnnotate {
         let zoom = this.viewer.viewport.getZoom();
         if (this.isMeasuring) { // already have a point, so complete the measurement
             this.p2 = new Point(imagePoint.x, imagePoint.y, this.measurementColor);
-            let measurement = new Measurement(this.p1, this.p2, this.measurementColor);
+            let measurement = new Measurement(
+                this.p1, this.p2, this.measurementColor, this.conversionFactor, this.units
+            );
+            // setup units
+            measurement.conversionFactor = this.conversionFactor;
+            measurement.units = this.units;
             // have to remove the original first dot - looking for a workaround
             this.fabricCanvas.remove(this.p1.fabricObject);
             measurement.render(this.fabricCanvas, zoom);
@@ -153,7 +162,7 @@ class OSDMeasureAndAnnotate {
                 this.measurements.push(new Measurement(
                     new Point(parseInt(data.measurements[i].p1.x), parseInt(data.measurements[i].p1.y), data.measurements[i].color),
                     new Point(parseInt(data.measurements[i].p2.x), parseInt(data.measurements[i].p2.y), data.measurements[i].color),
-                    data.measurements[i].color
+                    data.measurements[i].color, this.conversionFactor, this.units
                 ));
             }
             for (let i = 0; i < data.annotations.length; i++) {
