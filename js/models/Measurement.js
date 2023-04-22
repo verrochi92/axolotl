@@ -14,6 +14,12 @@ class Measurement {
         this.distance = Math.sqrt(Math.pow(this.p2.x - this.p1.x, 2) + Math.pow(this.p2.y - this.p1.y, 2));
     }
 
+    /* convert pixels to nanometers                         *
+     * NOTE: not reusable - this is specific to the project */
+    toUM() {
+        return this.distance * 4.54e-7 * 10e6;
+    }
+
     /* render the measurement as 3 fabricjs objects on the viewer passed in */
     render(fabricCanvas, zoom) {
         this.p1.render(fabricCanvas, zoom);
