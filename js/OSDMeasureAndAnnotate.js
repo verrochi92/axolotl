@@ -12,7 +12,7 @@
  */
 
 class OSDMeasureAndAnnotate {
-    constructor(viewer) {
+    constructor(viewer, conversionFactor = 1, units = "px") {
         this.viewer = viewer;
 
         // pull in the two libraries
@@ -43,8 +43,8 @@ class OSDMeasureAndAnnotate {
         this.measurementColor = "#000000"
 
         // these are used to convert from pixels to real-world units
-        this.conversionFactor = 1;
-        this.units = "px";
+        this.conversionFactor = conversionFactor;
+        this.units = units;
 
         // save annotations after creations
         this.annotations.on('createAnnotation', () => {
