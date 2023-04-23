@@ -34,10 +34,12 @@
         <input type="button" id="reset-button" value="Reset" onclick="resetButton()">
         <input type="button" id="undo-button" value="Undo" onclick="undoButton()">
         <input type="button" id="redo-button" value="Redo" onclick="redoButton()">
-        <span id="options" hidden="hidden">
-            <input type="color" id="measurement-color" name="measurement-color" onchange="setColor()">
-            <label for="measurement-color">Measurement Color</label>
-        </span>
+    </div>
+    <div class="centered" id="options" hidden="hidden">
+        <input type="color" id="measurement-color" name="measurement-color" onchange="setColor()">
+        <label for="measurement-color">Measurement color</label><br /><br />
+        <input type="checkbox" id="grid-checkbox" name="grid-checkbox">
+        <label for="grid-checkbox">Measuring guides</label>
     </div>
 </body>
 

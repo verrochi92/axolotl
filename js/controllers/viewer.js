@@ -56,7 +56,7 @@ function measureButton() {
     let zoomOutButton = document.getElementById("zoom-out-button");
     let measureButton = document.getElementById("measure-button");
     let undoButton = document.getElementById("undo-button");
-    let optionsSpan = document.getElementById("options");
+    let options = document.getElementById("options");
     // based on plugin's mode, disable or re-enable other buttons
     if (plugin.mode == plugin.Modes.MEASURE) {
         // disable zoom and set text in measure button
@@ -64,7 +64,7 @@ function measureButton() {
         zoomOutButton.disabled = true;
         measureButton.value = "Stop Measuring";
         // display measurement options while measuring
-        optionsSpan.removeAttribute("hidden");
+        options.removeAttribute("hidden");
     } else {
         // restore buttons as measuring stopped
         zoomInButton.disabled = false;
@@ -74,7 +74,7 @@ function measureButton() {
         if (plugin.measurements.length == 0) {
             undoButton.disabled = true;
         }
-        optionsSpan.hidden = "hidden";
+        options.hidden = "hidden";
     }
 }
 
