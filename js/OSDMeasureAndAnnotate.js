@@ -141,7 +141,8 @@ class OSDMeasureAndAnnotate {
         let json = JSON.stringify({
             measurements: this.measurements,
             redoStack: this.redoStack,
-            annotations: this.annotations.getAnnotations()
+            annotations: this.annotations.getAnnotations(),
+            color: this.color
         });
         localStorage.setItem(currentTileSource, json);
     }
@@ -178,6 +179,7 @@ class OSDMeasureAndAnnotate {
                 // Annotorious is set up to take the stripped objects from the JSON
                 this.annotations.addAnnotation(data.annotations[i]);
             }
+            this.color = data.color;
             // render the measurements
             this.renderAllMeasurements();
         }
@@ -269,7 +271,6 @@ class OSDMeasureAndAnnotate {
      */
     setMeasurementColor(color) {
         this.measurementColor = color;
-        console.log("color set...");
         if (this.isMeasuring) {
             console.log("re-rendering p1");
             // have to re-color the marking already placed
