@@ -131,6 +131,33 @@ class OSDMeasureAndAnnotate {
         }
     }
 
+    measuring(){
+        if (this.mode == this.Modes.ZOOM) {
+                    this.mode = this.Modes.MEASURE;
+                    // disable zoom on click
+                    this.viewer.zoomPerClick = 1;
+                    // disable annotation selection so user can measure where there are annotations
+                    this.annotations.disableSelect = true;
+         }
+    }
+
+    stopMeasuring(){
+        if(this.mode == this.Modes.MEASURE) {
+                    this.mode = this.Modes.ZOOM;
+                    // re-enable zoom on click
+                    this.viewer.zoomPerClick = 2;
+                    // re-enable annotation selection
+                    this.annotations.disableSelect = false;
+                    if (this.isMeasuring) {
+                        // cancel current measurement
+                        this.p1 = null;
+                        this.isMeasuring = !this.isMeasuring;
+                        this.renderAllMeasurements();
+                    }
+        }
+    }
+
+
     /**
      * saveInLocalStorage:
      *     Saves the measurements and annotations in localStorage in JSON format
