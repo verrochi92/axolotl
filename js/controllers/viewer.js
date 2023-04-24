@@ -17,7 +17,7 @@ window.onload = () => {
     let viewer = new OpenSeadragon({
         id: "viewer",
         prefixUrl: "https://openseadragon.github.io/openseadragon/images/",
-        showNavigator: true,
+        showNavigator: false,
         tileSources: tileSource,
         sequenceMode: false,
         zoomInButton: "zoom-in-button",
