@@ -140,6 +140,7 @@ class OSDMeasureAndAnnotate {
         let currentTileSource = this.viewer.tileSources; // for now only works with one source
         let json = JSON.stringify({
             measurements: this.measurements,
+            redoStack: this.redoStack,
             annotations: this.annotations.getAnnotations()
         });
         localStorage.setItem(currentTileSource, json);
@@ -155,7 +156,7 @@ class OSDMeasureAndAnnotate {
         let data = JSON.parse(localStorage.getItem(currentTileSource));
         // make sure we have data
         if (data != null) {
-            // we have to add the measurements and annotations one-by-one 
+            // we have to add the measurements one-by-one 
             for (let i = 0; i < data.measurements.length; i++) {
                 // JSON.stringify() strips our methods from Measurement objects,
                 // so we have to re-construct all of them one-by-one
@@ -163,6 +164,14 @@ class OSDMeasureAndAnnotate {
                     new Point(parseInt(data.measurements[i].p1.x), parseInt(data.measurements[i].p1.y), data.measurements[i].color),
                     new Point(parseInt(data.measurements[i].p2.x), parseInt(data.measurements[i].p2.y), data.measurements[i].color),
                     data.measurements[i].color, this.conversionFactor, this.units
+                ));
+            }
+            // now for the redo stack
+            for (let i = 0; i < data.redoStack.length; i++) {
+                this.redoStack.push(new Measurement(
+                    new Point(parseInt(data.redoStack[i].p1.x), parseInt(data.redoStack[i].p1.y), data.redoStack[i].color),
+                    new Point(parseInt(data.redoStack[i].p2.x), parseInt(data.redoStack[i].p2.y), data.redoStack[i].color),
+                    data.redoStack[i].color, this.conversionFactor, this.units
                 ));
             }
             for (let i = 0; i < data.annotations.length; i++) {
