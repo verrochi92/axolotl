@@ -184,9 +184,6 @@ function stopMeasuring() {
 }
 
 function rotateGrid() {
-    for (let i = 0; i < gridGroup.length; i++) {
-
-    }
     gridGroup.setAngle(5);
     overlay.fabricCanvas().renderAll();
 }
