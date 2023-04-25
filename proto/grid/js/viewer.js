@@ -72,35 +72,43 @@ window.onload = function () {
     }
     */
 
-    let fabricCanvas = overlay.fabricCanvas();
-    let gridSize = 10;
-    let canvasHeight = fabricCanvas.getHeight();
-    console.log("canvas height: " + canvasHeight);
-    let canvasWidth = fabricCanvas.getWidth();
-    console.log("canvas width: " + canvasWidth);
-    // draw horizontal lines
-    for (let i = 0; i < canvasHeight; i += gridSize) {
-        let line = new fabric.Line([0, i, canvasWidth, i], {
-            stroke: 'black',
-            strokeWidth: 10
-        });
-        console.log("added line: " + line);
-        fabricCanvas.add(line);
-        gridGroup.add(line);
-    }
-    // draw vertical lines
-    for (let i = 0; i < canvasWidth; i += gridSize) {
-        let line = new fabric.Line([i, 0, i, canvasHeight], {
-            stroke: 'black',
-            strokeWidth: 10
-        })
-        console.log("added line: " + line);
-        fabricCanvas.add(line);
-        gridGroup.add(line);
-    }
+    viewer.addHandler('open', () => {
+        let fabricCanvas = overlay.fabricCanvas();
+        let gridSize = 500;
+        let imageSize = viewer.world.getItemAt(0).getContentSize();
+        let canvasWidth = imageSize.x;
+        let canvasHeight = imageSize.y;
+        console.log("canvas height: " + canvasHeight);
+        console.log("canvas width: " + canvasWidth);
+        // draw horizontal lines
+        for (let i = 0; i < canvasHeight; i += gridSize) {
+            let line = new fabric.Line([0, i, canvasWidth, i], {
+                stroke: 'black',
+                strokeWidth: 1
+            });
+            console.log("added line: " + line);
+            gridGroup.add(line);
+        }
+        // draw vertical lines
+        for (let i = 0; i < canvasWidth; i += gridSize) {
+            let line = new fabric.Line([i, 0, i, canvasHeight], {
+                stroke: 'black',
+                strokeWidth: 1
+            })
+            console.log("added line: " + line);
+            gridGroup.add(line);
+        }
 
-    // add the grid group to the overlay canvas
-    fabricCanvas.add(gridGroup);
+        // add the grid group to the overlay canvas
+        fabricCanvas.add(gridGroup);
+    });
+
+    // register click handlers
+    viewer.addHandler('canvas-double-click', (event) => {
+        if (mode === Mode.MEASURE) {
+            handleClickMeasure(event);
+        }
+    });
 }
 
 function handleClickMeasure(event) {
