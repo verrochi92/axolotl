@@ -54,37 +54,66 @@ window.onload = function () {
     });
     overlay = viewer.fabricjsOverlay();
 
-// create the grid buttons
-for (let i = 0; i < 23; i++) {
-    for (let j = 0; j < 13; j++) {
-        let button = new fabric.Rect({
-            left: i * 800,
-            top: j * 800,
-            width: 800,
-            height: 800,
-            fill: 'transparent',
-            stroke: 'black',
-            strokeWidth: 2
-        });
-        gridGroup.add(button);
+    /*
+    // create the grid buttons
+    for (let i = 0; i < 23; i++) {
+        for (let j = 0; j < 13; j++) {
+            let button = new fabric.Rect({
+                left: i * 800,
+                top: j * 800,
+                width: 800,
+                height: 800,
+                fill: 'transparent',
+                stroke: 'black',
+                strokeWidth: 2
+            });
+            gridGroup.add(button);
+        }
     }
+    */
+
+    let fabricCanvas = overlay.fabricCanvas();
+    let gridSize = 10;
+    let canvasHeight = fabricCanvas.getHeight();
+    console.log("canvas height: " + canvasHeight);
+    let canvasWidth = fabricCanvas.getWidth();
+    console.log("canvas width: " + canvasWidth);
+    // draw horizontal lines
+    for (let i = 0; i < canvasHeight; i += gridSize) {
+        let line = new fabric.Line([0, i, canvasWidth, i], {
+            stroke: 'black',
+            strokeWidth: 10
+        });
+        console.log("added line: " + line);
+        fabricCanvas.add(line);
+        gridGroup.add(line);
+    }
+    // draw vertical lines
+    for (let i = 0; i < canvasWidth; i += gridSize) {
+        let line = new fabric.Line([i, 0, i, canvasHeight], {
+            stroke: 'black',
+            strokeWidth: 10
+        })
+        console.log("added line: " + line);
+        fabricCanvas.add(line);
+        gridGroup.add(line);
+    }
+
+    // add the grid group to the overlay canvas
+    fabricCanvas.add(gridGroup);
 }
 
-// add the grid group to the overlay canvas
-overlay.fabricCanvas().add(gridGroup);
-
-}
 function handleClickMeasure(event) {
     let webPoint = event.position;
     let viewportPoint = viewer.viewport.pointFromPixel(webPoint);
     let imagePoint = viewer.viewport.viewportToImageCoordinates(viewportPoint);
     // render circle at imagePoint
-        overlay.fabricCanvas().add(new fabric.Circle({
-            left: imagePoint.x-35,
-            top: imagePoint.y-35,
-            fill: 'black',
-            radius: 35
-        }));
+    overlay.fabricCanvas().add(new fabric.Circle({
+        left: imagePoint.x - 35,
+        top: imagePoint.y - 35,
+        fill: 'black',
+        radius: 35
+    }));
     if (isMeasuring) {
         p2 = imagePoint;
         // draw line between p1 and p2
