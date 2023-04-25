@@ -81,8 +81,8 @@ window.onload = function () {
         console.log("canvas height: " + canvasHeight);
         console.log("canvas width: " + canvasWidth);
         // draw horizontal lines
-        for (let i = 0; i < canvasHeight; i += gridSize) {
-            let line = new fabric.Line([0, i, canvasWidth, i], {
+        for (let i = -(2 * canvasHeight); i < 2 * canvasHeight; i += gridSize) {
+            let line = new fabric.Line([-(2 * canvasWidth), i, 2 * canvasWidth, i], {
                 stroke: 'black',
                 strokeWidth: 1
             });
@@ -90,8 +90,8 @@ window.onload = function () {
             gridGroup.add(line);
         }
         // draw vertical lines
-        for (let i = 0; i < canvasWidth; i += gridSize) {
-            let line = new fabric.Line([i, 0, i, canvasHeight], {
+        for (let i = -(2 * canvasHeight); i < 2 * canvasWidth; i += gridSize) {
+            let line = new fabric.Line([i, -(2 * canvasHeight), i, 2 * canvasHeight], {
                 stroke: 'black',
                 strokeWidth: 1
             })
@@ -184,6 +184,9 @@ function stopMeasuring() {
 }
 
 function rotateGrid() {
+    for (let i = 0; i < gridGroup.length; i++) {
+
+    }
     gridGroup.setAngle(5);
     overlay.fabricCanvas().renderAll();
 }
