@@ -84,7 +84,7 @@ window.onload = function () {
         for (let i = -(2 * canvasHeight); i < 2 * canvasHeight; i += gridSize) {
             let line = new fabric.Line([-(2 * canvasWidth), i, 2 * canvasWidth, i], {
                 stroke: 'black',
-                strokeWidth: 1
+                strokeWidth: 5
             });
             console.log("added line: " + line);
             gridGroup.add(line);
@@ -93,7 +93,7 @@ window.onload = function () {
         for (let i = -(2 * canvasHeight); i < 2 * canvasWidth; i += gridSize) {
             let line = new fabric.Line([i, -(2 * canvasHeight), i, 2 * canvasHeight], {
                 stroke: 'black',
-                strokeWidth: 1
+                strokeWidth: 5
             })
             console.log("added line: " + line);
             gridGroup.add(line);
