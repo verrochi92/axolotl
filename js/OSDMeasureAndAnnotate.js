@@ -320,9 +320,22 @@ class OSDMeasureAndAnnotate {
                 measurement.toString()
             ];
         }
-        console.log(header);
+        // generate the rows
+        let rows = [header];
         for (let i = 0; i < this.measurements.length; i++) {
-            console.log(createRow(this.measurements[i]));
+            rows.push(createRow(this.measurements[i]));
         }
+        // join the rows together
+        let csv = "data:text/csv;charset=utf-8," + rows.map((row) => row.join(",")).join("\n");
+        // encode to URI
+        let uri = encodeURI(csv);
+        // download using invisible link trick
+        let link = document.createElement("a");
+        link.setAttribute("href", uri);
+        link.setAttribute("download", "measurements.csv");
+        document.body.appendChild(link);
+        link.click();
+        // clean up
+        document.body.removeChild(link);
     }
 }
