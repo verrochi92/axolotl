@@ -131,7 +131,7 @@ class OSDMeasureAndAnnotate {
         }
     }
 
-    measuring(){
+    measure(){
         if (this.mode == this.Modes.ZOOM) {
                     this.mode = this.Modes.MEASURE;
                     // disable zoom on click
@@ -304,6 +304,25 @@ class OSDMeasureAndAnnotate {
             this.p1.color = this.measurementColor;
             this.p1.fabricObject.remove();
             this.p1.render(this.fabricCanvas, this.viewer.viewport.getZoom());
+        }
+    }
+
+    /**
+     * exportCSV:
+     *     creates a CSV containing the measurement data
+     */
+    exportCSV() {
+        let header = ["Point 1", "Point 2", "Distance"]
+        let createRow = (measurement) => {
+            return [
+                measurement.p1.toString(),
+                measurement.p2.toString(),
+                measurement.toString()
+            ];
+        }
+        console.log(header);
+        for (let i = 0; i < this.measurements.length; i++) {
+            console.log(createRow(this.measurements[i]));
         }
     }
 }

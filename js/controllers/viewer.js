@@ -117,3 +117,6 @@ function setColor() {
     plugin.setMeasurementColor(colorSelector.value);
 }
 
+function exportCSVButton() {
+    plugin.exportCSV();
+}
