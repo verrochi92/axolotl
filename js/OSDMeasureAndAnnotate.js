@@ -167,7 +167,9 @@ class OSDMeasureAndAnnotate {
         let currentTileSource = this.viewer.tileSources; // for now only works with one source
         let json = JSON.stringify({
             measurements: this.measurements,
-            annotations: this.annotations.getAnnotations()
+            redoStack: this.redoStack,
+            annotations: this.annotations.getAnnotations(),
+            color: this.color
         });
         localStorage.setItem(currentTileSource, json);
     }
@@ -182,7 +184,7 @@ class OSDMeasureAndAnnotate {
         let data = JSON.parse(localStorage.getItem(currentTileSource));
         // make sure we have data
         if (data != null) {
-            // we have to add the measurements and annotations one-by-one 
+            // we have to add the measurements one-by-one 
             for (let i = 0; i < data.measurements.length; i++) {
                 // JSON.stringify() strips our methods from Measurement objects,
                 // so we have to re-construct all of them one-by-one
@@ -192,10 +194,19 @@ class OSDMeasureAndAnnotate {
                     data.measurements[i].color, this.conversionFactor, this.units
                 ));
             }
+            // now for the redo stack
+            for (let i = 0; i < data.redoStack.length; i++) {
+                this.redoStack.push(new Measurement(
+                    new Point(parseInt(data.redoStack[i].p1.x), parseInt(data.redoStack[i].p1.y), data.redoStack[i].color),
+                    new Point(parseInt(data.redoStack[i].p2.x), parseInt(data.redoStack[i].p2.y), data.redoStack[i].color),
+                    data.redoStack[i].color, this.conversionFactor, this.units
+                ));
+            }
             for (let i = 0; i < data.annotations.length; i++) {
                 // Annotorious is set up to take the stripped objects from the JSON
                 this.annotations.addAnnotation(data.annotations[i]);
             }
+            this.color = data.color;
             // render the measurements
             this.renderAllMeasurements();
         }
@@ -287,7 +298,6 @@ class OSDMeasureAndAnnotate {
      */
     setMeasurementColor(color) {
         this.measurementColor = color;
-        console.log("color set...");
         if (this.isMeasuring) {
             console.log("re-rendering p1");
             // have to re-color the marking already placed

@@ -17,7 +17,7 @@ window.onload = () => {
     let viewer = new OpenSeadragon({
         id: "viewer",
         prefixUrl: "https://openseadragon.github.io/openseadragon/images/",
-        showNavigator: true,
+        showNavigator: false,
         tileSources: tileSource,
         sequenceMode: false,
         zoomInButton: "zoom-in-button",
@@ -38,6 +38,11 @@ window.onload = () => {
     if (plugin.redoStack.length == 0) {
         redoButton.disabled = true;
     }
+    
+    // set color of the color input to match that of the plugin
+    let colorSelector = document.getElementById("measurement-color");
+    colorSelector.value = plugin.color;
+
     // re-enable undo button after a measurement
     viewer.addHandler('canvas-double-click', () => {
         if (plugin.measurements.length > 0 || plugin.isMeasuring) {
@@ -45,7 +50,7 @@ window.onload = () => {
             // since we made a new measurement, we need to disable the redo button
             redoButton.disabled = true; 
         }
-    })
+    });
 }
 
 function measureButton() {
