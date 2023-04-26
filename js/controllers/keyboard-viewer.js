@@ -66,7 +66,7 @@ window.onload = () => {
 
 function measureButton() {
 
-    plugin.measuring();
+    plugin.measure();
 }
 function stopMeasureButton() {
         plugin.stopMeasuring();

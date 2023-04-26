@@ -24,4 +24,9 @@ class Point {
         });
         fabricCanvas.add(this.fabricObject);
     }
+
+    /* create the string representation of the point i.e (x, y) */
+    toString() {
+        return `(${this.x}, ${this.y})`
+    }
 }
