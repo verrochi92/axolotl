@@ -37,4 +37,9 @@ class Measurement {
         });
         fabricCanvas.add(textObject);
     }
+
+    /* returns the string representing the distance */
+    toString() {
+        return `${(this.distance * this.conversionFactor).toFixed(3)}`;
+    }
 }
