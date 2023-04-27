@@ -17,7 +17,7 @@ body {
 }
 
 #viewer {
-    height: 90%;
+    height: 100%;
     width: 100%;
     border: 1px solid black;
     z-index: 1;
@@ -63,7 +63,7 @@ body {
   color:white;
   background-color: rgba(0, 0, 0, 0.7);
   padding: 3px;
-  top: 20px;
+  top: 0px;
   right: 0px;
   width: 15px;
   height: 25px;
@@ -84,7 +84,7 @@ body {
 /* Menu styles */
 .menu {
   position: absolute;
-  top: 50px;
+  top: 30px;
   right: 0px;
   background-color: rgba(0, 0, 0, 0.7);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
