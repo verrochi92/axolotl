@@ -59,7 +59,12 @@ window.onload = () => {
 
     // set color of the color input to match that of the plugin
     let colorSelector = document.getElementById("measurement-color");
-    colorSelector.value = plugin.color;
+    if (plugin.color) {
+        colorSelector.value = plugin.color;
+    }
+    else {
+        plugin.color = "#000000";
+    }
 }
 
 function setColor() {
