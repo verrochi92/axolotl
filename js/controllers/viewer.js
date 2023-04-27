@@ -31,6 +31,7 @@ window.onload = () => {
 
     // dispatch correct method on key press
     document.addEventListener('keydown', (event) => {
+        console.log("keydown");
         // start measuring
         if (event.key == 'm') {
             if (plugin.mode != plugin.Modes.MEASURE) {
@@ -43,17 +44,21 @@ window.onload = () => {
                 plugin.toggleMeasuring();
             }
         }
+        // reset
         else if (event.key == 'r') {
             if (window.confirm("Are you sure you want to reset all measurements and annotations?")) {
                 plugin.clear();
             }
         }
+        // undo
         else if (event.ctrlKey && event.key == 'z') {
             plugin.undo();
         }
+        // redo
         else if (event.ctrlKey && event.key == 'y') {
             plugin.redo();
         }
+        // export csv
         else if (event.ctrlKey && event.key == 'e') {
             plugin.exportCSV();
         }
