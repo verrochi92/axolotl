@@ -6,21 +6,22 @@
  */
 
 body {
-    overflow: hidden !important;
-    background-color: darkgray;
-    font-family: 'Courier New';
+  overflow: hidden !important;
+  background-color: black;
+  font-family: 'Courier New';
 }
 
 .centered {
-    margin: auto;
-    text-align: center;
+  margin: auto;
+  text-align: center;
 }
 
 #viewer {
-    height: 100%;
-    width: 100%;
-    border: 1px solid black;
-    z-index: 1;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  z-index: 1;
+  position: relative;
 }
 
 #options {
@@ -39,11 +40,11 @@ body {
 }
 
 #buttons {
-    margin-top: 1%;
-    z-index: 2;
+  margin-top: 1%;
+  z-index: 2;
 }
 
-#info {
+#shortcuts, #info {
   position: absolute;
   z-index: 1000;
   bottom: 0;
@@ -57,10 +58,16 @@ body {
   font-size: 0.9em;
 }
 
+#measurement-color {
+  height: 20px;
+  width: 20px;
+  border-width: 0;
+}
+
 /* Menu icon styles */
 .menu-icon {
   position: absolute;
-  color:white;
+  color: white;
   background-color: rgba(0, 0, 0, 0.7);
   padding: 3px;
   top: 0px;
@@ -71,7 +78,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  z-index: 1; /* set z-index to a value higher than the black background */
+  z-index: 1;
+  /* set z-index to a value higher than the black background */
 }
 
 .dot {
@@ -88,10 +96,11 @@ body {
   right: 0px;
   background-color: rgba(0, 0, 0, 0.7);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  color:white;
+  color: white;
   padding: 10px;
   display: none;
-  z-index: 2; /* set z-index to a value higher than the menu icon */
+  z-index: 2;
+  /* set z-index to a value higher than the menu icon */
 }
 
 .menu ul {
@@ -110,11 +119,10 @@ body {
 }
 
 /* Show menu upon clicking menu icon */
-.menu-icon:focus + .menu {
+.menu-icon:focus+.menu {
   display: block;
 }
 
 .menu-open {
-      display: block;
-    }
-
+  display: block;
+}
