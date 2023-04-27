@@ -26,6 +26,9 @@ window.onload = () => {
     // initialize the plugin
     plugin = new OSDMeasureAndAnnotate(viewer, 4.54e-1, "um");
 
+    // add menus as children to the viewer so they display in fullscreen
+    document.getElementById("viewer").appendChild(document.getElementById("shortcuts"));
+
     // dispatch correct method on key press
     document.addEventListener('keydown', (event) => {
         // start measuring
