@@ -20,96 +20,46 @@ window.onload = () => {
         showNavigator: false,
         tileSources: tileSource,
         sequenceMode: false,
-        zoomInButton: "zoom-in-button",
-        zoomOutButton: "zoom-out-button"
+        useCanvas: true
     });
 
     // initialize the plugin
     plugin = new OSDMeasureAndAnnotate(viewer, 4.54e-1, "um");
 
-    // set up undo and redo features
-    let undoButton = document.getElementById("undo-button");
-    let redoButton = document.getElementById("redo-button");
-    // if no measurements stored, disable the undo button
-    if (plugin.measurements.length == 0) {
-        undoButton.disabled = true;
-    }
-    // if no undone items stored, disable the redo button
-    if (plugin.redoStack.length == 0) {
-        redoButton.disabled = true;
-    }
-    
+    // dispatch correct method on key press
+    document.addEventListener('keydown', (event) => {
+        // start measuring
+        if (event.key == 'm') {
+            if (plugin.mode != plugin.Modes.MEASURE) {
+                plugin.toggleMeasuring();
+            }
+        }
+        // stop measuring
+        else if (event.key == 'q') {
+            if (plugin.mode == plugin.Modes.MEASURE) {
+                plugin.toggleMeasuring();
+            }
+        }
+        else if (event.key == 'r') {
+            if (window.confirm("Are you sure you want to reset all measurements and annotations?")) {
+                plugin.clear();
+            }
+        }
+        else if (event.ctrlKey && event.key == 'z') {
+            plugin.undo();
+        }
+        else if (event.ctrlKey && event.key == 'y') {
+            plugin.redo();
+        }
+        else if (event.ctrlKey && event.key == 'e') {
+            plugin.exportCSV();
+        }
+        event.preventDefault();
+    });
+
     // set color of the color input to match that of the plugin
     let colorSelector = document.getElementById("measurement-color");
     colorSelector.value = plugin.color;
-
-    // re-enable undo button after a measurement
-    viewer.addHandler('canvas-double-click', () => {
-        if (plugin.measurements.length > 0 || plugin.isMeasuring) {
-            undoButton.disabled = false;
-            // since we made a new measurement, we need to disable the redo button
-            redoButton.disabled = true; 
-        }
-    });
-}
-
-function measureButton() {
-    // toggle measuring in the plugin
-    plugin.toggleMeasuring();
-    // get buttons 
-    let zoomInButton = document.getElementById("zoom-in-button");
-    let zoomOutButton = document.getElementById("zoom-out-button");
-    let measureButton = document.getElementById("measure-button");
-    let undoButton = document.getElementById("undo-button");
-    let options = document.getElementById("options");
-    // based on plugin's mode, disable or re-enable other buttons
-    if (plugin.mode == plugin.Modes.MEASURE) {
-        // disable zoom and set text in measure button
-        zoomInButton.disabled = true;
-        zoomOutButton.disabled = true;
-        measureButton.value = "Stop Measuring";
-        // display measurement options while measuring
-        options.removeAttribute("hidden");
-    } else {
-        // restore buttons as measuring stopped
-        zoomInButton.disabled = false;
-        zoomOutButton.disabled = false;
-        measureButton.value = "Measure";
-        // disable undo if needed
-        if (plugin.measurements.length == 0) {
-            undoButton.disabled = true;
-        }
-        options.hidden = "hidden";
-    }
-}
-
-function resetButton() {
-    if (window.confirm("Are you sure you want to reset all measurements and annotations?")) {
-        plugin.clear();
-        document.getElementById("undo-button").disabled = true;
-        document.getElementById("redo-button").disabled = true;
-    }
-}
-
-function undoButton() {
-    plugin.undo();
-    if (plugin.measurements.length == 0 && !plugin.isMeasuring) {
-        document.getElementById("undo-button").disabled = true;
-    }
-    // re-enable the redo button if there has been a successful undo
-    if (plugin.redoStack.length > 0) {
-        document.getElementById("redo-button").disabled = false;
-    }
-}
-
-function redoButton() {
-    plugin.redo();
-    if (plugin.redoStack.length == 0) {
-        document.getElementById("redo-button").disabled = true;
-    }
-    if (plugin.measurements.length > 0) {
-        document.getElementById("undo-button").disabled = false;
-    }
 }
 
 function setColor() {
@@ -117,6 +67,4 @@ function setColor() {
     plugin.setMeasurementColor(colorSelector.value);
 }
 
-function exportCSVButton() {
-    plugin.exportCSV();
-}
+
