@@ -17,7 +17,7 @@ window.onload = () => {
     let viewer = new OpenSeadragon({
         id: "viewer",
         prefixUrl: "https://openseadragon.github.io/openseadragon/images/",
-        showNavigator: true,
+        showNavigator: false,
         tileSources: tileSource,
         sequenceMode: false,
         useCanvas: true,
@@ -90,4 +90,5 @@ function setColor() {
     colorSelector = document.getElementById("measurement-color");
     plugin.setMeasurementColor(colorSelector.value);
 }
+
 

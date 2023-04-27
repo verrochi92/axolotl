@@ -26,7 +26,24 @@
 </head>
 
 <body>
-<div id="viewer" style="height:100vh;width:100vw;background-color:black"></div>
+<div id="viewer" style="height:100vh;width:100vw;background-color:black;position:relative;">
+    <div class="menu-icon" tabindex="0">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+
+    <div class="menu">
+        <ul>
+            <li>
+                Measurements:<br>
+                L1:<br>
+                L2:<br>
+                L3:
+            </li>
+        </ul>
+    </div>
+</div>
 <div id="info" >
     <label for="measurement-color">Select color :</label>
     <input type="color" id="measurement-color" name="measurement-color" onchange="setColor()" style="height:20px;width:20px;border-width:thin;"><br>
@@ -36,6 +53,9 @@
     redo : ctrl + y<br>
     reset : r
 </div>
+
+
+
 </body>
 
 </html>
