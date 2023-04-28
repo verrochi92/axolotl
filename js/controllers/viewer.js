@@ -27,10 +27,25 @@ window.onload = () => {
     plugin = new OSDMeasureAndAnnotate(viewer, 4.54e-1, "um");
 
     // add menus as children to the viewer so they display in fullscreen
-    let viewerElement = document.getElementById("element");
+    let viewerElement = document.getElementById("viewer");
+    let menuIcon = document.getElementById("menu-icon");
+    let measurementMenu = document.getElementById("measurement-menu");
+
     viewerElement.appendChild(document.getElementById("shortcuts"));
-    viewerElement.appendChild(document.getElementById("menu-icon"));
-    viewerElement.appendChild(document.getElementById("measurement-menu"));
+    viewerElement.appendChild(menuIcon);
+    viewerElement.appendChild(measurementMenu);
+
+    // display menu when menu icon is clicked
+    menuIcon.addEventListener("click", () => {
+        // display if not open
+        if (measurementMenu.getAttribute("hidden") == "hidden") {
+            measurementMenu.removeAttribute("hidden");
+        }
+        // otherwise close it
+        else {
+            measurementMenu.setAttribute("hidden", "hidden");
+        }
+    })
 
     // dispatch correct method on key press
     document.addEventListener('keydown', (event) => {
