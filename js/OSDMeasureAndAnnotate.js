@@ -98,6 +98,8 @@ class OSDMeasureAndAnnotate {
             this.saveInLocalStorage();
             // have to blow out the redo stack since we made a new measurement
             this.redoStack = [];
+            // dispatch an event to let it be known there is a new measurement
+            dispatchEvent(new CustomEvent("measurement-added", { detail: measurement }));
         } else { // place the first point
             this.p1 = new Point(imagePoint.x, imagePoint.y, this.measurementColor);
             this.p1.render(this.fabricCanvas, zoom);
@@ -190,11 +192,13 @@ class OSDMeasureAndAnnotate {
             for (let i = 0; i < data.measurements.length; i++) {
                 // JSON.stringify() strips our methods from Measurement objects,
                 // so we have to re-construct all of them one-by-one
-                this.measurements.push(new Measurement(
+                let measurement = new Measurement(
                     new Point(parseInt(data.measurements[i].p1.x), parseInt(data.measurements[i].p1.y), data.measurements[i].color),
                     new Point(parseInt(data.measurements[i].p2.x), parseInt(data.measurements[i].p2.y), data.measurements[i].color),
                     data.measurents[i].name, data.measurements[i].color, this.conversionFactor, this.units
-                ));
+                );
+                this.measurements.push(measurement);
+                dispatchEvent(new CustomEvent("measurement-added", { detail: measurement }));
             }
             // now for the redo stack
             for (let i = 0; i < data.redoStack.length; i++) {
@@ -264,6 +268,7 @@ class OSDMeasureAndAnnotate {
             this.redoStack.push(this.measurements.pop());
             this.saveInLocalStorage();
             this.renderAllMeasurements();
+            dispatchEvent(new Event("measurement-removed"));
         }
 
     }
@@ -289,6 +294,8 @@ class OSDMeasureAndAnnotate {
                 lastObject.render(this.fabricCanvas, zoom);
                 // can't forget to save!
                 this.saveInLocalStorage();
+                // dispatch event to replace it in the measurement list
+                dispatchEvent(new CustomEvent("measurement-added", { detail: lastObject }));
             }
         }
     }

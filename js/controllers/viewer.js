@@ -91,6 +91,15 @@ window.onload = () => {
     else {
         plugin.color = "#000000";
     }
+
+    // add new measurements to the window
+    viewer.addHandler('canvas-double-click', () => {
+        let measurementList = document.getElementById("measurement-list");
+        let html = ""; // we will generate list items based on the measurements
+        for (let i = 0; i < plugin.measurements.length; i++) {
+            
+        }
+    })
 }
 
 function setColor() {
