@@ -40,7 +40,7 @@ class OSDMeasureAndAnnotate {
         this.redoStack = [];
 
         // measurement marking color
-        this.measurementColor = "#000000"
+        this.measurementColor = "#000000";
 
         // these are used to convert from pixels to real-world units
         this.conversionFactor = conversionFactor;
@@ -84,7 +84,9 @@ class OSDMeasureAndAnnotate {
         if (this.isMeasuring) { // already have a point, so complete the measurement
             this.p2 = new Point(imagePoint.x, imagePoint.y, this.measurementColor);
             let measurement = new Measurement(
-                this.p1, this.p2, this.measurementColor, this.conversionFactor, this.units
+                this.p1, this.p2,
+                `measurement ${this.measurements.length + 1}`,
+                this.measurementColor, this.conversionFactor, this.units
             );
             // setup units
             measurement.conversionFactor = this.conversionFactor;
@@ -122,7 +124,7 @@ class OSDMeasureAndAnnotate {
             this.viewer.zoomPerClick = 2;
             // re-enable annotation selection
             this.annotations.disableSelect = false;
-            if (this.isMeasuring) { 
+            if (this.isMeasuring) {
                 // cancel current measurement
                 this.p1 = null;
                 this.isMeasuring = !this.isMeasuring;
@@ -131,29 +133,29 @@ class OSDMeasureAndAnnotate {
         }
     }
 
-    measure(){
+    measure() {
         if (this.mode == this.Modes.ZOOM) {
-                    this.mode = this.Modes.MEASURE;
-                    // disable zoom on click
-                    this.viewer.zoomPerClick = 1;
-                    // disable annotation selection so user can measure where there are annotations
-                    this.annotations.disableSelect = true;
-         }
+            this.mode = this.Modes.MEASURE;
+            // disable zoom on click
+            this.viewer.zoomPerClick = 1;
+            // disable annotation selection so user can measure where there are annotations
+            this.annotations.disableSelect = true;
+        }
     }
 
-    stopMeasuring(){
-        if(this.mode == this.Modes.MEASURE) {
-                    this.mode = this.Modes.ZOOM;
-                    // re-enable zoom on click
-                    this.viewer.zoomPerClick = 2;
-                    // re-enable annotation selection
-                    this.annotations.disableSelect = false;
-                    if (this.isMeasuring) {
-                        // cancel current measurement
-                        this.p1 = null;
-                        this.isMeasuring = !this.isMeasuring;
-                        this.renderAllMeasurements();
-                    }
+    stopMeasuring() {
+        if (this.mode == this.Modes.MEASURE) {
+            this.mode = this.Modes.ZOOM;
+            // re-enable zoom on click
+            this.viewer.zoomPerClick = 2;
+            // re-enable annotation selection
+            this.annotations.disableSelect = false;
+            if (this.isMeasuring) {
+                // cancel current measurement
+                this.p1 = null;
+                this.isMeasuring = !this.isMeasuring;
+                this.renderAllMeasurements();
+            }
         }
     }
 
@@ -191,7 +193,7 @@ class OSDMeasureAndAnnotate {
                 this.measurements.push(new Measurement(
                     new Point(parseInt(data.measurements[i].p1.x), parseInt(data.measurements[i].p1.y), data.measurements[i].color),
                     new Point(parseInt(data.measurements[i].p2.x), parseInt(data.measurements[i].p2.y), data.measurements[i].color),
-                    data.measurements[i].color, this.conversionFactor, this.units
+                    data.measurents[i].name, data.measurements[i].color, this.conversionFactor, this.units
                 ));
             }
             // now for the redo stack
@@ -199,7 +201,7 @@ class OSDMeasureAndAnnotate {
                 this.redoStack.push(new Measurement(
                     new Point(parseInt(data.redoStack[i].p1.x), parseInt(data.redoStack[i].p1.y), data.redoStack[i].color),
                     new Point(parseInt(data.redoStack[i].p2.x), parseInt(data.redoStack[i].p2.y), data.redoStack[i].color),
-                    data.redoStack[i].color, this.conversionFactor, this.units
+                    data.redoStack[i].name, data.redoStack[i].color, this.conversionFactor, this.units
                 ));
             }
             for (let i = 0; i < data.annotations.length; i++) {
@@ -263,7 +265,7 @@ class OSDMeasureAndAnnotate {
             this.saveInLocalStorage();
             this.renderAllMeasurements();
         }
-        
+
     }
 
     /**
