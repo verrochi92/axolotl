@@ -27,7 +27,10 @@ window.onload = () => {
     plugin = new OSDMeasureAndAnnotate(viewer, 4.54e-1, "um");
 
     // add menus as children to the viewer so they display in fullscreen
-    document.getElementById("viewer").appendChild(document.getElementById("shortcuts"));
+    let viewerElement = document.getElementById("element");
+    viewerElement.appendChild(document.getElementById("shortcuts"));
+    viewerElement.appendChild(document.getElementById("menu-icon"));
+    viewerElement.appendChild(document.getElementById("measurement-menu"));
 
     // dispatch correct method on key press
     document.addEventListener('keydown', (event) => {
