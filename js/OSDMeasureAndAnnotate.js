@@ -4,7 +4,7 @@
  * Plugin for OpenSeadragon that allows for measuring
  * as well as annotation on the same image.
  * 
- * By Nicholas Verrochi
+ * By Nicholas Verrochi and Vidhya Sree N
  * For CS410 - The Axolotl Project
  * 
  * Requires OpenSeadragon, Annotorious, Fabric.js, 
@@ -18,6 +18,8 @@ class OSDMeasureAndAnnotate {
         // pull in the two libraries
         this.overlay = viewer.fabricjsOverlay();
         this.fabricCanvas = this.overlay.fabricCanvas();
+        this.viewer.gestureSettingsMouse.clickToZoom = false;
+        this.viewer.gestureSettingsTouch.clickToZoom = false;
         this.annotations = OpenSeadragon.Annotorious(viewer);
 
         // enum to represent modes of operation - symbol enforces use of the enum
@@ -27,7 +29,7 @@ class OSDMeasureAndAnnotate {
         };
 
         // setting up variables used in tracking what user is doing
-        this.mode = this.Modes.ZOOM; // start in ZOOM mode (no measurements taken on click)
+//        this.mode = this.Modes.ZOOM; // start in ZOOM mode (no measurements taken on click)
         this.isMeasuring = false; // toggles when user places first point of a measurement
 
         // the two points used to measure - these are image coordinates
@@ -55,8 +57,11 @@ class OSDMeasureAndAnnotate {
         this.viewer.addHandler('canvas-double-click', (event) => {
             if (this.mode == this.Modes.MEASURE) {
                 this.addMeasurement(event);
+            } else if (!event.quick) {
+                event.preventDefaultAction = true;
             }
         });
+
 
         // re-render on page event (change in zoom)
         this.viewer.addHandler('zoom', () => {
@@ -131,32 +136,14 @@ class OSDMeasureAndAnnotate {
         }
     }
 
+    /*
+         * Measure :
+         *  Starts to measure when called
+         */
     measure(){
-        if (this.mode == this.Modes.ZOOM) {
                     this.mode = this.Modes.MEASURE;
-                    // disable zoom on click
-                    this.viewer.zoomPerClick = 1;
-                    // disable annotation selection so user can measure where there are annotations
                     this.annotations.disableSelect = true;
-         }
     }
-
-    stopMeasuring(){
-        if(this.mode == this.Modes.MEASURE) {
-                    this.mode = this.Modes.ZOOM;
-                    // re-enable zoom on click
-                    this.viewer.zoomPerClick = 2;
-                    // re-enable annotation selection
-                    this.annotations.disableSelect = false;
-                    if (this.isMeasuring) {
-                        // cancel current measurement
-                        this.p1 = null;
-                        this.isMeasuring = !this.isMeasuring;
-                        this.renderAllMeasurements();
-                    }
-        }
-    }
-
 
     /**
      * saveInLocalStorage:
