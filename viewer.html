@@ -27,25 +27,34 @@
 
 <body>
     <div class="centered" id="viewer"></div>
-    <div class="centered" id="buttons">
-        <input type="button" id="zoom-in-button" value="Zoom In">
-        <input type="button" id="zoom-out-button" value="Zoom Out">
-        <input type="button" id="measure-button" value="Measure" onclick="measureButton()">
-        <input type="button" id="reset-button" value="Reset" onclick="resetButton()">
-        <input type="button" id="undo-button" value="Undo" onclick="undoButton()">
-        <input type="button" id="redo-button" value="Redo" onclick="redoButton()">
-        <input type="button" id="export-csv-button" value="Export CSV" onclick="exportCSVButton()">
-    </div>
+
     <div id="shortcuts">
-        <label for="measurement-color">Select color :</label>
-        <input type="color" id="measurement-color" name="measurement-color" onchange="setColor()"><br>
-        measure: m<br>
-        stop measuring: q<br>
-        undo: ctrl + z<br>
-        redo: ctrl + y<br>
-        export csv: ctrl + e<br> 
-        reset: r
+        <ul>
+            <li>
+                <label for="measurement-color">select color:</label>
+                <input type="color" id="measurement-color" name="measurement-color" onchange="setColor()">
+            </li>
+            <li>measure: m</li>
+            <li>stop measuring: q</li>
+            <li>undo: ctrl + z</li>
+            <li>redo: ctrl + y</li>
+            <li>export csv: ctrl + e</li>
+            <li>reset: r</li>
+        </ul>
     </div>
+
+    <div id="menu-icon" tabindex="0">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+
+    <div class="measurement-menu">
+        <ul>
+            <li>Measurements:</li>
+        </ul>
+    </div>
+
 </body>
 
 </html>
