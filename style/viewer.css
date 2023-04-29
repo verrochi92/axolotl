@@ -73,6 +73,7 @@ body {
 /* Menu styles */
 #measurement-menu {
   position: absolute;
+  text-align: left;
   top: 10%;
   right: 0%;
   background-color: rgba(0, 0, 0, 0.7);

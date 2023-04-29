@@ -6,6 +6,7 @@
  */
 
 var plugin; // stores the OSDMeasureAndAnnotate plugin
+var measurementListElements = []; // measurements to display
 
 window.onload = () => {
     // get the image url from the search parameters sent by index.html
@@ -25,6 +26,14 @@ window.onload = () => {
 
     // initialize the plugin
     plugin = new OSDMeasureAndAnnotate(viewer, 4.54e-1, "um");
+    // display measurements if loaded from localStorage
+    let measurementList = document.getElementById("measurement-list");
+    for (let i = 0; i < plugin.measurements.length; i++) {
+        let element = document.createElement("li");
+        element.innerHTML = plugin.measurements[i].toListElement();
+        measurementListElements.push(element);
+        measurementList.appendChild(element);
+    }
 
     // add menus as children to the viewer so they display in fullscreen
     let viewerElement = document.getElementById("viewer");
@@ -93,12 +102,13 @@ window.onload = () => {
     }
 
     // add new measurements to the window
-    viewer.addHandler('canvas-double-click', () => {
-        let measurementList = document.getElementById("measurement-list");
-        let html = ""; // we will generate list items based on the measurements
-        for (let i = 0; i < plugin.measurements.length; i++) {
-            
-        }
+    document.addEventListener("measurement-added", (event) => {
+        let measurement = event.detail;
+        let element = document.createElement("li");
+        element.innerText = measurement.toListElement();
+        measurementListElements.push(element);
+        measurementList.appendChild(element);
+        event.preventDefault();
     })
 }
 

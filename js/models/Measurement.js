@@ -43,4 +43,9 @@ class Measurement {
     toString() {
         return `${(this.distance * this.conversionFactor).toFixed(3)}`;
     }
+
+    /* convert to a list element */
+    toListElement() {
+        return `${this.name}: ${(this.distance * this.conversionFactor).toFixed(3)} ${this.units}`;
+    }
 }

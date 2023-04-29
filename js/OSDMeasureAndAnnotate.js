@@ -195,7 +195,7 @@ class OSDMeasureAndAnnotate {
                 let measurement = new Measurement(
                     new Point(parseInt(data.measurements[i].p1.x), parseInt(data.measurements[i].p1.y), data.measurements[i].color),
                     new Point(parseInt(data.measurements[i].p2.x), parseInt(data.measurements[i].p2.y), data.measurements[i].color),
-                    data.measurents[i].name, data.measurements[i].color, this.conversionFactor, this.units
+                    data.measurements[i].name, data.measurements[i].color, this.conversionFactor, this.units
                 );
                 this.measurements.push(measurement);
                 dispatchEvent(new CustomEvent("measurement-added", { detail: measurement }));
