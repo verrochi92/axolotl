@@ -99,7 +99,7 @@ class OSDMeasureAndAnnotate {
             // have to blow out the redo stack since we made a new measurement
             this.redoStack = [];
             // dispatch an event to let it be known there is a new measurement
-            dispatchEvent(new CustomEvent("measurement-added", { detail: measurement }));
+            document.dispatchEvent(new Event("measurement-added", { detail: measurement }));
         } else { // place the first point
             this.p1 = new Point(imagePoint.x, imagePoint.y, this.measurementColor);
             this.p1.render(this.fabricCanvas, zoom);
@@ -198,7 +198,6 @@ class OSDMeasureAndAnnotate {
                     data.measurements[i].name, data.measurements[i].color, this.conversionFactor, this.units
                 );
                 this.measurements.push(measurement);
-                dispatchEvent(new CustomEvent("measurement-added", { detail: measurement }));
             }
             // now for the redo stack
             for (let i = 0; i < data.redoStack.length; i++) {
@@ -268,7 +267,7 @@ class OSDMeasureAndAnnotate {
             this.redoStack.push(this.measurements.pop());
             this.saveInLocalStorage();
             this.renderAllMeasurements();
-            dispatchEvent(new Event("measurement-removed"));
+            document.dispatchEvent(new Event("measurement-removed"));
         }
 
     }

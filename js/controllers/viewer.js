@@ -102,9 +102,9 @@ window.onload = () => {
     }
 
     // add new measurements to the window
-    document.addEventListener("measurement-added", (event) => {
-        let measurement = event.detail;
+    document.addEventListener("measurement-added", () => {
         let element = document.createElement("li");
+        let measurement = plugin.measurements[plugin.measurements.length - 1]
         element.innerText = measurement.toListElement();
         measurementListElements.push(element);
         measurementList.appendChild(element);
