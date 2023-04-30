@@ -108,7 +108,11 @@ window.onload = () => {
         element.innerText = measurement.toListElement();
         measurementListElements.push(element);
         measurementList.appendChild(element);
-        event.preventDefault();
+    })
+    // remove measurements on undo
+    document.addEventListener("measurement-removed", () => {
+        let element = measurementListElements.pop();
+        measurementList.removeChild(element);
     })
 }
 
