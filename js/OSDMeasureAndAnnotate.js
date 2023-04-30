@@ -29,7 +29,7 @@ class OSDMeasureAndAnnotate {
         };
 
         // setting up variables used in tracking what user is doing
-//        this.mode = this.Modes.ZOOM; // start in ZOOM mode (no measurements taken on click)
+        //        this.mode = this.Modes.ZOOM; // start in ZOOM mode (no measurements taken on click)
         this.isMeasuring = false; // toggles when user places first point of a measurement
 
         // the two points used to measure - these are image coordinates
@@ -145,8 +145,8 @@ class OSDMeasureAndAnnotate {
      *  Starts to measure when called
      */
     measure() {
-                    this.mode = this.Modes.MEASURE;
-                    this.annotations.disableSelect = true;
+        this.mode = this.Modes.MEASURE;
+        this.annotations.disableSelect = true;
     }
 
     /**
@@ -233,6 +233,7 @@ class OSDMeasureAndAnnotate {
         this.annotations.clearAnnotations();
         this.p1 = null;
         this.p2 = null;
+        document.dispatchEvent(new Event("measurements-reset"));
     }
 
     /**

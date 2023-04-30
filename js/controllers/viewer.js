@@ -111,11 +111,18 @@ window.onload = () => {
         element.innerText = measurement.toListElement();
         measurementListElements.push(element);
         measurementList.appendChild(element);
-    })
+    });
     // remove measurements on undo
     document.addEventListener("measurement-removed", () => {
         let element = measurementListElements.pop();
         measurementList.removeChild(element);
+    });
+    // remove all on reset
+    document.addEventListener("measurements-reset", () => {
+        while (measurementListElements.length > 0) {
+            let element = measurementListElements.pop();
+            measurementList.removeChild(element);
+        }
     })
 }
 
