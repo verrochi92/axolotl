@@ -7,9 +7,10 @@
 
 class Measurement {
     /* p1 and p2 are the **image** coordinates */
-    constructor(p1, p2, color, conversionFactor, units) {
+    constructor(p1, p2, name, color, conversionFactor, units) {
         this.p1 = p1;
         this.p2 = p2;
+        this.name = name;
         this.color = color;
         this.distance = Math.sqrt(Math.pow(this.p2.x - this.p1.x, 2) + Math.pow(this.p2.y - this.p1.y, 2));
         this.conversionFactor = conversionFactor; // pixels * conversionFactor = actual measurement
@@ -41,5 +42,10 @@ class Measurement {
     /* returns the string representing the distance */
     toString() {
         return `${(this.distance * this.conversionFactor).toFixed(3)}`;
+    }
+
+    /* convert to a list element */
+    toListElement() {
+        return `${this.name}: ${(this.distance * this.conversionFactor).toFixed(3)} ${this.units}`;
     }
 }

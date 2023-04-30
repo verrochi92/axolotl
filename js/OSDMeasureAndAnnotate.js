@@ -42,7 +42,7 @@ class OSDMeasureAndAnnotate {
         this.redoStack = [];
 
         // measurement marking color
-        this.measurementColor = "#000000"
+        this.measurementColor = "#000000";
 
         // these are used to convert from pixels to real-world units
         this.conversionFactor = conversionFactor;
@@ -89,7 +89,9 @@ class OSDMeasureAndAnnotate {
         if (this.isMeasuring) { // already have a point, so complete the measurement
             this.p2 = new Point(imagePoint.x, imagePoint.y, this.measurementColor);
             let measurement = new Measurement(
-                this.p1, this.p2, this.measurementColor, this.conversionFactor, this.units
+                this.p1, this.p2,
+                `measurement ${this.measurements.length + 1}`,
+                this.measurementColor, this.conversionFactor, this.units
             );
             // setup units
             measurement.conversionFactor = this.conversionFactor;
@@ -101,6 +103,8 @@ class OSDMeasureAndAnnotate {
             this.saveInLocalStorage();
             // have to blow out the redo stack since we made a new measurement
             this.redoStack = [];
+            // dispatch an event to let it be known there is a new measurement
+            document.dispatchEvent(new Event("measurement-added", { detail: measurement }));
         } else { // place the first point
             this.p1 = new Point(imagePoint.x, imagePoint.y, this.measurementColor);
             this.p1.render(this.fabricCanvas, zoom);
@@ -127,7 +131,7 @@ class OSDMeasureAndAnnotate {
             this.viewer.zoomPerClick = 2;
             // re-enable annotation selection
             this.annotations.disableSelect = false;
-            if (this.isMeasuring) { 
+            if (this.isMeasuring) {
                 // cancel current measurement
                 this.p1 = null;
                 this.isMeasuring = !this.isMeasuring;
@@ -137,10 +141,10 @@ class OSDMeasureAndAnnotate {
     }
 
     /*
-         * Measure :
-         *  Starts to measure when called
-         */
-    measure(){
+     * Measure :
+     *  Starts to measure when called
+     */
+    measure() {
                     this.mode = this.Modes.MEASURE;
                     this.annotations.disableSelect = true;
     }
@@ -175,18 +179,19 @@ class OSDMeasureAndAnnotate {
             for (let i = 0; i < data.measurements.length; i++) {
                 // JSON.stringify() strips our methods from Measurement objects,
                 // so we have to re-construct all of them one-by-one
-                this.measurements.push(new Measurement(
+                let measurement = new Measurement(
                     new Point(parseInt(data.measurements[i].p1.x), parseInt(data.measurements[i].p1.y), data.measurements[i].color),
                     new Point(parseInt(data.measurements[i].p2.x), parseInt(data.measurements[i].p2.y), data.measurements[i].color),
-                    data.measurements[i].color, this.conversionFactor, this.units
-                ));
+                    data.measurements[i].name, data.measurements[i].color, this.conversionFactor, this.units
+                );
+                this.measurements.push(measurement);
             }
             // now for the redo stack
             for (let i = 0; i < data.redoStack.length; i++) {
                 this.redoStack.push(new Measurement(
                     new Point(parseInt(data.redoStack[i].p1.x), parseInt(data.redoStack[i].p1.y), data.redoStack[i].color),
                     new Point(parseInt(data.redoStack[i].p2.x), parseInt(data.redoStack[i].p2.y), data.redoStack[i].color),
-                    data.redoStack[i].color, this.conversionFactor, this.units
+                    data.redoStack[i].name, data.redoStack[i].color, this.conversionFactor, this.units
                 ));
             }
             for (let i = 0; i < data.annotations.length; i++) {
@@ -249,8 +254,9 @@ class OSDMeasureAndAnnotate {
             this.redoStack.push(this.measurements.pop());
             this.saveInLocalStorage();
             this.renderAllMeasurements();
+            document.dispatchEvent(new Event("measurement-removed"));
         }
-        
+
     }
 
     /**
@@ -274,6 +280,8 @@ class OSDMeasureAndAnnotate {
                 lastObject.render(this.fabricCanvas, zoom);
                 // can't forget to save!
                 this.saveInLocalStorage();
+                // dispatch event to replace it in the measurement list
+                dispatchEvent(new CustomEvent("measurement-added", { detail: lastObject }));
             }
         }
     }

@@ -6,6 +6,7 @@
  */
 
 var plugin; // stores the OSDMeasureAndAnnotate plugin
+var measurementListElements = []; // measurements to display
 
 window.onload = () => {
     // get the image url from the search parameters sent by index.html
@@ -26,9 +27,35 @@ window.onload = () => {
 
     // initialize the plugin
     plugin = new OSDMeasureAndAnnotate(viewer, 4.54e-1, "um");
+    // display measurements if loaded from localStorage
+    let measurementList = document.getElementById("measurement-list");
+    for (let i = 0; i < plugin.measurements.length; i++) {
+        let element = document.createElement("li");
+        element.innerHTML = plugin.measurements[i].toListElement();
+        measurementListElements.push(element);
+        measurementList.appendChild(element);
+    }
 
     // add menus as children to the viewer so they display in fullscreen
-    document.getElementById("viewer").appendChild(document.getElementById("shortcuts"));
+    let viewerElement = document.getElementById("viewer");
+    let menuIcon = document.getElementById("menu-icon");
+    let measurementMenu = document.getElementById("measurement-menu");
+
+    viewerElement.appendChild(document.getElementById("shortcuts"));
+    viewerElement.appendChild(menuIcon);
+    viewerElement.appendChild(measurementMenu);
+
+    // display menu when menu icon is clicked
+    menuIcon.addEventListener("click", () => {
+        // display if not open
+        if (measurementMenu.getAttribute("hidden") == "hidden") {
+            measurementMenu.removeAttribute("hidden");
+        }
+        // otherwise close it
+        else {
+            measurementMenu.setAttribute("hidden", "hidden");
+        }
+    })
 
     // dispatch correct method on key press
     document.addEventListener('keydown', (event) => {
@@ -76,6 +103,20 @@ window.onload = () => {
     else {
         plugin.color = "#000000";
     }
+
+    // add new measurements to the window
+    document.addEventListener("measurement-added", () => {
+        let element = document.createElement("li");
+        let measurement = plugin.measurements[plugin.measurements.length - 1]
+        element.innerText = measurement.toListElement();
+        measurementListElements.push(element);
+        measurementList.appendChild(element);
+    })
+    // remove measurements on undo
+    document.addEventListener("measurement-removed", () => {
+        let element = measurementListElements.pop();
+        measurementList.removeChild(element);
+    })
 }
 
 function setColor() {
