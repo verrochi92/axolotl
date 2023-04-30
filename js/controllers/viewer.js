@@ -1,7 +1,7 @@
 /**
  * viewer.js
  * Viewer page logic
- * By Nicholas Verrochi
+ * By Nicholas Verrochi and Vidhya Sree N
  * For CS410 - The Axolotl Project
  */
 
@@ -21,7 +21,8 @@ window.onload = () => {
         showNavigator: false,
         tileSources: tileSource,
         sequenceMode: false,
-        useCanvas: true
+        useCanvas: true,
+        preventDefaultAction : true
     });
 
     // initialize the plugin
@@ -60,19 +61,19 @@ window.onload = () => {
     document.addEventListener('keydown', (event) => {
         console.log("keydown");
         // start measuring
-        if (event.key == 'm') {
-            if (plugin.mode != plugin.Modes.MEASURE) {
-                plugin.toggleMeasuring();
-            }
-        }
-        // stop measuring
-        else if (event.key == 'q') {
-            if (plugin.mode == plugin.Modes.MEASURE) {
-                plugin.toggleMeasuring();
-            }
-        }
+//        if (event.key == 'm') {
+//            if (plugin.mode != plugin.Modes.MEASURE) {
+//                plugin.toggleMeasuring();
+//            }
+//        }
+//        // stop measuring
+//        else if (event.key == 'q') {
+//            if (plugin.mode == plugin.Modes.MEASURE) {
+//                plugin.toggleMeasuring();
+//            }
+//        }
         // reset
-        else if (event.key == 'r') {
+        if (event.key == 'r') {
             if (window.confirm("Are you sure you want to reset all measurements and annotations?")) {
                 plugin.clear();
             }
@@ -91,6 +92,8 @@ window.onload = () => {
         }
         event.preventDefault();
     });
+
+    plugin.measure();
 
     // set color of the color input to match that of the plugin
     let colorSelector = document.getElementById("measurement-color");
