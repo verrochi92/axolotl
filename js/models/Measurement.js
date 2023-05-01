@@ -24,6 +24,8 @@ class Measurement {
 
         // draw line between p1 and p2
         let line = new fabric.Line([this.p1.x, this.p1.y, this.p2.x, this.p2.y], {
+            originX: 'center',
+            originY: 'center',
             stroke: this.color,
             strokeWidth: 50 / zoom
         });
