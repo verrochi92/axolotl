@@ -8,6 +8,7 @@
 var plugin; // stores the OSDMeasureAndAnnotate plugin
 var measurementListElements = []; // measurements to display
 
+
 window.onload = () => {
     // get the image url from the search parameters sent by index.html
     const urlParamsString = window.location.search;
@@ -32,6 +33,9 @@ window.onload = () => {
     for (let i = 0; i < plugin.measurements.length; i++) {
         let element = document.createElement("li");
         element.innerHTML = plugin.measurements[i].toListElement();
+        element.addEventListener("click", () => {
+            showMeasurementDetails(plugin.measurements[i].toListElement());
+        });
         measurementListElements.push(element);
         measurementList.appendChild(element);
     }
@@ -41,7 +45,7 @@ window.onload = () => {
     let menuIcon = document.getElementById("menu-icon");
     let measurementMenu = document.getElementById("measurement-menu");
 
-    viewerElement.appendChild(document.getElementById("shortcuts"));
+//    viewerElement.appendChild(document.getElementById("shortcuts"));
     viewerElement.appendChild(menuIcon);
     viewerElement.appendChild(measurementMenu);
 
@@ -129,6 +133,15 @@ window.onload = () => {
 function setColor() {
     colorSelector = document.getElementById("measurement-color");
     plugin.setMeasurementColor(colorSelector.value);
+}
+
+function toggleShort() {
+    var shortDiv = document.getElementById("short");
+    if (shortDiv.style.display === "none") {
+        shortDiv.style.display = "block";
+    } else {
+        shortDiv.style.display = "none";
+    }
 }
 
 
