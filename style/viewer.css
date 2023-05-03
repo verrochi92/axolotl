@@ -114,3 +114,16 @@ ul {
       font-family: sans-serif;
       font-size: 0.9em;
 }
+#help-button
+{
+    position: absolute;
+      z-index: 1000;
+      bottom:4;
+      left:4;
+      padding: 1%;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      font-family: sans-serif;
+      font-size: 0.9em;
+}
+
