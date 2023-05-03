@@ -143,5 +143,15 @@ function toggleShort() {
         shortDiv.style.display = "none";
     }
 }
+function showMeasurementDetails(measurementId) {
+    var sideBox = document.getElementById("measurement-details");
+    var measurement = measurementId;
+    if (measurement) {
+        sideBox.innerHTML = `<p>${measurementId}</p>`;
+    } else {
+        sideBox.innerHTML = `Measurement not found`;
+    }
+    sideBox.style.display = "block";
+}
 
 
