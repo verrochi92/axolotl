@@ -131,10 +131,15 @@ function showMeasurementDetails(measurement) {
     if (measurement) {
         measurementDetails.innerHTML = measurement.toListElementInnerHTML();
         // change stored name after editing
-        let measurementNameElement = document.getElementById(measurement.id);
-        measurementNameElement.addEventListener("change", () => {
-            measurement.name = measurementNameElement.innerText;
-        });
+        let nameDisplays = document.getElementsByClassName(measurement.id);
+        for (let i = 0; i < nameDisplays.length; i++) {
+            nameDisplays[i].addEventListener('change', () => {
+                measurement.name = nameDisplays[i].innerText;
+                updateMeasurementDisplays(measurement);
+                // save the new name
+                plugin.saveToLocalStorage();
+            });
+        }
     } else {
         measurementDetails.innerHTML = `Measurement not found`;
     }
@@ -153,10 +158,23 @@ function addMeasurementToList(measurement) {
     measurementListElements.push(element);
     measurementList.appendChild(element);
     // add event listener to change name
-    let measurementNameElement = document.getElementById(measurement.id);
-    measurementNameElement.addEventListener('change', () => {
-        measurement.name = measurementNameElement.innerText;
-    });
+    let nameDisplays = document.getElementsByClassName(measurement.id);
+    for (let i = 0; i < nameDisplays.length; i++) {
+        nameDisplays[i].addEventListener('change', () => {
+            measurement.name = nameDisplays[i].innerText;
+            updateMeasurementDisplays(measurement);
+            // save the new name
+            plugin.saveToLocalStorage();
+        });
+    }
+}
+
+// update the displayed text when a measurement name is changed
+function updateMeasurementDisplays(measurement) {
+    let elements = document.getElementsByClassName(measurement.id);
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].innerText = measurement.name;
+    }
 }
 
 

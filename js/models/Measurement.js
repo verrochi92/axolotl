@@ -49,7 +49,7 @@ class Measurement {
 
     /* convert to a list element */
     toListElementInnerHTML() {
-        return `<span id="${this.id}" contenteditable="true">${this.name}</span>: ` + 
+        return `<span class="${this.id}" contenteditable="true">${this.name}</span>: ` + 
             `${(this.distance * this.conversionFactor).toFixed(3)} ${this.units}`;
     }
 }
