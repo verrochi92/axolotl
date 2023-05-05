@@ -28,17 +28,21 @@ window.onload = () => {
 
     // initialize the plugin
     plugin = new OSDMeasureAndAnnotate(viewer, 4.54e-1, "um");
-    // display measurements if loaded from localStorage
-    let measurementList = document.getElementById("measurement-list");
-    for (let i = 0; i < plugin.measurements.length; i++) {
-        let element = document.createElement("li");
-        element.innerHTML = plugin.measurements[i].toListElement();
-        element.addEventListener("click", () => {
-            showMeasurementDetails(plugin.measurements[i].toListElement());
-        });
-        measurementListElements.push(element);
-        measurementList.appendChild(element);
-    }
+    /// display measurements if loaded from localStorage
+     let measurementList = document.getElementById("measurement-list");
+     for (let i = 0; i < plugin.measurements.length; i++) {
+       let element = document.createElement("li");
+       element.innerHTML = plugin.measurements[i].toListElement();
+       (function (index) {
+         element.addEventListener("click", () => {
+           showMeasurementDetails(plugin.measurements[index].toListElement());
+         });
+       })(i);
+       measurementListElements.push(element);
+       measurementList.appendChild(element);
+     }
+
+
 
     // add menus as children to the viewer so they display in fullscreen
     let viewerElement = document.getElementById("viewer");
@@ -110,11 +114,16 @@ window.onload = () => {
 
     // add new measurements to the window
     document.addEventListener("measurement-added", () => {
-        let element = document.createElement("li");
-        let measurement = plugin.measurements[plugin.measurements.length - 1]
-        element.innerText = measurement.toListElement();
-        measurementListElements.push(element);
-        measurementList.appendChild(element);
+      let element = document.createElement("li");
+      let measurement = plugin.measurements[plugin.measurements.length - 1]
+      element.innerText = measurement.toListElement();
+      (function (index) {
+        element.addEventListener("click", () => {
+          showMeasurementDetails(plugin.measurements[index].toListElement());
+        });
+      })(plugin.measurements.length - 1);
+      measurementListElements.push(element);
+      measurementList.appendChild(element);
     });
     // remove measurements on undo
     document.addEventListener("measurement-removed", () => {
@@ -127,7 +136,10 @@ window.onload = () => {
             let element = measurementListElements.pop();
             measurementList.removeChild(element);
         }
-    })
+        // Clear the clicked measurement
+        let sideBox = document.getElementById("measurement-details");
+        sideBox.style.display = "none";
+    });
 }
 
 function setColor() {
