@@ -60,6 +60,8 @@ window.onload = function () {
 function rotateGrid() {
     var angle = document.getElementById("grid-rotation-slider").value;
     gridGroup.setAngle(angle);
+    let angleDisplay = document.getElementById("angle-display");
+    angleDisplay.innerText = angle;
     overlay.fabricCanvas().renderAll();
 }
 function toggleGrid() {

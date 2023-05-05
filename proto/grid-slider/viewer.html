@@ -25,7 +25,8 @@
         <input type="checkbox" id="grid" onclick="toggleGrid()">
         <span class="slider round"></span>
     </label>
-    <input type="range" min="-180" max="180" value="0"  id="grid-rotation-slider" onchange="rotateGrid()" style="width:100px">
+    <input type="range" min="-180" max="180" value="0"  id="grid-rotation-slider" ondrag="rotateGrid()" onchange="rotateGrid()" style="width:100px">
+    <p id="angle-display"></p>
 </div>
 </div>
 </body>
