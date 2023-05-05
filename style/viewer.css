@@ -25,20 +25,6 @@ body {
   position: relative;
 }
 
-#shortcuts {
-  position: absolute;
-  z-index: 1000;
-  bottom: 0;
-  left: 0;
-  padding: 1%;
-  background-color: rgba(0, 0, 0, 0.7);
-  min-height: 5%;
-  width: 8%;
-  color: white;
-  font-family: sans-serif;
-  font-size: 0.9em;
-}
-
 #measurement-color {
   height: 20px;
   width: 20px;
@@ -92,38 +78,40 @@ ul {
   padding: 0;
 }
 
-#short {
-    position: absolute;
-      z-index: 1000;
-      bottom: 0;
-      right: 20;
-      padding: 1%;
-      background-color: rgba(0, 0, 0, 0.2);
-      color: white;
-      font-family: sans-serif;
-      font-size: 0.9em;
-}
-#measurement-details{
-    position: absolute;
-      z-index: 1000;
-      top:150;
-      right:198;
-      padding: 1%;
-      background-color: rgba(0, 0, 0, 0.7);
-      color: white;
-      font-family: sans-serif;
-      font-size: 0.9em;
-}
-#help-button
-{
-    position: absolute;
-      z-index: 1000;
-      bottom:4;
-      left:4;
-      padding: 1%;
-      background-color: rgba(0, 0, 0, 0.7);
-      color: white;
-      font-family: sans-serif;
-      font-size: 0.9em;
+#shortcuts {
+  position: absolute;
+  z-index: 1000;
+  bottom: 0;
+  right: 20;
+  padding: 1%;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  font-family: sans-serif;
+  font-size: 0.9em;
+  display: none;
 }
 
+#measurement-details {
+  position: absolute;
+  z-index: 1000;
+  top: 150;
+  right: 198;
+  padding: 1%;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-family: sans-serif;
+  font-size: 0.9em;
+  display: none;
+}
+
+#help-button {
+  position: absolute;
+  z-index: 1000;
+  bottom: 4;
+  left: 4;
+  padding: 1%;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-family: sans-serif;
+  font-size: 0.9em;
+}

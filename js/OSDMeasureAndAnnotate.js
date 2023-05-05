@@ -22,14 +22,6 @@ class OSDMeasureAndAnnotate {
         this.viewer.gestureSettingsTouch.clickToZoom = false;
         this.annotations = OpenSeadragon.Annotorious(viewer);
 
-        // enum to represent modes of operation - symbol enforces use of the enum
-        this.Modes = {
-            ZOOM: Symbol("zoom"),
-            MEASURE: Symbol("measure")
-        };
-
-        // setting up variables used in tracking what user is doing
-        //        this.mode = this.Modes.ZOOM; // start in ZOOM mode (no measurements taken on click)
         this.isMeasuring = false; // toggles when user places first point of a measurement
 
         // the two points used to measure - these are image coordinates
@@ -55,9 +47,8 @@ class OSDMeasureAndAnnotate {
 
         // add our custom handler for measurements
         this.viewer.addHandler('canvas-double-click', (event) => {
-            if (this.mode == this.Modes.MEASURE) {
-                this.addMeasurement(event);
-            } else if (!event.quick) {
+            this.addMeasurement(event);
+            if (!event.quick) {
                 event.preventDefaultAction = true;
             }
         });
@@ -110,43 +101,6 @@ class OSDMeasureAndAnnotate {
             this.p1.render(this.fabricCanvas, zoom);
         }
         this.isMeasuring = !this.isMeasuring;
-    }
-
-    /*
-     * toggleMeasuring:
-     *     Switches between the two modes of operation - note this does not
-     *     disable the custom buttons - this needs to be done in the buttons'
-     *     onclick handlers
-     */
-    toggleMeasuring() {
-        if (this.mode == this.Modes.ZOOM) {
-            this.mode = this.Modes.MEASURE;
-            // disable zoom on click
-            this.viewer.zoomPerClick = 1;
-            // disable annotation selection so user can measure where there are annotations
-            this.annotations.disableSelect = true;
-        } else { // this.mode == this.Modes.MEASURE
-            this.mode = this.Modes.ZOOM;
-            // re-enable zoom on click
-            this.viewer.zoomPerClick = 2;
-            // re-enable annotation selection
-            this.annotations.disableSelect = false;
-            if (this.isMeasuring) {
-                // cancel current measurement
-                this.p1 = null;
-                this.isMeasuring = !this.isMeasuring;
-                this.renderAllMeasurements();
-            }
-        }
-    }
-
-    /*
-     * Measure :
-     *  Starts to measure when called
-     */
-    measure() {
-        this.mode = this.Modes.MEASURE;
-        this.annotations.disableSelect = true;
     }
 
     /**
@@ -282,7 +236,7 @@ class OSDMeasureAndAnnotate {
                 // can't forget to save!
                 this.saveInLocalStorage();
                 // dispatch event to replace it in the measurement list
-                dispatchEvent(new CustomEvent("measurement-added", { detail: lastObject }));
+                dispatchEvent(new Event("measurement-added"));
             }
         }
     }

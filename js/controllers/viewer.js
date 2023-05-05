@@ -23,33 +23,23 @@ window.onload = () => {
         tileSources: tileSource,
         sequenceMode: false,
         useCanvas: true,
-        preventDefaultAction : true
+        preventDefaultAction: true
     });
 
     // initialize the plugin
     plugin = new OSDMeasureAndAnnotate(viewer, 4.54e-1, "um");
+
     /// display measurements if loaded from localStorage
-     let measurementList = document.getElementById("measurement-list");
-     for (let i = 0; i < plugin.measurements.length; i++) {
-       let element = document.createElement("li");
-       element.innerHTML = plugin.measurements[i].toListElement();
-       (function (index) {
-         element.addEventListener("click", () => {
-           showMeasurementDetails(plugin.measurements[index].toListElement());
-         });
-       })(i);
-       measurementListElements.push(element);
-       measurementList.appendChild(element);
-     }
-
-
+    for (let i = 0; i < plugin.measurements.length; i++) {
+        addMeasurementToList(plugin.measurements[i]);
+    }
 
     // add menus as children to the viewer so they display in fullscreen
     let viewerElement = document.getElementById("viewer");
     let menuIcon = document.getElementById("menu-icon");
     let measurementMenu = document.getElementById("measurement-menu");
 
-//    viewerElement.appendChild(document.getElementById("shortcuts"));
+    //    viewerElement.appendChild(document.getElementById("shortcuts"));
     viewerElement.appendChild(menuIcon);
     viewerElement.appendChild(measurementMenu);
 
@@ -85,12 +75,11 @@ window.onload = () => {
         else if (event.ctrlKey && event.key == 'e') {
             plugin.exportCSV();
         }
+        // override ctrl presses
         if (event.ctrlKey) {
             event.preventDefault();
         }
     });
-
-    plugin.measure();
 
     // set color of the color input to match that of the plugin
     let colorSelector = document.getElementById("measurement-color");
@@ -103,16 +92,8 @@ window.onload = () => {
 
     // add new measurements to the window
     document.addEventListener("measurement-added", () => {
-      let element = document.createElement("li");
-      let measurement = plugin.measurements[plugin.measurements.length - 1]
-      element.innerText = measurement.toListElement();
-      (function (index) {
-        element.addEventListener("click", () => {
-          showMeasurementDetails(plugin.measurements[index].toListElement());
-        });
-      })(plugin.measurements.length - 1);
-      measurementListElements.push(element);
-      measurementList.appendChild(element);
+        // add the newest measurement
+        addMeasurementToList(plugin.measurements[plugin.measurements.length - 1]);
     });
     // remove measurements on undo
     document.addEventListener("measurement-removed", () => {
@@ -125,9 +106,9 @@ window.onload = () => {
             let element = measurementListElements.pop();
             measurementList.removeChild(element);
         }
-        // Clear the clicked measurement
-        let sideBox = document.getElementById("measurement-details");
-        sideBox.style.display = "none";
+        // clear the measurement detail box
+        let measurementDetails = document.getElementById("measurement-details");
+        measurementDetails.style.setProperty("display", "none");
     });
 }
 
@@ -136,23 +117,46 @@ function setColor() {
     plugin.setMeasurementColor(colorSelector.value);
 }
 
-function toggleShort() {
-    var shortDiv = document.getElementById("short");
-    if (shortDiv.style.display === "none") {
-        shortDiv.style.display = "block";
+function toggleShortcuts() {
+    var shortDiv = document.getElementById("shortcuts");
+    if (shortDiv.style.getPropertyValue("display") == "none") {
+        shortDiv.style.setProperty("display", "block");
     } else {
-        shortDiv.style.display = "none";
+        shortDiv.style.setProperty("display", "none");
     }
 }
-function showMeasurementDetails(measurementId) {
-    var sideBox = document.getElementById("measurement-details");
-    var measurement = measurementId;
+
+function showMeasurementDetails(measurement) {
+    let measurementDetails = document.getElementById("measurement-details");
     if (measurement) {
-        sideBox.innerHTML = `<p>${measurementId}</p>`;
+        measurementDetails.innerHTML = measurement.toListElementInnerHTML();
+        // change stored name after editing
+        let measurementNameElement = document.getElementById(measurement.id);
+        measurementNameElement.addEventListener("change", () => {
+            measurement.name = measurementNameElement.innerText;
+        });
     } else {
-        sideBox.innerHTML = `Measurement not found`;
+        measurementDetails.innerHTML = `Measurement not found`;
     }
-    sideBox.style.display = "block";
+    measurementDetails.style.setProperty("display", "block");
+}
+
+function addMeasurementToList(measurement) {
+    let measurementList = document.getElementById("measurement-list");
+    let element = document.createElement("li");
+    element.innerHTML = measurement.toListElementInnerHTML();
+    // show details on click
+    element.addEventListener("click", () => {
+        showMeasurementDetails(measurement);
+    });
+    // add element to list in memory and in the dom
+    measurementListElements.push(element);
+    measurementList.appendChild(element);
+    // add event listener to change name
+    let measurementNameElement = document.getElementById(measurement.id);
+    measurementNameElement.addEventListener('change', () => {
+        measurement.name = measurementNameElement.innerText;
+    });
 }
 
 
