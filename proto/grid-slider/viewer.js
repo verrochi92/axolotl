@@ -9,8 +9,6 @@ var gridGroup = new fabric.Group([], {
     evented: false
 });
 
-var plugin; // stores the OSDMeasureAndAnnotate plugin
-
 window.onload = function () {
     viewer = OpenSeadragon({
         id: "viewer",
@@ -55,21 +53,26 @@ window.onload = function () {
 
         // add the grid group to the overlay canvas
         fabricCanvas.add(gridGroup);
+        gridGroup.visible = false;
     });
 
 }
 function rotateGrid() {
-    gridGroup.setAngle(5);
+    var angle = document.getElementById("grid-rotation-slider").value;
+    gridGroup.setAngle(angle);
     overlay.fabricCanvas().renderAll();
 }
 function toggleGrid() {
     var gridVisible = gridGroup.visible;
     gridGroup.visible = !gridVisible;
     overlay.fabricCanvas().renderAll();
-    var gridRotationButton = document.getElementById("grid-rotation");
+    var gridRotationAngle = document.getElementById("grid-rotation-slider");
+    var gridToggleSwitch = document.getElementById("grid");
     if (gridVisible) {
-        gridRotationButton.classList.remove("visible");
+        gridRotationAngle.style.display = "none";
+        gridToggleSwitch.checked = false;
     } else {
-        gridRotationButton.classList.add("visible");
+        gridRotationAngle.style.display = "block";
+        gridToggleSwitch.checked = true;
     }
 }

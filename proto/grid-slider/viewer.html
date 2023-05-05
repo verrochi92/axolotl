@@ -18,16 +18,16 @@
 </head>
 
 <body>
-<div id="viewer"></div>
-<span>Grid</span>
-<label class="switch" for="grid">
-    <input type="checkbox" id="grid" onclick="toggleGrid()" checked>
-    <span class="slider round"></span>
-</label>
-<br>
-<br>
-<input type="button" id="grid-rotation" value="Rotate Grid" onclick="rotateGrid();" class="visible">
-
+<div id="viewer" style="height:100vh;width:100vw;background-color:black;position:relative;">
+<div id="info">
+    <span>Grid</span>
+    <label class="switch" for="grid">
+        <input type="checkbox" id="grid" onclick="toggleGrid()">
+        <span class="slider round"></span>
+    </label>
+    <input type="range" min="-180" max="180" value="0"  id="grid-rotation-slider" onchange="rotateGrid()" style="width:100px">
+</div>
+</div>
 </body>
 
 </html>
