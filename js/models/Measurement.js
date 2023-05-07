@@ -49,7 +49,7 @@ class Measurement {
 
     /* convert to a list element */
     toListElementInnerHTML() {
-        return `<input type="text" class="name-textbox" placeholder="${this.name}" />: ` + 
+        return `<span contenteditable="true">${this.name}</span>: ` + 
             `${(this.distance * this.conversionFactor).toFixed(3)} ${this.units}`;
     }
 }

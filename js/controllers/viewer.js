@@ -155,9 +155,11 @@ function addMeasurementToList(measurement) {
     element.measurementObject = measurement; // this was the tricky part :(
     element.innerHTML = measurement.toListElementInnerHTML();
     // show details on click
+    /*
     element.addEventListener("click", () => {
         showMeasurementDetails(measurement);
     });
+    */
     // add element to list in memory and in the dom
     measurementListElements.push(element);
     measurementList.appendChild(element);
