@@ -34,12 +34,12 @@ window.onload = () => {
         addMeasurementToList(plugin.measurements[i]);
     }
 
-    // add menus as children to the viewer so they display in fullscreen
     let viewerElement = document.getElementById("viewer");
     let menuIcon = document.getElementById("menu-icon");
     let measurementMenu = document.getElementById("measurement-menu");
+    let measurementList = document.getElementById("measurement-list");
 
-    //    viewerElement.appendChild(document.getElementById("shortcuts"));
+    // add menus as children to the viewer so they display in fullscreen
     viewerElement.appendChild(menuIcon);
     viewerElement.appendChild(measurementMenu);
 
@@ -98,12 +98,14 @@ window.onload = () => {
     // remove measurements on undo
     document.addEventListener("measurement-removed", () => {
         let element = measurementListElements.pop();
+        let measurementList = document.getElementById("measurement-list")
         measurementList.removeChild(element);
     });
     // remove all on reset
     document.addEventListener("measurements-reset", () => {
         while (measurementListElements.length > 0) {
             let element = measurementListElements.pop();
+            let measurementList = document.getElementById("measurement-list")
             measurementList.removeChild(element);
         }
         // clear the measurement detail box
@@ -133,9 +135,10 @@ function showMeasurementDetails(measurement) {
         // change stored name after editing
         let nameDisplays = document.getElementsByClassName(measurement.id);
         for (let i = 0; i < nameDisplays.length; i++) {
+            var self = nameDisplays[i];
             nameDisplays[i].addEventListener('change', () => {
-                measurement.name = nameDisplays[i].innerText;
-                updateMeasurementDisplays(measurement);
+                let nameDisplay = self;
+                updateMeasurementDisplays(nameDisplay);
                 // save the new name
                 plugin.saveToLocalStorage();
             });
@@ -149,6 +152,7 @@ function showMeasurementDetails(measurement) {
 function addMeasurementToList(measurement) {
     let measurementList = document.getElementById("measurement-list");
     let element = document.createElement("li");
+    element.measurementObject = measurement; // this was the tricky part :(
     element.innerHTML = measurement.toListElementInnerHTML();
     // show details on click
     element.addEventListener("click", () => {
@@ -161,8 +165,7 @@ function addMeasurementToList(measurement) {
     let nameDisplays = document.getElementsByClassName(measurement.id);
     for (let i = 0; i < nameDisplays.length; i++) {
         nameDisplays[i].addEventListener('change', () => {
-            measurement.name = nameDisplays[i].innerText;
-            updateMeasurementDisplays(measurement);
+            updateMeasurementDisplays();
             // save the new name
             plugin.saveToLocalStorage();
         });
@@ -170,10 +173,14 @@ function addMeasurementToList(measurement) {
 }
 
 // update the displayed text when a measurement name is changed
-function updateMeasurementDisplays(measurement) {
-    let elements = document.getElementsByClassName(measurement.id);
-    for (let i = 0; i < elements.length; i++) {
-        elements[i].innerText = measurement.name;
+function updateMeasurementDisplays(nameDisplayElement) {
+    for (let i = 0; i < measurementListELements.length; i++) {
+        let element = measurementListElements[i];
+        let measurement = element.measurementObject;
+        let newName = nameDisplayElement.innerText;
+        
+        measurement.name = newName;
+        element.innerHTML = measurement.toListElementInnerHTML();
     }
 }
 

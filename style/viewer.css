@@ -115,3 +115,10 @@ ul {
   font-family: sans-serif;
   font-size: 0.9em;
 }
+
+#name-textbox {
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0px 0px 0px 0px;
+}
