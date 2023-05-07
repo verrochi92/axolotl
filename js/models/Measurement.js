@@ -10,6 +10,7 @@ class Measurement {
     constructor(p1, p2, name, color, conversionFactor, units) {
         this.p1 = p1;
         this.p2 = p2;
+        this.id = name; // this never changes
         this.name = name;
         this.color = color;
         this.distance = Math.sqrt(Math.pow(this.p2.x - this.p1.x, 2) + Math.pow(this.p2.y - this.p1.y, 2));
@@ -47,7 +48,8 @@ class Measurement {
     }
 
     /* convert to a list element */
-    toListElement() {
-        return `${this.name}: ${(this.distance * this.conversionFactor).toFixed(3)} ${this.units}`;
+    toListElementInnerHTML() {
+        return `<span contenteditable="true">${this.name}</span>: ` + 
+            `${(this.distance * this.conversionFactor).toFixed(3)} ${this.units}`;
     }
 }
