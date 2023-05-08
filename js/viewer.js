@@ -152,7 +152,6 @@ function showMeasurementDetails(measurement) {
 function addMeasurementToList(measurement) {
     let measurementList = document.getElementById("measurement-list");
     let element = document.createElement("li");
-    element.measurementObject = measurement; // this was the tricky part :(
     element.innerHTML = measurement.toListElementInnerHTML();
     // show details on click
     /*
@@ -164,6 +163,7 @@ function addMeasurementToList(measurement) {
     measurementListElements.push(element);
     measurementList.appendChild(element);
     // add event listener to change name
+    /*
     let nameDisplays = document.getElementsByClassName(measurement.id);
     for (let i = 0; i < nameDisplays.length; i++) {
         nameDisplays[i].addEventListener('change', () => {
@@ -172,6 +172,7 @@ function addMeasurementToList(measurement) {
             plugin.saveToLocalStorage();
         });
     }
+    */
 }
 
 // update the displayed text when a measurement name is changed
