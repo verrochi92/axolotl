@@ -95,7 +95,7 @@ class OSDMeasureAndAnnotate {
             // have to blow out the redo stack since we made a new measurement
             this.redoStack = [];
             // dispatch an event to let it be known there is a new measurement
-            document.dispatchEvent(new Event("measurement-added", { detail: measurement }));
+            document.dispatchEvent(new Event("measurement-added"));
         } else { // place the first point
             this.p1 = new Point(imagePoint.x, imagePoint.y, this.measurementColor);
             this.p1.render(this.fabricCanvas, zoom);
@@ -236,7 +236,7 @@ class OSDMeasureAndAnnotate {
                 // can't forget to save!
                 this.saveInLocalStorage();
                 // dispatch event to replace it in the measurement list
-                dispatchEvent(new Event("measurement-added"));
+                document.dispatchEvent(new Event("measurement-added"));
             }
         }
     }
@@ -249,7 +249,6 @@ class OSDMeasureAndAnnotate {
     setMeasurementColor(color) {
         this.measurementColor = color;
         if (this.isMeasuring) {
-            console.log("re-rendering p1");
             // have to re-color the marking already placed
             this.p1.color = this.measurementColor;
             this.p1.fabricObject.remove();

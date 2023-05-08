@@ -27,8 +27,9 @@ body {
 
 #measurement-color {
   height: 20px;
-  width: 20px;
-  border-width: 0;
+  width: 30px;
+  border: none;
+  padding: 0px;
 }
 
 /* Menu icon styles */
@@ -88,7 +89,6 @@ ul {
   color: white;
   font-family: sans-serif;
   font-size: 0.9em;
-  display: none;
 }
 
 #measurement-details {
