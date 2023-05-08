@@ -120,11 +120,11 @@ function setColor() {
 }
 
 function toggleShortcuts() {
-    var shortDiv = document.getElementById("shortcuts");
-    if (shortDiv.style.getPropertyValue("display") == "none") {
-        shortDiv.style.setProperty("display", "block");
+    var shortcuts = document.getElementById("shortcuts");
+    if (shortcuts.getAttribute("hidden") == "hidden") {
+        shortcuts.removeAttribute("hidden");
     } else {
-        shortDiv.style.setProperty("display", "none");
+        shortcuts.setAttribute("hidden", "hidden");
     }
 }
 
