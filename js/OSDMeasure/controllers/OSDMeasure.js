@@ -92,14 +92,14 @@ class OSDMeasureAndAnnotate {
             measurement.render(this.fabricCanvas, zoom);
             this.measurements.push(measurement);
             this.saveInLocalStorage();
-            // have to blow out the redo stack since we made a new measurement
-            this.redoStack = [];
             // dispatch an event to let it be known there is a new measurement
             document.dispatchEvent(new Event("measurement-added"));
         } else { // place the first point
             this.p1 = new Point(imagePoint.x, imagePoint.y, this.measurementColor);
             this.p1.render(this.fabricCanvas, zoom);
         }
+        // have to blow out the redo stack since we made a new measurement
+        this.redoStack = [];
         this.isMeasuring = !this.isMeasuring;
     }
 
