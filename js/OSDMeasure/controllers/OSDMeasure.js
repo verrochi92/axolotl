@@ -68,7 +68,7 @@ class OSDMeasureAndAnnotate {
     }
 
     /*
-     * handleClickMeasure:
+     * addMeasurement:
      *     Only called in measuring mode - places a new point onto the canvas,
      *     and performs measuring once two points have been placed.
      */
