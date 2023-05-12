@@ -27,7 +27,11 @@ window.onload = () => {
     });
 
     // initialize the plugin
-    plugin = new OSDMeasureAndAnnotate(viewer, 4.54e-1, "um");
+    plugin = new OSDMeasureAndAnnotate(viewer, {
+        conversionFactor: 4.54e-1, 
+        units: "um",
+        useDefaultUI: true
+    });
 
     /// display measurements if loaded from localStorage
     for (let i = 0; i < plugin.measurements.length; i++) {
@@ -40,10 +44,11 @@ window.onload = () => {
     let measurementList = document.getElementById("measurement-list");
 
     // add menus as children to the viewer so they display in fullscreen
-    viewerElement.appendChild(menuIcon);
+    //viewerElement.appendChild(menuIcon);
     viewerElement.appendChild(measurementMenu);
 
     // display menu when menu icon is clicked
+    /*
     menuIcon.addEventListener("click", () => {
         // display if not open
         if (measurementMenu.getAttribute("hidden") == "hidden") {
@@ -53,7 +58,8 @@ window.onload = () => {
         else {
             measurementMenu.setAttribute("hidden", "hidden");
         }
-    })
+    });
+    */
 
     // dispatch correct method on key press
     document.addEventListener('keydown', (event) => {
