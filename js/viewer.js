@@ -28,9 +28,9 @@ window.onload = () => {
 
     // initialize the plugin
     plugin = new OSDMeasureAndAnnotate(viewer, {
-        conversionFactor: 4.54e-1, 
+        conversionFactor: 4.54e-1,
         units: "um",
-        useDefaultUI: true
+        useBuiltInUI: true
     });
 
     /// display measurements if loaded from localStorage
@@ -187,7 +187,7 @@ function updateMeasurementDisplays(nameDisplayElement) {
         let element = measurementListElements[i];
         let measurement = element.measurementObject;
         let newName = nameDisplayElement.innerText;
-        
+
         measurement.name = newName;
         element.innerHTML = measurement.toListElementInnerHTML();
     }
