@@ -27,7 +27,7 @@ window.onload = () => {
     });
 
     // initialize the plugin
-    plugin = new OSDMeasureAndAnnotate(viewer, {
+    plugin = new OSDMeasure(viewer, {
         conversionFactor: 4.54e-1,
         units: "um",
         useBuiltInUI: true
@@ -90,10 +90,10 @@ window.onload = () => {
     // set color of the color input to match that of the plugin
     let colorSelector = document.getElementById("measurement-color");
     if (plugin.color) {
-        colorSelector.value = plugin.color;
+        colorSelector.value = plugin.measurementColor;
     }
     else {
-        plugin.color = "#000000";
+        plugin.measurementColor = "#000000";
     }
 
     // add new measurements to the window
