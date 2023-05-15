@@ -2,10 +2,12 @@
 by Nicholas Verrochi, Vidhya Sree Narayanappa, Sairam Bandarupalli and Andy Duverneau
 
 Try it out: https://verrochi92.github.io/axolotl/
+
 Project documentation coming soon!
 
 ## Previous work
 This project is an extension of work done by Allen Dai in 2022: 
+
 https://github.com/allendai1/cs460student/tree/main/axo
 
 ## What we added
@@ -34,8 +36,11 @@ a previously undone measurement, reset all measurements and annotations, and exp
 to a .csv file. There are various keyboard shortcuts for these features as well:
 
 ctrl + z: undo
+
 ctrl + y: redo
+
 ctrl + r: reset
+
 ctrl + e: export
 
 ## Developer setup
