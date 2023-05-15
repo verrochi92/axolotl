@@ -7,6 +7,7 @@
 
 var plugin; // stores the OSDMeasureAndAnnotate plugin
 var measurementListElements = []; // measurements to display
+var gridPlugin; // gridplugin
 
 
 window.onload = () => {
@@ -25,6 +26,11 @@ window.onload = () => {
         useCanvas: true,
         preventDefaultAction: true
     });
+
+    // Initialize the Grid plugin
+    gridPlugin = new GridViewerPlugin(viewer);
+    gridPlugin.addGrid();
+
 
     // initialize the plugin
     plugin = new OSDMeasureAndAnnotate(viewer, 4.54e-1, "um");
