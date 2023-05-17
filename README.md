@@ -1,15 +1,50 @@
-Try it out!
+# The Axolotl Project
+by Nicholas Verrochi, Vidhya Sree Narayanappa, Sairam Bandarupalli and Andy Duverneau
 
-https://verrochi92.github.io/axolotl/
+Try it out: https://verrochi92.github.io/axolotl/
 
-This project is an extension of work done by Allen Dai in 2022:
+Project documentation coming soon!
+
+## Previous work
+This project is an extension of work done by Allen Dai in 2022: 
 
 https://github.com/allendai1/cs460student/tree/main/axo
 
-Our goal is to create an application that will help the McCusker lab at the
-University of Massachusetts in Boston better analyze the regerative properties
-of the Axolotl. The original software allows for viewing scans of the animals
-at a high resolution and measuring the length (in pixels) between two points on
-the image. Our goal is to improve the interface by getting the actual 
-measurements based on the scale of the image, and allowing for this data to be
-saved.
+## What we added
+The Axolotl Project is a client-side web application designed to help the McCusker 
+lab at the University of Massachusetts in Boston better analyze the regerative properties
+of the Axolotl. The original software allows for viewing scans of the animals at a high 
+resolution and measuring the length in nanometers between two points on the image. Our work
+improved the interface and allowed for saving and exporting measurement data. To do this we 
+created a plugin for OpenSeadragon, an open-source zooming viewer for high-resolution
+images, OSDMeasure. 
+
+## OSDMeasure
+OSDMeasure is our open-source plugin for OpenSeadragon that allows measurements to be
+taken from any OpenSeadragon-compatible image, including the high-resolution DeepZoom
+format used for the Axolotl scans. This plugin is the backbone of our project and was
+designed with the community in mind, it can be used in other applications with similar
+needs. For more information, see our repo [here](https://github.com/verrochi92/OSDMeasure). 
+
+## Usage
+From the index, you can select from a set of Axolotl scans. Once the image is loaded,
+you can start measuring right away by double-clicking. Each time you double-click marks
+a point on the image. Once a second point is chosen, you will see the length in nanometers
+on the screen. To open the menu, click the icon in the top-right. From there you can change
+the color of the measurements, give custom names to measurements, undo a measurement, redo
+a previously undone measurement, reset all measurements and annotations, and export measurements
+to a .csv file. There are various keyboard shortcuts for these features as well:
+
+ctrl + z: undo
+
+ctrl + y: redo
+
+ctrl + r: reset
+
+ctrl + e: export
+
+## Developer setup
+Our project is easy to setup, every library we use is included, so you don't actually
+need to download any of the dependencies or the OSDMeasure plugin, simply clone the
+repository. Most of the functionality we added is within the plugin itself, so it might 
+interest you more to work with OSDMeasure directly. 
