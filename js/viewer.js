@@ -33,7 +33,11 @@ window.onload = () => {
 
 
     // initialize the plugin
-    plugin = new OSDMeasureAndAnnotate(viewer, 4.54e-1, "um");
+    plugin = new OSDMeasure(viewer, {
+        conversionFactor: 4.54e-1,
+        units: "um",
+        useBuiltInUI: true
+    });
 
     /// display measurements if loaded from localStorage
     for (let i = 0; i < plugin.measurements.length; i++) {
@@ -46,10 +50,11 @@ window.onload = () => {
     let measurementList = document.getElementById("measurement-list");
 
     // add menus as children to the viewer so they display in fullscreen
-    viewerElement.appendChild(menuIcon);
+    //viewerElement.appendChild(menuIcon);
     viewerElement.appendChild(measurementMenu);
 
     // display menu when menu icon is clicked
+    /*
     menuIcon.addEventListener("click", () => {
         // display if not open
         if (measurementMenu.getAttribute("hidden") == "hidden") {
@@ -59,7 +64,8 @@ window.onload = () => {
         else {
             measurementMenu.setAttribute("hidden", "hidden");
         }
-    })
+    });
+    */
 
     // dispatch correct method on key press
     document.addEventListener('keydown', (event) => {
@@ -90,10 +96,10 @@ window.onload = () => {
     // set color of the color input to match that of the plugin
     let colorSelector = document.getElementById("measurement-color");
     if (plugin.color) {
-        colorSelector.value = plugin.color;
+        colorSelector.value = plugin.measurementColor;
     }
     else {
-        plugin.color = "#000000";
+        plugin.measurementColor = "#000000";
     }
 
     // add new measurements to the window
@@ -187,7 +193,7 @@ function updateMeasurementDisplays(nameDisplayElement) {
         let element = measurementListElements[i];
         let measurement = element.measurementObject;
         let newName = nameDisplayElement.innerText;
-        
+
         measurement.name = newName;
         element.innerHTML = measurement.toListElementInnerHTML();
     }
