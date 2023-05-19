@@ -1,5 +1,5 @@
 /*
- * OSDMeasureAndAnnotate.js
+ * GridViewerPlugin.js
  *
  * Plugin for OpenSeadragon that adds Grid on OSD image
  *
@@ -11,7 +11,7 @@
  */
 
 class GridViewerPlugin {
-  constructor(viewer, conversionFactor = 1, units = "px") {
+  constructor(viewer) {
     this.viewer = viewer;
     // pull in the two libraries
     this.overlay = viewer.fabricjsOverlay();
@@ -29,38 +29,38 @@ class GridViewerPlugin {
     this.addPluginHTML(viewer);
   }
 
- // Function to rotate the grid
-   rotateGrid() {
-     var angle = document.getElementById("grid-rotation-slider").value;
-     this.gridGroup.setAngle(angle);
-     var angleDisplay = document.getElementById("angle-display");
-     angleDisplay.innerText = angle;
-     this.fabricCanvas.renderAll();
-   }
+  // Function to rotate the grid
+  rotateGrid() {
+    var angle = document.getElementById("grid-rotation-slider").value;
+    this.gridGroup.setAngle(angle);
+    var angleDisplay = document.getElementById("angle-display");
+    angleDisplay.innerText = angle;
+    this.fabricCanvas.renderAll();
+  }
 
-   // Function to toggle the grid
-   toggleGrid() {
-     var gridVisible = this.gridGroup.visible;
-     this.gridGroup.visible = !gridVisible;
-     this.fabricCanvas.renderAll();
-     var gridRotationAngle = document.getElementById("grid-rotation-slider");
-     var gridToggleSwitch = document.getElementById("grid");
-     var angleDisplay = document.getElementById("angle-display")
-     if (gridVisible) {
-       gridRotationAngle.style.display = "none";
-       angleDisplay.style.display = "none"
-       gridToggleSwitch.checked = false;
-     } else {
-       gridRotationAngle.style.display = "block";
-       angleDisplay.style.display = "block"
-       gridToggleSwitch.checked = true;
-     }
-   }
+  // Function to toggle the grid
+  toggleGrid() {
+    var gridVisible = this.gridGroup.visible;
+    this.gridGroup.visible = !gridVisible;
+    this.fabricCanvas.renderAll();
+    var gridRotationAngle = document.getElementById("grid-rotation-slider");
+    var gridToggleSwitch = document.getElementById("grid");
+    var angleDisplay = document.getElementById("angle-display")
+    if (gridVisible) {
+      gridRotationAngle.style.display = "none";
+      angleDisplay.style.display = "none"
+      gridToggleSwitch.checked = false;
+    } else {
+      gridRotationAngle.style.display = "block";
+      angleDisplay.style.display = "block"
+      gridToggleSwitch.checked = true;
+    }
+  }
 
-// Function to add the plugin HTML to the viewer element
-addPluginHTML(viewer) {
-  // Create the plugin HTML
-  const pluginHTML = `
+  // Function to add the plugin HTML to the viewer element
+  addPluginHTML(viewer) {
+    // Create the plugin HTML
+    const pluginHTML = `
     <div id="info">
         <span>Grid</span>
         <label class="switch" for="grid">
@@ -72,14 +72,14 @@ addPluginHTML(viewer) {
     </div>
   `;
 
-  // Append the plugin HTML to the viewer element
-  const viewerElement = document.getElementById(viewer.element.id);
-  viewerElement.insertAdjacentHTML("beforeend", pluginHTML);
+    // Append the plugin HTML to the viewer element
+    const viewerElement = document.getElementById(viewer.element.id);
+    viewerElement.insertAdjacentHTML("beforeend", pluginHTML);
 
-  // Attach event listeners using addEventListener
-  document.getElementById("grid-rotation-slider").addEventListener("input", this.rotateGrid);
-  document.getElementById("grid").addEventListener("change", this.toggleGrid);
-}
+    // Attach event listeners using addEventListener
+    document.getElementById("grid-rotation-slider").addEventListener("input", this.rotateGrid);
+    document.getElementById("grid").addEventListener("change", this.toggleGrid);
+  }
 
 
 
@@ -119,9 +119,9 @@ addPluginHTML(viewer) {
       });
 
       // Attach event listeners using addEventListener
-          document.getElementById("grid-rotation-slider").addEventListener("input", this.rotateGrid);
-          document.getElementById("grid").addEventListener("change", this.toggleGrid);
-        };
+      document.getElementById("grid-rotation-slider").addEventListener("input", this.rotateGrid);
+      document.getElementById("grid").addEventListener("change", this.toggleGrid);
+    };
 
     // Call the initialize function when the plugin is created
     init();
