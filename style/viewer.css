@@ -128,3 +128,17 @@ display: inline-block;
 #grid-rotation-slider {
   display: none;
 }
+
+#info {
+  position: absolute;
+  z-index: 1000;
+  bottom: 0;
+  left: 0;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  min-height: 5vh;
+  width: 8vw;
+  color: white;
+  font-family: sans-serif;
+  font-size: 0.9em;
+  }
