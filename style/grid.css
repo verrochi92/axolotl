@@ -6,13 +6,13 @@
     width: 50px;
     height: 24px;
     }
-    
+
     .switch input {
     opacity: 0;
     width: 0;
     height: 0;
     }
-    
+
     .slider {
     position: absolute;
     cursor: pointer;
@@ -24,7 +24,7 @@
     -webkit-transition: .4s;
     transition: .4s;
     }
-    
+
     .slider:before {
     position: absolute;
     content: "";
@@ -36,62 +36,107 @@
     -webkit-transition: .4s;
     transition: .4s;
     }
-    
+
     input:checked + .slider {
     background-color: #2196F3;
     }
-    
+
     input:focus + .slider {
     box-shadow: 0 0 1px #2196F3;
     }
-    
+
     input:checked + .slider:before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
     }
-    
+
+    .slider-container {
+    display: flex;
+    align-items: center;
+    }
+
+    .slider-input {
+    width: 100px;
+    margin-right: 10px;
+    }
+
+    .slider-value {
+    margin: 0;
+    }
+
     /* Rounded sliders */
     .slider.round {
     border-radius: 34px;
     }
-    
+
     .slider.round:before {
     border-radius: 50%;
     }
-    
+
     #grid-rotation {
     display: none;
     }
-    
+
     #grid-rotation.visible {
     display: inline-block;
     }
-    
+
     #grid-rotation-container {
       display: none;
       margin-left: 10px;
     }
-    
+
     #grid-rotation-slider.visible {
       display: inline-block;
     }
-    
+
     #grid-rotation-label {
       display: inline-block;
-      width: 30px;
-      text-align: center;
+      text-align: left;
       margin-left: 5px;
     }
-    
+
     #grid-rotation-slider.visible + #grid-rotation-label {
       display: inline-block;
     }
-    
+
     #grid-rotation-slider {
       display: none;
     }
-    
+
+
+    #grid-size {
+    display: none;
+    }
+
+    #grid-size.visible {
+    display: inline-block;
+    }
+
+    #grid-size-container {
+      display: none;
+      margin-left: 10px;
+    }
+
+    #grid-size-slider.visible {
+      display: inline-block;
+    }
+
+    #grid-size-label {
+     display: inline-block;
+      text-align: left;
+      margin-left: 5px;
+    }
+
+    #grid-size-slider.visible + #grid-size-label {
+      display: inline-block;
+    }
+
+    #grid-size-slider {
+      display: none;
+    }
+
     #info {
       position: absolute;
       z-index: 1000;
@@ -100,7 +145,7 @@
       padding: 10px;
       background-color: rgba(0, 0, 0, 0.7);
       min-height: 5vh;
-      width: 8vw;
+      width: 10vw;
       color: white;
       font-family: sans-serif;
       font-size: 0.9em;
