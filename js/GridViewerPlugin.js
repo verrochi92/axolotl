@@ -55,6 +55,7 @@ class GridViewerPlugin {
       angleDisplay.style.display = "block"
       gridToggleSwitch.checked = true;
     }
+    this.rotateGrid();
   }
 
   // Function to add the plugin HTML to the viewer element
