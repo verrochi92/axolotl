@@ -5,11 +5,6 @@
  * For CS410 - The Axolotl Project
  */
 
-var plugin; // stores the OSDMeasureAndAnnotate plugin
-var measurementListElements = []; // measurements to display
-var gridPlugin; // gridplugin
-
-
 window.onload = () => {
     // get the image url from the search parameters sent by index.html
     const urlParamsString = window.location.search;
@@ -28,15 +23,18 @@ window.onload = () => {
     });
 
     // Initialize the Grid plugin
-    gridPlugin = new GridViewerPlugin(viewer);
+    let gridPlugin = new GridViewerPlugin(viewer);
     gridPlugin.addGrid();
 
-    // initialize the plugin
-    plugin = new OSDMeasure(viewer, {
+    // initialize the OSDMeasure plugin
+    let plugin = new OSDMeasure(viewer, {
         conversionFactor: 4.54e-1,
         units: "um",
         useBuiltInUI: true
     });
+
+    // setup annotations
+    let annotationHelper = new AnnotationHelper(viewer);
 }
 
 
