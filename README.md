@@ -43,6 +43,12 @@ ctrl + r: reset
 
 ctrl + e: export
 
+This project also uses Annotorious for annotations. To make an annotation, hold shift and click to draw a box.
+To edit or delete an annotation, simply click on it to open an editor.
+
+On the bottom left, there is a toggle for a grid to help make evenly spaced measurements. After toggling, the two sliders can adjust the
+angle and size of the grid.
+
 ## Developer setup
 Our project is easy to setup, every library we use is included, so you don't actually
 need to download any of the dependencies or the OSDMeasure plugin, simply clone the
