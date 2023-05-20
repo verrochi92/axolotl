@@ -35,13 +35,14 @@ the color of the measurements, give custom names to measurements, undo a measure
 a previously undone measurement, reset all measurements and annotations, and export measurements
 to a .csv file. There are various keyboard shortcuts for these features as well:
 
-ctrl + z: undo
+1. ctrl + z: undo
+2. ctrl + y: redo
+3. ctrl + r: reset
+4. ctrl + e: export csv (will download the file)
 
-ctrl + y: redo
-
-ctrl + r: reset
-
-ctrl + e: export
+To open the menu, simply click the top-right icon. From there, you will see a color picker to change
+measurement rendering colors, a list of the measurements you've taken with editable labels, and some 
+buttons for each of the features listed above that have keyboard shortcuts.
 
 This project also uses Annotorious for annotations. To make an annotation, hold shift and click to draw a box.
 To edit or delete an annotation, simply click on it to open an editor.
