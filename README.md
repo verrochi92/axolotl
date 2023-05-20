@@ -3,7 +3,7 @@ by Nicholas Verrochi, Vidhya Sree Narayanappa, Sairam Bandarupalli and Andy Duve
 
 Try it out: https://verrochi92.github.io/axolotl/
 
-Project documentation coming soon!
+Project documentation: https://verrochi92.github.io/axolotl/documentation.pdf
 
 ## Previous work
 This project is an extension of work done by Allen Dai in 2022: 
