@@ -26,6 +26,15 @@ format used for the Axolotl scans. This plugin is the backbone of our project an
 designed with the community in mind, it can be used in other applications with similar
 needs. For more information, see our repo [here](https://github.com/verrochi92/OSDMeasure). 
 
+
+## OSDGrid
+OSDGrid is our open-source plugin for OpenSeadragon that allows to add grid,rotate 
+and resize the grid for any OpenSeadragon-compatible image, including the high-resolution DeepZoom
+format used for the Axolotl scans.This plugin was designed with the community in mind, 
+it can be used in other applications with similar needs.
+For more information, see our repo [here](https://github.com/VidhyaSree-N/OSDGrid).
+
+
 ## Usage
 From the index, you can select from a set of Axolotl scans. Once the image is loaded,
 you can start measuring right away by double-clicking. Each time you double-click marks
