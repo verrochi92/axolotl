@@ -1,6 +1,15 @@
 <html>
 
 <head>
+    <!-- library imports -->
+    <script src="lib/openseadragon.min.js"></script>
+    <script src="lib/openseadragon-annotorious.min.js"></script>
+    <script src="lib/annotorious-shape-labels.min.js"></script>
+    <script src="lib/fabricjs.min.js"></script>
+    <script src="lib/openseadragon-fabricjs-overlay.js"></script>
+    <script src="lib/dexie.min.js"></script>
+    <link rel="stylesheet" href="lib/annotorious.min.css">
+
     <!-- OSDMeasure classes -->
     <script src="js/OSDMeasure/controllers/DexieWrapper.js"></script>
     <script src="js/OSDMeasure/controllers/OSDMeasure.js"></script>
@@ -15,6 +24,27 @@
 </head>
 
 <body>
+    <script>
+        (async function () {
+            var dexie = new DexieWrapper();
+            var m1 = new Measurement(
+                new Point(1, 2, "color1", "some-canvas"),
+                new Point(3, 4, "color2", "some-canvas"),
+                "m1", "color3", 1, "px", "some-canvas"
+            );
+            var m2 = new Measurement(
+                new Point(5, 6, "color4", "some-canvas"),
+                new Point(7, 8, "color5", "some-canvas"),
+                "m2", "color6", 1, "px", "some-canvas"
+            );
+            m1.id = 0;
+            m2.id = 1;
+            dexie.saveMeasurement(m1);
+            dexie.saveMeasurement(m2);
+            var measurements = await dexie.getAllMeasurements();
+            console.log(measurements);
+        })();
+    </script>
 </body>
 
 </html>
