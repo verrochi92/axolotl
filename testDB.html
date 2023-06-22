@@ -24,9 +24,13 @@
 </head>
 
 <body>
+    <div id="viewer"></div>
     <script>
         (async function () {
-            var dexie = new DexieWrapper();
+            var dexie = new DexieWrapper(new OSDMeasure(new OpenSeadragon({
+                id: "viewer",
+                tileSources: "./data/W255B_0.dzi"
+            })));
             var m1 = new Measurement(
                 new Point(1, 2, "color1", "some-canvas"),
                 new Point(3, 4, "color2", "some-canvas"),
