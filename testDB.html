@@ -1,17 +1,6 @@
-<!--
-    viewer.html
-    Holds the OSD viewer
-    By Nicholas Verrochi and Vidhya Sree N
-    For CS410 - The Axolotl Project
--->
-
 <html>
 
 <head>
-    <title>Viewer</title>
-    <link rel="stylesheet" href="style/viewer.css">
-    <link rel="stylesheet" href="style/grid.css">
-
     <!-- library imports -->
     <script src="lib/openseadragon.min.js"></script>
     <script src="lib/openseadragon-annotorious.min.js"></script>
@@ -32,15 +21,34 @@
     <script src="js/OSDMeasure/views/Menu.js"></script>
     <script src="js/OSDMeasure/views/MenuButton.js"></script>
     <script src="js/OSDMeasure/views/UI.js"></script>
-
-    <script src="js/AnnotationHelper.js"></script>
-    <script src="js/GridViewerPlugin.js"></script>
-    <script src="js/viewer.js"></script>
-
 </head>
 
 <body>
-    <div class="centered" id="viewer"></div>
+    <div id="viewer"></div>
+    <script>
+        (async function () {
+            var dexie = new DexieWrapper(new OSDMeasure(new OpenSeadragon({
+                id: "viewer",
+                tileSources: "./data/W255B_0.dzi"
+            })));
+            var m1 = new Measurement(
+                new Point(1, 2, "color1", "some-canvas"),
+                new Point(3, 4, "color2", "some-canvas"),
+                "m1", "color3", 1, "px", "some-canvas"
+            );
+            var m2 = new Measurement(
+                new Point(5, 6, "color4", "some-canvas"),
+                new Point(7, 8, "color5", "some-canvas"),
+                "m2", "color6", 1, "px", "some-canvas"
+            );
+            m1.id = 0;
+            m2.id = 1;
+            dexie.saveMeasurement(m1);
+            dexie.saveMeasurement(m2);
+            var measurements = await dexie.getAllMeasurements();
+            console.log(measurements);
+        })();
+    </script>
 </body>
 
 </html>

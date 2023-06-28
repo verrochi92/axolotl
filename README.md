@@ -1,6 +1,9 @@
 # The Axolotl Project
 by Nicholas Verrochi, Vidhya Sree Narayanappa, Sairam Bandarupalli and Andy Duverneau
 
+Created for the University of Massachusetts Boston as a capstone project for the [CS410](https://cs410.net) 
+class tought by Professor Daniel Haehn.
+
 Try it out: https://verrochi92.github.io/axolotl/
 
 Project documentation: https://verrochi92.github.io/axolotl/documentation.pdf
