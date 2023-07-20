@@ -66,7 +66,7 @@ class GridViewerPlugin {
     const gridSizeSlider = document.getElementById("grid-size-slider");
     const gridSizeValue = document.getElementById("grid-size-value");
     const gridSize = parseInt(gridSizeSlider.value);
-    gridSizeValue.innerText = gridSize/100 + "mm";
+    gridSizeValue.innerText = gridSize + "px";
 
     // Convert the grid size to the desired unit (e.g., pixels)
     const scaledGridSize = gridSize;

@@ -28,8 +28,8 @@ window.onload = () => {
 
     // initialize the OSDMeasure plugin
     let plugin = new OSDMeasure(viewer, {
-        conversionFactor: 4.54e-1,
-        units: "um",
+        conversionFactor: 1,
+        units: "px",
         useBuiltInUI: true
     });
 
