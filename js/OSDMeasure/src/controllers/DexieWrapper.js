@@ -51,7 +51,6 @@ class DexieWrapper {
      */
     async getAllMeasurements() {
         let measurements = [];
-        let id = 0;
         // query all measurements related to the image
         let result = await this.db.measurements.where("image").equals(this.plugin.viewer.tileSources[0]).toArray();
         for (let i = 0; i < result.length; i++) {
