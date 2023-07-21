@@ -60,7 +60,7 @@ class DexieWrapper {
                 new Point(result[i].p2x, result[i].p2y, result[i].color, this.plugin.fabricCanvas),
                 result[i].name, result[i].color, this.plugin.conversionFactor, this.plugin.units, this.plugin.fabricCanvas
             );
-            measurement.id = id++;
+            measurement.id = result[i].id;
             measurements.push(measurement);
         }
         return measurements;
