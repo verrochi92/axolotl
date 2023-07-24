@@ -11,8 +11,25 @@
  */
 
 class GridViewerPlugin {
-  constructor(viewer) {
+    /**
+     * APIs used by the plugin
+     */
+    viewer; // the OpenSeadragon viewer
+    overlay; // the fabric.js overlay, contains the canvas
+    fabricCanvas; // the fabric.js canvas to draw shapes on
+    useBuiltInUI; // when true, will setup the built-in UI after starting
+
+    /**
+     * Customization options
+     */
+    conversionFactor; // factor to multiply for converting from pixels
+    menuOptions; // options object to be passed to the built-in UI if used
+    units; // string to indicate what units are used, for example "mm"
+
+
+   constructor(viewer,options = {}) {
     this.viewer = viewer;
+    this.processOptions(options);
     this.overlay = viewer.fabricjsOverlay();
     this.fabricCanvas = this.overlay.fabricCanvas();
     this.gridGroup = new fabric.Group([], {
@@ -28,6 +45,36 @@ class GridViewerPlugin {
     // Add the plugin HTML to the viewer element
     this.addPluginHTML(viewer);
   }
+
+  /**
+       * processOptions:
+       *
+       * Stores customization options in the object proper
+       * Loads the built-in UI if chosen for use
+       *
+       * @param {Object} options
+       */
+      processOptions(options) {
+          if (options.conversionFactor) {
+              this.conversionFactor = options.conversionFactor;
+          }
+          else {
+              this.conversionFactor = 1;
+          }
+
+          if (options.units) {
+              this.units = options.units;
+          }
+          else {
+              this.units = "px";
+          }
+
+          if (options.useBuiltInUI) {
+              let ui = new UI(this);
+              ui.addToDocument();
+          }
+      }
+
 
    // Function to toggle the grid
    toggleGrid() {
@@ -66,7 +113,7 @@ class GridViewerPlugin {
     const gridSizeSlider = document.getElementById("grid-size-slider");
     const gridSizeValue = document.getElementById("grid-size-value");
     const gridSize = parseInt(gridSizeSlider.value);
-    gridSizeValue.innerText = gridSize + "px";
+    gridSizeValue.innerText = gridSize * this.conversionFactor + this.units;
 
     // Convert the grid size to the desired unit (e.g., pixels)
     const scaledGridSize = gridSize;
@@ -128,7 +175,7 @@ class GridViewerPlugin {
         </div>
         <p id="grid-size-label"></p>
         <div class="slider-container">
-            <input type="range" min="100" max="5000" value="500" id="grid-size-slider" class="slider-input">
+            <input type="range" min="100" max="5000" value="377.95275591" id="grid-size-slider" class="slider-input">
             <p id="grid-size-value" class="slider-value" style="display:none"></p>
         </div>
     </div>

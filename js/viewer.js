@@ -23,13 +23,17 @@ window.onload = () => {
     });
 
     // Initialize the Grid plugin
-    let gridPlugin = new GridViewerPlugin(viewer);
+    let gridPlugin = new GridViewerPlugin(viewer, {
+        conversionFactor: 0.2645833333,
+        units: "mm",
+        useBuiltInUI: true
+    });
     gridPlugin.addGrid();
 
     // initialize the OSDMeasure plugin
     let plugin = new OSDMeasure(viewer, {
-        conversionFactor: 1,
-        units: "px",
+        conversionFactor: 0.2645833333,
+        units: "mm",
         useBuiltInUI: true
     });
 
