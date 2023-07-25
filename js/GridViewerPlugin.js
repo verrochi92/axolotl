@@ -202,8 +202,8 @@ class GridViewerPlugin {
           var canvasHeight = imageSize.y;
 
           // Draw horizontal lines
-          for (var i = -(2 * canvasHeight); i < 2 * canvasHeight; i += gridSize) {
-            var line = new fabric.Line([-(2 * canvasWidth), i, 2 * canvasWidth, i], {
+          for (var i = 0 ; i <= canvasHeight; i += gridSize) {
+              var line = new fabric.Line([0, i, canvasWidth, i], {
               stroke: "grey",
               strokeWidth: 5
             });
@@ -211,8 +211,8 @@ class GridViewerPlugin {
           }
 
           // Draw vertical lines
-          for (var i = -(2 * canvasHeight); i < 2 * canvasWidth; i += gridSize) {
-            var line = new fabric.Line([i, -(2 * canvasHeight), i, 2 * canvasHeight], {
+          for (var i = 0; i <= canvasWidth; i += gridSize) {
+              var line = new fabric.Line([i, 0, i, canvasHeight], {
               stroke: "grey",
               strokeWidth: 5
             });
