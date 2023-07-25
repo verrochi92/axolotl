@@ -113,11 +113,9 @@ class GridViewerPlugin {
     const gridSizeSlider = document.getElementById("grid-size-slider");
     const gridSizeValue = document.getElementById("grid-size-value");
     const gridSize = parseInt(gridSizeSlider.value);
-    gridSizeValue.innerText = gridSize * this.conversionFactor + this.units;
-
-    // Convert the grid size to the desired unit (e.g., pixels)
-    const scaledGridSize = gridSize;
-
+    // Convert the grid size to the desired unit
+    const scaledGridSize = (gridSize * this.conversionFactor).toFixed(3);
+    gridSizeValue.innerText = scaledGridSize + this.units;
     // Clear the existing grid lines
     this.gridGroup.remove(...this.gridGroup.getObjects("line"));
 
@@ -128,7 +126,7 @@ class GridViewerPlugin {
       var canvasHeight = imageSize.y;
 
       // Draw horizontal lines
-      for (var i = -(2 * canvasHeight); i < 2 * canvasHeight; i += scaledGridSize) {
+      for (var i = -(2 * canvasHeight); i < 2 * canvasHeight; i += gridSize) {
         var line = new fabric.Line([-(2 * canvasWidth), i, 2 * canvasWidth, i], {
           stroke: "black",
           strokeWidth: 5
@@ -137,7 +135,7 @@ class GridViewerPlugin {
       }
 
       // Draw vertical lines
-      for (var i = -(2 * canvasHeight); i < 2 * canvasWidth; i += scaledGridSize) {
+      for (var i = -(2 * canvasHeight); i < 2 * canvasWidth; i += gridSize) {
         var line = new fabric.Line([i, -(2 * canvasHeight), i, 2 * canvasHeight], {
           stroke: "black",
           strokeWidth: 5
@@ -175,7 +173,7 @@ class GridViewerPlugin {
         </div>
         <p id="grid-size-label"></p>
         <div class="slider-container">
-            <input type="range" min="100" max="5000" value="377.95275591" id="grid-size-slider" class="slider-input">
+            <input type="range" min="100" max="5000" value="440" id="grid-size-slider" class="slider-input">
             <p id="grid-size-value" class="slider-value" style="display:none"></p>
         </div>
     </div>
@@ -196,7 +194,7 @@ class GridViewerPlugin {
     // Function to initialize the Grid
     const init = () => {
       this.viewer.addHandler("open", () => {
-        var gridSize = 500;
+        var gridSize = 0.1 / this.conversionFactor; // Set the gridSize to 0.1 mm in pixels
         var world = this.viewer.world;
         if (world) {
           var imageSize = world.getItemAt(0).getContentSize();

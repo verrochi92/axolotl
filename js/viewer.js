@@ -10,6 +10,7 @@ window.onload = () => {
     const urlParamsString = window.location.search;
     const urlParams = new URLSearchParams(urlParamsString);
     const tileSource = "./data/" + urlParams.get('tileSource') + ".dzi";
+//    const PIXEL_Size = 4.54e-7;
 
     // setup the viewer
     let viewer = new OpenSeadragon({
@@ -22,9 +23,24 @@ window.onload = () => {
         preventDefaultAction: true
     });
 
+    viewer.scalebar({
+        type: OpenSeadragon.ScalebarType.MICROSCOPY,
+    	pixelsPerMeter: 1 / 4.54e-7,
+    	minWidth: "75px",
+    	location: OpenSeadragon.ScalebarLocation.BOTTOM_RIGHT,
+    	xOffset: 5,
+    	yOffset: 10,
+    	stayInsideImage: true,
+    	color: "rgba(255,255,0,1)",
+    	fontColor: "white",
+    	backgroundColor: "rgba(0, 0, 0, 0.7)",
+    	fontSize: "small",
+    	barThickness: 2,
+    });
+
     // Initialize the Grid plugin
     let gridPlugin = new GridViewerPlugin(viewer, {
-        conversionFactor: 0.2645833333,
+        conversionFactor: 4.54e-7 * 1e3,
         units: "mm",
         useBuiltInUI: true
     });
@@ -32,7 +48,7 @@ window.onload = () => {
 
     // initialize the OSDMeasure plugin
     let plugin = new OSDMeasure(viewer, {
-        conversionFactor: 0.2645833333,
+        conversionFactor: 4.54e-7 * 1e3,
         units: "mm",
         useBuiltInUI: true
     });
