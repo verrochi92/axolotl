@@ -125,35 +125,45 @@ class GridViewerPlugin {
       var canvasWidth = imageSize.x;
       var canvasHeight = imageSize.y;
 
+      // Calculate the diagonal length of the canvas to ensure grid lines extend beyond it
+      var diagonalLength = Math.sqrt(canvasWidth ** 2 + canvasHeight ** 2);
+
       // Draw horizontal lines
-      for (var i = 0 ; i <= canvasHeight; i += gridSize) {
-        var line = new fabric.Line([0, i, canvasWidth, i], {
-          stroke: "grey",
-          strokeWidth: 5
-        });
+      for (var i = -diagonalLength; i <= diagonalLength; i += gridSize) {
+        var line = new fabric.Line(
+          [-diagonalLength, i, diagonalLength, i],
+          {
+            stroke: "grey",
+            strokeWidth: 10,
+          }
+        );
         this.gridGroup.add(line);
       }
 
       // Draw vertical lines
-      for (var i = 0; i <= canvasWidth; i += gridSize) {
-        var line = new fabric.Line([i, 0, i, canvasHeight], {
+      for (var i = -diagonalLength; i <= diagonalLength; i += gridSize) {
+        var line = new fabric.Line([i, -diagonalLength, i, diagonalLength], {
           stroke: "grey",
-          strokeWidth: 5
+          strokeWidth: 10,
         });
         this.gridGroup.add(line);
       }
 
+    // Set the clipTo function to limit the grid to the canvas boundaries
+    this.gridGroup.clipTo = function (ctx) {
+      ctx.rect(0, 0, canvasWidth, canvasHeight);
+    };
       this.fabricCanvas.renderAll();
     }
   }
 
   // Function to rotate the grid
   rotateGrid() {
-    var angle = document.getElementById("grid-rotation-slider").value;
-    this.gridGroup.setAngle(angle);
-    var angleDisplay = document.getElementById("angle-display");
-    angleDisplay.innerText = angle;
-    this.fabricCanvas.renderAll();
+   var angle = document.getElementById("grid-rotation-slider").value;
+   this.gridGroup.setAngle(angle);
+   var angleDisplay = document.getElementById("angle-display");
+   angleDisplay.innerText = angle;
+   this.fabricCanvas.renderAll();
   }
 
   // Function to add the plugin HTML to the viewer element
