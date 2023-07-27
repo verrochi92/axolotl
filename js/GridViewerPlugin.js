@@ -134,7 +134,7 @@ class GridViewerPlugin {
           [-diagonalLength, i, diagonalLength, i],
           {
             stroke: "grey",
-            strokeWidth: 10,
+            strokeWidth: 5,
           }
         );
         this.gridGroup.add(line);
@@ -144,7 +144,7 @@ class GridViewerPlugin {
       for (var i = -diagonalLength; i <= diagonalLength; i += gridSize) {
         var line = new fabric.Line([i, -diagonalLength, i, diagonalLength], {
           stroke: "grey",
-          strokeWidth: 10,
+          strokeWidth: 5,
         });
         this.gridGroup.add(line);
       }
