@@ -4,7 +4,7 @@
  * Javascript controller for preview-viewer.html, the
  * smaller viewer used to preview images in the index
  * 
- * By Nicholas Verrochi
+ * By Nicholas Verrochi and Vidhya Sree N
  * 
  * For CS410 - The Axolotl Project
  */

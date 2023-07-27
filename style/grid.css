@@ -1,5 +1,9 @@
-/* Grid */
-
+/*
+ * grid.css
+ * Styling for the grid page
+ * By Nicholas Verrochi and Vidhya Sree N
+ * For CS410 - The Axolotl Project
+ */
 .switch {
     position: relative;
     display: inline-block;

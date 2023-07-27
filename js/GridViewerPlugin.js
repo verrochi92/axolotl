@@ -3,7 +3,7 @@
  *
  * Plugin for OpenSeadragon that adds Grid on OSD image
  *
- * By Vidhya Sree N
+ * By Vidhya Sree N and Nicholas Verrochi
  * For CS410 - The Axolotl Project
  *
  * Requires OpenSeadragon Fabric.js,

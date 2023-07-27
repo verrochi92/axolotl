@@ -3,7 +3,7 @@
  * 
  * Manages annotations for the Axolotl Project
  * 
- * By Nicholas Verrochi
+ * By Nicholas Verrochi and Vidhya Sree N
  */
 
 class AnnotationHelper {
